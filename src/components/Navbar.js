@@ -11,17 +11,18 @@ const NavbarContainer = styled.nav`
 
 const Navbar = () => {
   return (
-    <NavbarContainer>
-      <h2>Silas Vasconcelos</h2>
-      <div>
-        <Link to="/">Home</Link>
-        <Link to="/about">Sobre</Link>
-        <Link to="/projects">Projetos</Link>
-        <Link to="/contact">Contato</Link>
+    <nav className="bg-blue-700 text-white p-4">
+      <div className="container mx-auto flex justify-between">
+        <h1 className="text-xl font-bold">Portfólio de Silas</h1>
+        <div className="space-x-4">
+          <Link to="/" className="hover:underline">Home</Link>
+          <Link to="/about" className="hover:underline">Sobre Mim</Link>
+          <Link to="/projects" className="hover:underline">Projetos</Link>
+          <Link to="/contact" className="hover:underline">Contato</Link>
+        </div>
       </div>
-    </NavbarContainer>
+    </nav>
   );
 };
 
 export default Navbar;
-

@@ -6,7 +6,106 @@
 }
 
 body {
-  background-color: #121212;
+ background-color: #121212;
+ color: #fff;
+}
+
+/* Adicionando um gradiente café */
+.bg-coffee {
+  background: linear-gradient(to bottom, #D7B49E, #8B4513);
+  color: white; /* Para contraste adequado */
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.max-w-4xl {
+  max-width: 64rem; /* Tamanho máximo do conteúdo */
+  margin: 0 auto; /* Centralizar */
+}
+
+.text-white {
+  color: white;
+}
+
+.text-blue {
+  color: #0056b3;
+}
+
+.text-blue:hover {
+  color: #003366;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.rounded {
+  border-radius: 0.375rem;
+}
+
+.bg-gray-300 {
+  background-color: #e2e8f0;
+}
+
+.bg-blue-500 {
+  background-color: #4299e1;
+}
+
+.bg-blue-500:hover {
+  background-color: #2b6cb0;
+}
+
+.text-white {
   color: #fff;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.space-x-4 > :not(:first-child) {
+  margin-left: 1rem;
 }
 
