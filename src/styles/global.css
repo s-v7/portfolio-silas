@@ -6,8 +6,22 @@
 }
 
 body {
+ font-family: 'Arial', sans-serif;	
  background-color: #121212;
  color: #fff;
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box; 
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 25px;
+}
+
+a:hover {
+  color: #007bff;
 }
 
 /* Adicionando um gradiente café */
@@ -108,4 +122,39 @@ body {
 .space-x-4 > :not(:first-child) {
   margin-left: 1rem;
 }
+
+.projeto-card {
+  background-color: #282c34;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projeto-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.projeto-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.projeto-card p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.projeto-card a {
+  color: #4299e1;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.projeto-card a:hover {
+  color: #2b6cb0;
+}
+
+
 
