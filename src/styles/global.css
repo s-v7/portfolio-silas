@@ -132,7 +132,7 @@ a:hover {
 }
 
 .projeto-card:hover {
-  transform: translateY(-7px);
+  transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -152,9 +152,23 @@ a:hover {
   font-weight: bold;
 }
 
-.projeto-card a:hover {
+.projeto-card a:hover {	
   color: #2b6cb0;
 }
 
 
+.grid {
+  display: grid;
+  gap: 1.5rem; /* Espaçamento entre os itens */
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr); /* Uma coluna */
+}
+
+@media (min-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas médias ou maiores */
+  }
+}
 
