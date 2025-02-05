@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaCode, FaServer, FaDatabase } from "react-icons/fa";
 
 const About = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,12 +49,23 @@ const About = () => {
               </a>, onde desempenho a função de <strong>Analista Programador Full Stack</strong>. Minha atuação envolve a manutenção e evolução de sistemas legados, além de implementar novas funcionalidades, resolver bugs críticos e explorar novas tecnologias para modernizar o ambiente corporativo.
             </p>
             <h2 className="text-2xl mt-6 mb-4">Tecnologias Utilizadas</h2>
-            <ul>
-              <li><strong>Back-End:</strong> Java e Python.</li>
-              <li><strong>Front-End:</strong> Angular 17, PrimeFaces, Bootstrap.</li>
-              <li><strong>Banco de Dados:</strong> PostgreSQL.</li>
-              <li><strong>Scripts Shell:</strong> Automação e segurança.</li>
-            </ul>
+           <div>
+            <h3 className="text-2xl mb-2">Habilidades Técnicas</h3>
+            <ul className="space-y-2">
+             <li>
+               <FaCode className="inline mr-2" /> Desenvolvimento Frontend: React,
+               Angular
+             </li>
+             <li>
+               <FaServer className="inline mr-2" /> Desenvolvimento Backend:
+               Node.js, Flask
+             </li>
+             <li>
+               <FaDatabase className="inline mr-2" /> Banco de Dados: PostgreSQL,
+               SQLite
+             </li>
+           </ul>
+         </div>		
           </section>
         )}
 
