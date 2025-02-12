@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Home = () => {
   const textToType = [
     "Bem-vindo ao meu Portfólio",
-    "Desenvolvedor Full Stack",
+    "Analista Programador Full Stack | CIO | Arquiteto de Sistemas",
     "Segurança | DevOps | IA",
     "Sou um programador Full Stack Java com experiência em desenvolvimento de sistemas web e mobile, com foco em segurança da informação, inteligência artificial e integração com APIs externas como SEFAZ. Apaixonado por aprender novas linguagens e frameworks, estou sempre atualizado com as tendências do mercado e em constante evolução profissional."	  
   ];
