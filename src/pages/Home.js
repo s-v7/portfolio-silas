@@ -40,14 +40,18 @@ const Home = () => {
 
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, currentIndex, textToType]);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <UserImagePro src={profilePic} alt="Minha Foto" />
-      <h1 className="text-4xl font-bold mb-4 animate-pulse">{currentText}</h1>
-      <p className="text-lg">Portfólio de projetos e habilidades técnicas</p>
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-900 text-white px-8">
+      <div className="flex flex-col items-center md:items-start md:flex-row space-x-6">
+        <UserImagePro src={profilePic} alt="Minha Foto" className="w-32 h-32 rounded-full border-4 border-teal-400" />
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 animate-pulse">{currentText}</h1>
+          <p className="text-lg text-gray-300">Portfólio de projetos e habilidades técnicas</p>
+        </div>
+      </div>
     </div>
   );
+
 };
 
 export default Home;
