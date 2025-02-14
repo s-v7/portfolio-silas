@@ -39,7 +39,7 @@
 
 .navbar {
   background-color: #282c34;
-  color: white;
+  color: #A533FF;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,7 +67,7 @@
 }
 
 .navbar a:hover {
-  color: white;
+  color: #A533FF;
   background-color: #007bff;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .navbar .active {
-  color: white;
+  color: red;
   background-color: #007bff;
   text-decoration: underline;  
 }

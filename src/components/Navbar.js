@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       {/* Componente da Imagem do Usuário */}
-      <UserImage />
+	  {/*      <UserImage />*/ }
 
       {/* Links da Navbar */}
       <ul className="navbar-links flex space-x-4">
