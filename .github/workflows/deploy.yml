@@ -3,7 +3,7 @@ name: Deploy Automático do Portfólio
 on:
   push:
     branches:
-      - dev  # Altere para 'dev' se quiser testar antes
+      - master  # Altere para 'dev' se quiser testar antes
 
 jobs:
   deploy:
