@@ -1,13 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import UserImage from "./UserImage"; // Componente adicional para sua imagem
 
 const Navbar = () => {
   return (
     <nav className="navbar">
-      {/* Componente da Imagem do Usuário */}
-	  {/*      <UserImage />*/ }
-
       {/* Links da Navbar */}
       <ul className="navbar-links flex space-x-4">
         <li>
