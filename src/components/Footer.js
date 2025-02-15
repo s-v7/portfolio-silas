@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container mx-auto text-center">	  
-      <p>© 2025 Sistema de Relatórios. Todos os direitos reservados.</p>
+      <p>© 2025 Portofólio Silas Vasconcelos Cruz. Todos os direitos reservados.</p>
       <div className="social-icons">
         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
           <FaFacebook />
