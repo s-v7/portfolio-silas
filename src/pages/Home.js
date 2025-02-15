@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useMemo } from "react";
 import UserImagePro from "../components/UserImagePro";
-import profilePic from "../assets/images/profile.jpg"; // Substitua pelo caminho da sua imagem
+import profilePic from "../assets/images/profile.jpg"; 
 
 const Home = () => {
-  const textToType = [
-    "Bem-vindo ao meu Portfólio",
-    "Analista Programador Full Stack | CIO | Arquiteto de Sistemas",
-    "Segurança | DevOps | IA",
-    "Sou um programador Full Stack Java com experiência em desenvolvimento de sistemas web e mobile, com foco em segurança da informação, inteligência artificial e integração com APIs externas como SEFAZ. Apaixonado por aprender novas linguagens e frameworks, estou sempre atualizado com as tendências do mercado e em constante evolução profissional."	  
-  ];
 
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const textToType = useMemo(() => [
+    "Bem-vindo ao meu Portfólio",
+    "Analista Programador Full Stack | CIO | Arquiteto de Sistemas",
+    "Segurança | DevOps | IA | C/C++ | Java | Python | JavaScript | SQL",
+    "Sou um programador Full Stack com experiência em desenvolvimento de sistemas web, com foco em segurança da informação, inteligência artificial e integração com APIs externas como SEFAZ e conforme as necessidades. Apaixonado por aprender novas linguagens e frameworks, estou sempre atualizado com as tendências do mercado e em constante evolução profissional."	  
+  ], []);
+
 
   useEffect(() => {
     const handleTyping = () => {
