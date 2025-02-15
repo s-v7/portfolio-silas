@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
-import { FaPython, FaAngular, FaDatabase } from "react-icons/fa";
 
 // Implementation for Projects Page with Automated Presentation and Styled Design
-import React, { useEffect, useState } from "react";
 
 
 const projects = [
