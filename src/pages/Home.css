@@ -1,0 +1,35 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100vh; /* Mantém a seção principal ocupando a tela toda */
+  background-color: #121212; /* Fundo escuro */
+  text-align: center;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  color: #f5f5f5;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #cfcfcf;
+}
+

@@ -7,7 +7,7 @@ const Skills = () => {
       <h1 className="skills-title">Skills</h1>
       <ul className="skills-list">
         <li>✔️ Backend: Java(JDK(s) 8,11,17),(EJB, JPA, JSF, PrimeFaces), Python(Flask, Django), Node.js</li>
-        <li>✔️ Frontend: React, Angular, JavaScript...</li>
+        <li>✔️ Frontend: React, Angular, JavaScript, Html, css/scss, Bootstrap</li>
         <li>✔️ Database: PostgreSQL, MySQL, SQLite, MongoDB</li>
         <li>✔️ DevOps and Automation: Gitea, CI/CD, Webhooks, Docker, Kubernetes, Terraform, Ansible</li>
         <li>✔️ Security: OWASP, API Hardening, Pentest, Blockchain, Audit and Logs</li>

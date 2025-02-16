@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import UserImagePro from "../components/UserImagePro";
 import profilePic from "../assets/images/profile.jpg"; 
+import "./Home.css";
 
 const Home = () => {
-
+  const mainSectionRef = useRef(null);
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -20,8 +21,18 @@ const Home = () => {
     "I thrive on continuous learning and technology leadership, staying updated with the latest trends in software engineering, AI, and cybersecurity. My goal is to drive innovation through automation, AI-driven insights, and secure, scalable architectures, contributing to cutting-edge technology solutions on a global scale."
   ], []);
 
+  useEffect(() => {
+  // Aguarda a renderização antes de rolar
+    setTimeout(() => {
+     if (mainSectionRef.current) {
+       mainSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+     }
+    }, 500); // Pequeno delay para garantir que tudo carregou
+  }, []);
+	
 
   useEffect(() => {
+
     const handleTyping = () => {
       const currentString = textToType[currentIndex];
 
@@ -40,12 +51,15 @@ const Home = () => {
       }
     };
 
-    const typingSpeed = isDeleting ? 7 : 30;
+    const typingSpeed = isDeleting ? 5 : 30;
     const timer = setTimeout(handleTyping, typingSpeed);
 
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, currentIndex, textToType]);
+
+
   return (
+   <div ref={mainSectionRef} id="main-section" className="home-container"> 
     <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-900 text-white px-8">
       <div className="flex flex-col items-center md:items-start md:flex-row space-x-6">
         <UserImagePro src={profilePic} alt="Minha Foto" className="w-32 h-32 rounded-full border-4 border-teal-400" />
@@ -55,6 +69,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+   </div>	  
   );
 
 };

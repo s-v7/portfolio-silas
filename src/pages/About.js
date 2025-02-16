@@ -47,29 +47,33 @@ const About = () => {
                 className="text-blue hover:underline"
               >
                 CREA-PI
-              </a>, where I work as a <strong>Full Stack Development Analyst</strong>.My role involves maintaining and evolving legacy systems, in addition to implementing new functionalities, resolving critical bugs and exploring new technologies to modernize the corporate environment.
+              </a>
+	    </p>
+	    <p className="mb-6 leading-relaxed text-gray-300">
+		where I work as a <strong>Full Stack Development Analyst</strong>.My role involves maintaining and evolving legacy systems, in addition to implementing new functionalities, resolving critical bugs and exploring new technologies to modernize the corporate environment.
+	    </p>
+            <p className="mb-6 leading-relaxed text-gray-300">
 		Working on the front line in modernization and evolution, from infrastructure to support for professionals and companies!
 		Actively participated in the migration from JDK-6 EE to JDK-7 EE and later JDK-8, Glassfish-3.1 to 4.1/5.1, PrimeFaces-3.5 to 5.0/10
                 Implementation of Automations for database backup, using Shell(.sh);
                 Implementation of SSL/TLS Certificate Renewal Automations for various use cases, CI/CD for Glassfish-4.1.1, using the best development and Security practices!
-		Automation implementation for build and deploy/autodeploy/rollback on a dedicated server, using best practices and security!
-                Projects:
-                Developed and Implemented a System, based on AI | Blockchain | Python | Angular, for Registration and Tracking of works in Civil Construction!
-		Developed and implemented an AI model for analyzing logs/anomalies, on servers and depending on use cases and needs!
+	    </p>
+            <p className="mb-6 leading-relaxed text-gray-300">
+		Automation implementation for build and deploy/autodeploy/rollback on a dedicated server, using best practices and security!<br/>
+		Developed and Implemented a System, based on AI | Blockchain | Python | Angular, for Registration and Tracking of works in Civil Construction!
+		AI model for analyzing logs/anomalies, on servers and depending on use cases and needs!
                 The intention is to change the entire Infrastructure from Product to Service! Implement means of Digitization, Automation, among others, always in compliance with environmental areas and other areas!		
 
             </p>
             <h2 className="text-2xl mt-6 mb-4">Technologies Used</h2>
            <div>
-	    <h3 className="text-2xl font-semibold mb-4 text-teal-400">Technical Skills</h3>
+	  
             <ul className="space-y-2">
              <li>
-               <FaCode className="inline mr-2 text-teal-400 hover:scale-110 transition-transform duration-300" /> Frontend Development: React,
-               Angular
+               <FaCode className="inline mr-2 text-teal-400 hover:scale-110 transition-transform duration-300" /> Frontend Development: JSF, PrimeFaces-5.0, JQuery, Ajax, JavaScript, XHtml, css
              </li>
              <li>
-               <FaServer className="inline mr-2" /> Backend Development:
-               Node.js, Flask
+               <FaServer className="inline mr-2" /> Backend Development: Java EE 6, Java EE 7 com JDk-8, JasperReport, Server: Glassfish-4.1.1, Hibernate, Jpa
              </li>
              <li>	
                <FaDatabase className="inline mr-2" /> Database: PostgreSQL,

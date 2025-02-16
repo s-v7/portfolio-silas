@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer fade-in">
       <div className="container mx-auto text-center">	  
       <p>© 2025 Silas Vasconcelos Cruz portfolio. All rights reserved.</p>
       <div className="social-icons">
