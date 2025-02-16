@@ -9,13 +9,13 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Skills from "./pages/Skills";
 
-import "./styles/global.css"; // Link simbólico para o arquivo fora de src
+import "./styles/global.css";
 
 
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
