@@ -43,6 +43,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
   padding: 1rem 2rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   position: sticky;
@@ -139,6 +140,16 @@ button:disabled {
   justify-content: center;
 }
 
+.sticky-navbar {
+  position: sticky;
+  top: 0;
+  background-color: rgba(40, 44, 52, 0.9); /* Transparência leve */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+}
+
+
 .user-image {
   width: 50px;
   height: 50px;
@@ -147,20 +158,38 @@ button:disabled {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}  
 
 .footer {
   background-color: #282c34;
   color: #f5f5f5;
   text-align: center;
-  padding: 2rem 1rem;
-  margin-top: 2rem;
+  padding: 1rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer .social-icons {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .footer a {
