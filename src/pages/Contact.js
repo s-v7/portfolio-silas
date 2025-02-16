@@ -26,12 +26,12 @@ const Contact = () => {
         onSubmit={handleSubmit}
         className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg"
       >
-        <h2 className="text-3xl font-bold mb-4 text-center">Contato</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center">Contact</h2>
         <div className="mb-4">
           <input
             type="text"
             name="nome"
-            placeholder="Seu Nome"
+            placeholder="Your name"
             value={formData.nome}
             onChange={handleChange}
             className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -41,7 +41,7 @@ const Contact = () => {
           <input
             type="email"
             name="email"
-            placeholder="Seu E-mail"
+            placeholder="Your Email"
             value={formData.email}
             onChange={handleChange}
             className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -51,7 +51,7 @@ const Contact = () => {
           <input
             type="text"
             name="assunto"
-            placeholder="Assunto"
+            placeholder="Subject"
             value={formData.assunto}
             onChange={handleChange}
             className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -60,7 +60,7 @@ const Contact = () => {
         <div className="mb-4">
           <textarea
             name="mensagem"
-            placeholder="Sua Mensagem"
+            placeholder="Your message"
             value={formData.mensagem}
             onChange={handleChange}
             className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"

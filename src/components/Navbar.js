@@ -10,16 +10,16 @@ const Navbar = () => {
           <Link to="/" className="hover:underline">Home</Link>
         </li>
         <li>
-          <Link to="/about" className="hover:underline">Sobre Mim</Link>
+          <Link to="/about" className="hover:underline">About Me</Link>
         </li>
         <li>
-          <Link to="/projects" className="hover:underline">Projetos</Link>
+          <Link to="/projects" className="hover:underline">Projects</Link>
         </li>
         <li>
-          <Link to="/contact" className="hover:underline">Contato</Link>
+          <Link to="/skills" className="hover:underline">Skills</Link>
         </li>
 	<li>
-        <Link to="/skills" className="hover:underline">Skills</Link>
+        <Link to="/contact" className="hover:underline">Contact</Link>
 	</li>
       </ul>
     </nav>

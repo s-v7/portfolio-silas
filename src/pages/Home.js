@@ -10,10 +10,14 @@ const Home = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const textToType = useMemo(() => [
-    "Bem-vindo ao meu Portfólio",
-    "Analista Programador Full Stack | CIO | Arquiteto de Sistemas",
-    "Segurança | DevOps | IA | C/C++ | Java | Python | JavaScript | SQL",
-    "Sou um programador Full Stack com experiência em desenvolvimento de sistemas web, com foco em segurança da informação, inteligência artificial e integração com APIs externas como SEFAZ e conforme as necessidades. Apaixonado por aprender novas linguagens e frameworks, estou sempre atualizado com as tendências do mercado e em constante evolução profissional."	  
+    "Welcome to my Portfolio",
+    "Full Stack Programmer Analyst | CIO | Systems Architect",
+    "Security | DevOps | AI | C/C++ | Java | Python | JavaScript | SQL",
+    "I am a Full Stack Developer and Technology Consultant with extensive experience in developing and optimizing web systems, focusing on information security, artificial intelligence (AI), and blockchain integration. My expertise spans backend and frontend development, system architecture, automation, and DevOps, enabling me to build robust, scalable, and secure solutions.",
+    "Passionate about software architecture and cloud computing, I specialize in Java EE (JSF, PrimeFaces, Hibernate), Python (Flask, TensorFlow), and JavaScript frameworks like Angular and Node.js. I have deep knowledge of databases (PostgreSQL, MySQL, MongoDB) and work with Docker, Kubernetes, and CI/CD pipelines to optimize deployment and scalability.",
+    "I have hands-on experience integrating with external APIs such as SEFAZ, implementing audit logs, cryptographic security measures, and compliance solutions for regulatory systems. My work also involves machine learning and neural networks for anomaly detection and predictive analytics, applying AI to enhance security and automation.",
+    "In addition to development, I focus on cybersecurity best practices, penetration testing, and secure system design, ensuring data integrity and protection against vulnerabilities. I am currently expanding my expertise in cloud security, distributed architectures, and blockchain-based smart contracts to enhance system resilience and trust.",
+    "I thrive on continuous learning and technology leadership, staying updated with the latest trends in software engineering, AI, and cybersecurity. My goal is to drive innovation through automation, AI-driven insights, and secure, scalable architectures, contributing to cutting-edge technology solutions on a global scale."
   ], []);
 
 
@@ -47,7 +51,7 @@ const Home = () => {
         <UserImagePro src={profilePic} alt="Minha Foto" className="w-32 h-32 rounded-full border-4 border-teal-400" />
         <div>
           <h1 className="text-3xl md:text-4xl font-bold mb-4 animate-pulse">{currentText}</h1>
-          <p className="text-lg text-gray-300">Portfólio de projetos e habilidades técnicas</p>
+          <p className="text-lg text-gray-300">Project portfolio and technical skills</p>
         </div>
       </div>
     </div>

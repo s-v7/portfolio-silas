@@ -15,15 +15,15 @@ const About = () => {
       <div className="max-w-4xl">
         {currentPage === 1 && (
           <section>
-            <h1 className="text-4xl font-bold mb-6 text-teal-400">Sobre Mim</h1>	
+            <h1 className="text-4xl font-bold mb-6 text-teal-400">About Me</h1>	
             <p className="mb-6 leading-relaxed text-gray-300">
-              Sou um programador Full Stack Java com experiência em desenvolvimento de sistemas web e mobile, com foco em segurança da informação, inteligência artificial e integração com APIs externas como SEFAZ. Apaixonado por aprender novas linguagens e frameworks, estou sempre atualizado com as tendências do mercado e em constante evolução profissional.
+              I am a Full Stack Java programmer with experience in developing web and mobile systems, focusing on information security, artificial intelligence and integration with external APIs such as SEFAZ. Passionate about learning new languages ​​and frameworks, I am always up to date with market trends and constantly evolving professionally.
             </p>
             <p className="mb-6 leading-relaxed text-gray-300">
-              Com mais de 5 anos de experiência em desenvolvimento de software, tenho ampla prática em implementação e manutenção de sistemas, análise de requisitos, desenvolvimento de novas funcionalidades e melhorias, além de trabalho com infraestrutura e segurança de sistemas. Meu foco está sempre na otimização e inovação tecnológica.
+              With more than 5 years of experience in software development, I have extensive experience in systems implementation and maintenance, requirements analysis, development of new features and improvements, in addition to working with infrastructure and systems security. My focus is always on optimization and technological innovation.
             </p>
             <p className="mb-6 leading-relaxed text-gray-300">
-              Durante minha experiência na{" "}
+              During my experience at{" "}
               <a
                 href="https://handpdv.com.br/"
                 target="_blank"
@@ -31,7 +31,7 @@ const About = () => {
                 className="text-blue hover:underline"
               >
                 HANDpdv
-              </a>, uma empresa especializada em software para varejo, desenvolvi e aprimorei funcionalidades web e mobile para emissão de notas fiscais eletrônicas e integração com a SEFAZ. Minha atuação envolveu tecnologias como XHTML, HTML, JSF, CSS, JavaScript, Ajax, JQuery, Java, SQL, JPA, Hibernate, IBExperts, TomCat, WebServices (SOAP, REST), XML e SVN. Além disso, possuo conhecimentos em C e criptografia para garantir a segurança dos dados.
+              </a>, a company specialized in retail software, I developed and improved web and mobile functionalities for issuing electronic invoices and integration with SEFAZ. My work involved technologies such as XHTML, HTML, JSF, CSS, JavaScript, Ajax, JQuery, Java, SQL, JPA, Hibernate, IBExperts, TomCat, WebServices (SOAP, REST), XML and SVN. Furthermore, I have knowledge of C and cryptography to ensure data security.
             </p>
           </section>
         )}
@@ -39,7 +39,7 @@ const About = () => {
         {currentPage === 2 && (
           <section>
             <p className="mb-6 leading-relaxed text-gray-300">
-              Atualmente, atuo como <strong>Assessor de Tecnologia e Segurança da Informação</strong> no{" "}
+              Currently, I work as a<strong>Technology and Information Security Advisor</strong> at{" "}
               <a
                 href="https://crea-pi.org.br/"
                 target="_blank"
@@ -47,22 +47,32 @@ const About = () => {
                 className="text-blue hover:underline"
               >
                 CREA-PI
-              </a>, onde desempenho a função de <strong>Analista Programador Full Stack</strong>. Minha atuação envolve a manutenção e evolução de sistemas legados, além de implementar novas funcionalidades, resolver bugs críticos e explorar novas tecnologias para modernizar o ambiente corporativo.
+              </a>, where I work as a <strong>Full Stack Development Analyst</strong>.My role involves maintaining and evolving legacy systems, in addition to implementing new functionalities, resolving critical bugs and exploring new technologies to modernize the corporate environment.
+		Working on the front line in modernization and evolution, from infrastructure to support for professionals and companies!
+		Actively participated in the migration from JDK-6 EE to JDK-7 EE and later JDK-8, Glassfish-3.1 to 4.1/5.1, PrimeFaces-3.5 to 5.0/10
+                Implementation of Automations for database backup, using Shell(.sh);
+                Implementation of SSL/TLS Certificate Renewal Automations for various use cases, CI/CD for Glassfish-4.1.1, using the best development and Security practices!
+		Automation implementation for build and deploy/autodeploy/rollback on a dedicated server, using best practices and security!
+                Projects:
+                Developed and Implemented a System, based on AI | Blockchain | Python | Angular, for Registration and Tracking of works in Civil Construction!
+		Developed and implemented an AI model for analyzing logs/anomalies, on servers and depending on use cases and needs!
+                The intention is to change the entire Infrastructure from Product to Service! Implement means of Digitization, Automation, among others, always in compliance with environmental areas and other areas!		
+
             </p>
-            <h2 className="text-2xl mt-6 mb-4">Tecnologias Utilizadas</h2>
+            <h2 className="text-2xl mt-6 mb-4">Technologies Used</h2>
            <div>
-	    <h3 className="text-2xl font-semibold mb-4 text-teal-400">Habilidades Técnicas</h3>
+	    <h3 className="text-2xl font-semibold mb-4 text-teal-400">Technical Skills</h3>
             <ul className="space-y-2">
              <li>
-               <FaCode className="inline mr-2 text-teal-400 hover:scale-110 transition-transform duration-300" /> Desenvolvimento Frontend: React,
+               <FaCode className="inline mr-2 text-teal-400 hover:scale-110 transition-transform duration-300" /> Frontend Development: React,
                Angular
              </li>
              <li>
-               <FaServer className="inline mr-2" /> Desenvolvimento Backend:
+               <FaServer className="inline mr-2" /> Backend Development:
                Node.js, Flask
              </li>
-             <li>
-               <FaDatabase className="inline mr-2" /> Banco de Dados: PostgreSQL,
+             <li>	
+               <FaDatabase className="inline mr-2" /> Database: PostgreSQL,
                SQLite
              </li>
            </ul>
@@ -73,7 +83,7 @@ const About = () => {
         {currentPage === 3 && (
           <section>
             <p className="mb-6 leading-relaxed text-gray-300">
-              Minha experiência abrange desde a implementação de soluções escaláveis no back-end até a criação de interfaces front-end modernas e responsivas, utilizando tecnologias de ponta.
+              My experience ranges from implementing scalable back-end solutions to creating modern and responsive front-end interfaces using cutting-edge technologies.
             </p>
           </section>
         )}

@@ -1,25 +1,21 @@
 import { motion } from "framer-motion";
 
-// Implementation for Projects Page with Automated Presentation and Styled Design
-
-
 const projects = [
   {
-    nome: "Sistema de Auditoria",
-    descricao: "Aplicativo para auditoria utilizando Flask e Angular.",
+    nome: "Audit System",
+    descricao: "Application for auditing using Flask and Angular.",
     tecnologias: "Python, Angular, SQLite",
     link: "https://github.com/s-v7/sistema-auditoria",
   },
   {
     nome: "Blockchain CREA-PI",
-    descricao: "Rede Blockchain para integração de dados CREA-PI.",
+    descricao: "Blockchain network for CREA-PI data integration.",
     tecnologias: "Blockchain, Node.js",
     link: "https://github.com/s-v7/blockchain-crea-pi",
   },
   {
-    nome: "CadastroRastreamentoObras",
-    descricao:
-      "Sistema robusto e modular para a gestão de informações relacionadas a obras de construção civil.",
+    nome: "RegistrationTrackingWorks",
+    descricao:"Robust and modular system for managing information related to civil construction works..",
     tecnologias: "Python, Angular, PostreSQL/SQLite",
     link: "https://github.com/s-v7/CadastroRastreamentoObras",
   },
@@ -28,7 +24,7 @@ const projects = [
 const Projects = () => {
   return (
     <section id="projetos" className="p-6 bg-coffee text-white">	 
-      <h2 className="text-3xl font-bold mb-6 text-center">Projetos</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">Projects</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">	  
       <motion.div
         initial={{ opacity: 0 }}
@@ -48,7 +44,7 @@ const Projects = () => {
             <h3 className="text-xl font-semibold mb-2">{project.nome}</h3>
             <p className="text-sm mb-2">{project.descricao}</p>
             <p className="text-sm">
-              <strong>Tecnologias:</strong> {project.tecnologias}
+              <strong>Technologies:</strong> {project.tecnologias}
             </p>
             <a
               href={project.link}
@@ -56,7 +52,7 @@ const Projects = () => {
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline mt-4 inline-block"
             >
-              Ver no GitHub
+              View on GitHub
             </a>
           </motion.div>
         ))}

@@ -1,6 +1,8 @@
 .skills-container {
+  
   max-width: 900px;
   margin: auto;
+  margin-top: 15px;
   padding: 30px;
   background-color: #1a1a1a;
   color: white;
