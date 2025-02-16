@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.804603f3.css",
-    "main.js": "/static/js/main.0b2674c6.js",
-    "static/js/488.526ec18d.chunk.js": "/static/js/488.526ec18d.chunk.js",
-    "static/media/profile.jpg": "/static/media/profile.298377855a2648f2ce54.jpg",
-    "index.html": "/index.html",
-    "main.804603f3.css.map": "/static/css/main.804603f3.css.map",
-    "main.0b2674c6.js.map": "/static/js/main.0b2674c6.js.map",
-    "488.526ec18d.chunk.js.map": "/static/js/488.526ec18d.chunk.js.map"
+    "main.css": "/portfolio-silas/static/css/main.804603f3.css",
+    "main.js": "/portfolio-silas/static/js/main.e662ce53.js",
+    "static/js/488.526ec18d.chunk.js": "/portfolio-silas/static/js/488.526ec18d.chunk.js",
+    "static/media/profile.jpg": "/portfolio-silas/static/media/profile.298377855a2648f2ce54.jpg",
+    "index.html": "/portfolio-silas/index.html",
+    "main.804603f3.css.map": "/portfolio-silas/static/css/main.804603f3.css.map",
+    "main.e662ce53.js.map": "/portfolio-silas/static/js/main.e662ce53.js.map",
+    "488.526ec18d.chunk.js.map": "/portfolio-silas/static/js/488.526ec18d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.804603f3.css",
-    "static/js/main.0b2674c6.js"
+    "static/js/main.e662ce53.js"
   ]
 }
