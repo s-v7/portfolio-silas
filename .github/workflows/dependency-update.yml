@@ -1,0 +1,36 @@
+name: Dependency Update
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Executa toda segunda-feira
+  workflow_dispatch:  # Permite execução manual
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Atualizar dependências vulneráveis
+        run: |
+          npm install -g npm-check-updates
+          ncu -u
+          npm install
+          npm audit fix --force
+
+      - name: Commit e Push se houver mudanças
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "Atualização automática de dependências" || exit 0
+          git push
+
