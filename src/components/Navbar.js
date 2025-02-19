@@ -19,8 +19,12 @@ const Navbar = () => {
           <Link to="/skills" className="hover:underline">Skills</Link>
         </li>
 	<li>
+        <Link to="/AI" className="hover:underline">AI</Link>
+        </li>	  
+	<li>
         <Link to="/contact" className="hover:underline">Contact</Link>
 	</li>
+
       </ul>
     </nav>
   );
