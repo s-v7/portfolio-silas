@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Skills from "./pages/Skills";
-
+import Chat from "./pages/Chat";
 import "./styles/global.css";
 
 
@@ -23,6 +23,7 @@ const App = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/skills" element={<Skills />} />
+	<Route path="/AI" element={<Chat />} />
       </Routes>
      <Footer />	  
     </Router>
