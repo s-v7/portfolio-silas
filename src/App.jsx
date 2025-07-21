@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -10,10 +10,9 @@ import Home from "./pages/Home.jsx";
 import Projects from "./pages/Projects.jsx";
 import Skills from "./pages/Skills.jsx";
 import Chat from "./pages/Chat.jsx";
+import Infra from "./pages/Infra.jsx";
 
 import "./styles/global.css";
-
-
 
 const App = () => {
   return (
@@ -25,15 +24,12 @@ const App = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/skills" element={<Skills />} />
-	<Route path="/AI" element={<Chat />} />
+        <Route path="/AI" element={<Chat />} />
+        <Route path="/infra" element={<Infra />} />
       </Routes>
-     <Footer />	  
+      <Footer />
     </Router>
   );
 };
 
 export default App;
-
-
-
-
