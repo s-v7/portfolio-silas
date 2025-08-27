@@ -1,0 +1,139 @@
+:root {
+  --bg: #0b0f14;
+  --panel: #0f151d;
+  --text: #d6deeb;
+  --muted: #9aa4b2;
+  --cmt: #9dc183;
+  --kw: #82aaff;
+  --tp: #c792ea;
+  --st: #ecc48d;
+  --num: #f78c6c;
+  --accent: #4fc1ff;
+}
+
+/* cartão tipo terminal com borda gradiente/glass */
+.cvcode-card {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 26, 34, 0.85),
+    rgba(15, 21, 29, 0.92)
+  );
+  border-radius: 16px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+}
+.cvcode-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(from 180deg, #00b4ff33, #8b5cf633, #00b4ff33);
+  filter: blur(12px);
+  z-index: 0;
+}
+.cvcode-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* barra superior */
+.cvcode-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #1f2a37;
+  background: rgba(11, 17, 24, 0.6);
+  backdrop-filter: blur(8px);
+}
+.cvcode-lights {
+  display: flex;
+  gap: 8px;
+  margin-right: 6px;
+}
+.cvcode-lights span {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: block;
+}
+.cvcode-lights span:nth-child(1) {
+  background: #ff5f57;
+}
+.cvcode-lights span:nth-child(2) {
+  background: #ffbd2e;
+}
+cvcode-lights span:nth-child(3) {
+  background: #28c840;
+}
+.cvcode-tabs {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+.cvcode-tab {
+  background: #0f151d;
+  color: #9aa4b2;
+  border: 1px solid #1f2a37;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cvcode-tab.active {
+  color: #d6deeb;
+  border-color: #334155;
+  background: #121a26;
+}
+.cvcode-actions button {
+  background: #121a26;
+  color: var(--text);
+  border: 1px solid #263042;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cvcode-actions button:hover {
+  filter: brightness(1.1);
+}
+
+/* corpo com numeração */
+.cvcode-body {
+  font-family: "Fira Code", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  padding: 14px 16px 18px;
+  overflow-x: auto;
+}
+.cvcode-line {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+}
+.cvcode-line .ln {
+  color: #64748b;
+  text-align: right;
+  user-select: none;
+}
+.cvcode-line .src {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* sintaxe rápida (opcional, se quiser marcar manualmente com spans) */
+.cmt {
+  color: var(--cmt);
+}
+.kw {
+  color: var(--kw);
+}
+.tp {
+  color: var(--tp);
+}
+.st {
+  color: var(--st);
+}
+.num {
+  color: var(--num);
+}

@@ -1,35 +1,33 @@
-import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Home from "./pages/Home.jsx";
 import Projects from "./pages/Projects.jsx";
-import Skills from "./pages/Skills.jsx";
-import Chat from "./pages/Chat.jsx";
-import Infra from "./pages/Infra.jsx";
+import CVInit from "./pages/CVInit.jsx";
 
 import "./styles/global.css";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
-const App = () => {
+export default function App() {
   return (
-    <Router basename="/">
+    <Router basename={import.meta.env.BASE_URL}>
+      {" "}
+      {/* "/" no dev; "/portfolio-silas/" no preview/prod */}
+      <ScrollToTop />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/AI" element={<Chat />} />
-        <Route path="/infra" element={<Infra />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route index element={<Home />} /> {/* em vez de path="/" */}
+          <Route path="cvinit" element={<CVInit />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<Home />} /> {/* fallback simples */}
+        </Routes>
+      </main>
       <Footer />
     </Router>
   );
-};
-
-export default App;
+}
