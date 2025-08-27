@@ -2,16 +2,35 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+main {
+  flex: 1 0 auto;
+}
+
+footer,
+.footer {
+  position: static !important;
+  margin-top: auto;
 }
 
 body {
- font-family: 'Arial', sans-serif;	
- background-color: #121212;
- color: #fff;
- margin: 0;
- padding: 0;
- box-sizing: border-box; 
+  font-family: "Arial", sans-serif;
+  background-color: #121212;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -24,10 +43,9 @@ a:hover {
   color: #007bff;
 }
 
-/* Adicionando um gradiente café */
 .bg-coffee {
-  background: linear-gradient(to bottom, #D7B49E, #8B4513);
-  color: white; /* Para contraste adequado */
+  background: linear-gradient(to bottom, #d7b49e, #8b4513);
+  color: white;
 }
 
 .min-h-screen {
@@ -39,8 +57,8 @@ a:hover {
 }
 
 .max-w-4xl {
-  max-width: 64rem; /* Tamanho máximo do conteúdo */
-  margin: 0 auto; /* Centralizar */
+  max-width: 64rem;
+  margin: 0 auto;
 }
 
 .text-white {
@@ -152,23 +170,59 @@ a:hover {
   font-weight: bold;
 }
 
-.projeto-card a:hover {	
+.projeto-card a:hover {
   color: #2b6cb0;
 }
 
-
 .grid {
   display: grid;
-  gap: 1.5rem; /* Espaçamento entre os itens */
+  gap: 1.5rem;
 }
 
 .grid-cols-1 {
-  grid-template-columns: repeat(1, 1fr); /* Uma coluna */
+  grid-template-columns: repeat(1, 1fr);
 }
 
 @media (min-width: 768px) {
   .grid-cols-2 {
-    grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas médias ou maiores */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: #111;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  z-index: 1000;
+}
+
+/* largura única para header, resumo, sobre, etc. */
+.cv-block {
+  width: min(1100px, 100%);
+  margin-inline: auto; /* centraliza */
+  padding-inline: 16px; /* respiro nas bordas em telas pequenas */
+}
+.cv-card {
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+.cv-header {
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.cv-grid {
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
