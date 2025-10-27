@@ -1,6 +1,5 @@
 // src/pages/CVInit.jsx
 import React from "react";
-import "./cv-init.css";
 import photo from "../assets/react.svg";
 import CodeCVUser from "../components/CodeCVUser";
 

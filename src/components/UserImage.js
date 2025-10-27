@@ -1,5 +1,5 @@
 import React from "react";
-import userPhoto from "../logo.svg";         //user-photo.jpg";  Substitua pelo caminho da sua foto
+import userPhoto from "../logo.svg"; //user-photo.jpg";
 
 const UserImage = () => {
   return (
@@ -10,4 +10,3 @@ const UserImage = () => {
 };
 
 export default UserImage;
-

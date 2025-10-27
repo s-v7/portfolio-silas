@@ -120,7 +120,7 @@ const About = () => {
         {currentPage === 3 && (
           <section>
             <h2 className="text-2xl font-bold text-teal-400 mb-4">
-              🏛️ Sistema CREA-PI
+              Sistema CREA-PI
             </h2>
             <p className="mb-4 text-gray-300">
               <strong>Descrição:</strong> Sistema de gestão institucional

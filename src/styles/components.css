@@ -1,3 +1,4 @@
+/* code-cv.css */
 :root {
   --bg: #0b0f14;
   --panel: #0f151d;
@@ -137,3 +138,22 @@ cvcode-lights span:nth-child(3) {
 .num {
   color: var(--num);
 }
+
+/* FIM: code-cv.css */
+
+/* user-image-pro.css */
+.user-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.user-image {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 4px solid #00e0ff;
+}
+
+/* FIM: user-image-pro.css */

@@ -1,24 +1,71 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    if (
+      path === "/" &&
+      (location.pathname === "/" || location.pathname === "")
+    ) {
+      return true;
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
-    <nav className="navbar sticky-navbar">
-      <ul className="navbar-links flex space-x-4">
+    <nav
+      className="navbar sticky-navbar"
+      role="navigation"
+      aria-label="Main Navigation"
+    >
+      <ul className="navbar-links">
         <li>
-          <Link to="" className="hover:underline">
+          <Link
+            to="/"
+            className={`navbar-link ${isActive("/") ? "active" : ""}`}
+          >
             Home
           </Link>
         </li>
+
         <li>
-          <Link to="cvinit" className="hover:underline">
-            AboutMe
+          <Link
+            to="/cv"
+            className={`navbar-link ${isActive("/cv") ? "active" : ""}`}
+          >
+            Profile / CV
           </Link>
         </li>
+
         <li>
-          <Link to="projects" className="hover:underline">
+          <Link
+            to="/projects"
+            className={`navbar-link ${isActive("/projects") ? "active" : ""}`}
+          >
             Projects
           </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/contact"
+            className={`navbar-link ${isActive("/contact") ? "active" : ""}`}
+          >
+            Contact
+          </Link>
+        </li>
+
+        <li className="navbar-cta">
+          <a
+            className="cv-button"
+            href="/CV_Silas.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download CV
+          </a>
         </li>
       </ul>
     </nav>

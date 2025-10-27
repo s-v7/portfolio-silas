@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Skills.css";
 
 const Skills = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,21 +20,21 @@ const Skills = () => {
           <li>
             ✔️ Frontend: React, Angular, JavaScript, HTML, CSS/SCSS, Bootstrap
           </li>
-          <li>✔️ Database: PostgreSQL, MySQL, SQLite, MongoDB</li>
+          <li>✔️ Databases: PostgreSQL, MySQL, SQLite, MongoDB</li>
           <li>
-            ✔️ DevOps and Automation: Gitea, CI/CD, Webhooks, Docker,
-            Kubernetes, Terraform, Ansible
+            ✔️ DevOps & Automation: Gitea, CI/CD, Webhooks, Docker, Kubernetes,
+            Terraform, Ansible
           </li>
           <li>
-            ✔️ Security: OWASP, API Hardening, Pentest, Blockchain, Audit and
-            Logs
+            ✔️ Security: OWASP, API Hardening, Pentesting, Blockchain,
+            Compliance & Audit Logging
           </li>
           <li>
-            ✔️ AI and Machine Learning: TensorFlow, Scikit-Learn, Pandas,
-            PyTorch, Anomalies Detection
+            ✔️ AI & Machine Learning: TensorFlow, Scikit-Learn, Pandas, PyTorch,
+            Anomaly Detection
           </li>
           <li>
-            ✔️ IT Governance and Management: ITIL 4, COBIT 2019, BPMN, Systems
+            ✔️ IT Governance & Management: ITIL 4, COBIT 2019, BPMN, Systems
             Architecture
           </li>
         </ul>
@@ -43,42 +42,44 @@ const Skills = () => {
 
       {currentPage === 2 && (
         <div className="skills-differentials">
-          <h2 className="skills-subtitle">Diferenciais Técnicos</h2>
+          <h2 className="skills-subtitle">Technical Differentials</h2>
           <ul className="skills-list">
+            <li>Specialist in modernizing large JSF-based corporate systems</li>
             <li>
-              Especialista em sistemas JSF corporativos e sua modernização
+              Able to read, refactor and evolve systems that are 10+ years old
+              without breaking mission-critical flows
             </li>
             <li>
-              Capacidade de leitura e reestruturação de sistemas com mais de 10
-              anos
+              Deep understanding of layout, DOM behavior, and dynamic/custom JS
             </li>
             <li>
-              Entendimento profundo de layout, DOM, comportamento JS dinâmico
+              Hands-on experience with production systems under high compliance
+              and public/financial accountability
             </li>
-            <li>Experiência prática com projetos de missão crítica</li>
             <li>
-              Equilíbrio entre manutenção do legado e uso de boas práticas
-              modernas
+              Strong balance between maintaining stability in legacy platforms
+              and introducing modern best practices (automation, observability,
+              security, AI augmentation)
             </li>
           </ul>
         </div>
       )}
 
-      {/* Paginação */}
+      {/* Pagination */}
       <div className="skills-pagination">
         <button
           onClick={() => changePage(1)}
           className={`skills-page-btn ${currentPage === 1 ? "active" : ""}`}
           disabled={currentPage === 1}
         >
-          Página 1
+          Page 1
         </button>
         <button
           onClick={() => changePage(2)}
           className={`skills-page-btn ${currentPage === 2 ? "active" : ""}`}
           disabled={currentPage === 2}
         >
-          Página 2
+          Page 2
         </button>
       </div>
     </div>

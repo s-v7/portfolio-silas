@@ -1,5 +1,4 @@
 import React from "react";
-import "./UserImagePro.css"; // Arquivo de estilos específico
 
 const UserImagePro = ({ src, alt }) => {
   return (
@@ -10,4 +9,3 @@ const UserImagePro = ({ src, alt }) => {
 };
 
 export default UserImagePro;
-

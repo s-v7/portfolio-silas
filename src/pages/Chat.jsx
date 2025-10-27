@@ -1,6 +1,4 @@
-
 import React, { useState } from "react";
-import "./Chat.css";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -16,23 +14,29 @@ const Chat = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer fajhlasflah`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4",
-          messages: [...messages, userMessage],
-        }),
-      });
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer fajhlasflah`,
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [...messages, userMessage],
+          }),
+        }
+      );
 
       const data = await response.json();
       setLoading(false);
 
       if (data.choices && data.choices.length > 0) {
-        const botMessage = { role: "assistant", content: data.choices[0].message.content };
+        const botMessage = {
+          role: "assistant",
+          content: data.choices[0].message.content,
+        };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } else {
         throw new Error("Resposta inválida da API.");
@@ -40,7 +44,10 @@ const Chat = () => {
     } catch (error) {
       console.error("Erro ao conectar à OpenAI:", error);
       setLoading(false);
-      setMessages((prevMessages) => [...prevMessages, { role: "assistant", content: "Erro ao obter resposta." }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { role: "assistant", content: "Erro ao obter resposta." },
+      ]);
     }
   };
 
@@ -49,8 +56,12 @@ const Chat = () => {
       <h2>🤖 AI Chat - Pergunte algo!</h2>
       <div className="chat-box">
         {messages.map((msg, index) => (
-          <p key={index} className={msg.role === "user" ? "user-msg" : "bot-msg"}>
-            <strong>{msg.role === "user" ? "Você" : "AI"}:</strong> {msg.content}
+          <p
+            key={index}
+            className={msg.role === "user" ? "user-msg" : "bot-msg"}
+          >
+            <strong>{msg.role === "user" ? "Você" : "AI"}:</strong>{" "}
+            {msg.content}
           </p>
         ))}
         {loading && <p className="bot-msg">Carregando...</p>}
@@ -62,10 +73,11 @@ const Chat = () => {
         onChange={(e) => setInput(e.target.value)}
         onKeyPress={(e) => e.key === "Enter" && sendMessage()}
       />
-      <button onClick={sendMessage} disabled={loading}>Enviar</button>
+      <button onClick={sendMessage} disabled={loading}>
+        Enviar
+      </button>
     </div>
   );
 };
 
 export default Chat;
-

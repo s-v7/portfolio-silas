@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import UserImagePro from "../components/UserImagePro";
 import profilePic from "../logo.svg";
-import "./Home.css";
 
 const CVInit = () => {
   const mainSectionRef = useRef(null);

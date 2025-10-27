@@ -1,118 +1,127 @@
 import React, { useMemo, useState, memo } from "react";
 
+// High-level positioning headline under "Summary"
 const HEADLINE =
   "Full Stack Software | DevSecOps | AI | Legacy Modernization | Data & Analytics (Streamlit, PostgreSQL, ML)";
 
-const CONTRIBS_ATUAL = [
+// Current role contributions / impact
+const CONTRIBS_CURRENT = [
   [
-    "Dashboards Inteligentes (Streamlit + PostgreSQL)",
-    "Painéis para ARTs, boletos, inadimplência e auditoria, com IA preditiva (redes neurais) e visualização interativa.",
+    "Intelligent Dashboards (Streamlit + PostgreSQL)",
+    "Operational panels for ART review, invoice control, default risk, and auditing — using predictive AI (neural networks) and interactive visual analytics.",
   ],
   [
-    "Automação de Insights",
-    "Alertas em tempo real e relatórios automáticos com dados financeiros e operacionais.",
+    "Automated Insights",
+    "Real-time alerts and automated reporting for financial and compliance data.",
   ],
   [
-    "Modernização de Legados",
-    "JDK 6 → 7 → 8 → 11 → 17, otimização SQL/JPA e ganhos > 40% de performance.",
+    "Legacy Modernization",
+    "JDK 6 → 7 → 8 → 11 → 17, SQL/JPA optimization and +40% performance gains in critical systems.",
   ],
   [
     "DevOps & CI/CD",
-    "Pipelines com Gitea Webhooks, Docker e Kubernetes (deploy automatizado e rollback seguro).",
+    "Pipelines with Gitea webhooks, Docker, and Kubernetes for automated deployment and safe rollback.",
   ],
   [
-    "Cibersegurança",
-    "Detecção de anomalias em logs via modelos neurais + hardening de servidores.",
+    "Cybersecurity",
+    "Anomaly detection in logs using neural models, plus hardening of internal services and infrastructure.",
   ],
   [
     "Blockchain",
-    "Smart contracts (Hyperledger/Ethereum) para rastreabilidade de documentos.",
+    "Smart contracts (Hyperledger / Ethereum) for document and process traceability.",
   ],
 ];
 
+// Previous role contributions / impact
 const CONTRIBS_HANDPDV = [
   [
     "Feature Development",
-    "Implemented new features for issuing NF-e and NFC-e, integrating with SEFAZ.",
+    "Delivered new features for issuing NF-e and NFC-e with SEFAZ integration.",
   ],
   [
     "Performance Optimization",
-    "Improved SQL queries and Hibernate integration, reducing system response time.",
+    "Improved SQL queries and Hibernate usage, reducing response time and load.",
   ],
   [
     "Security and Cryptography",
-    "Applied encryption and data security techniques to ensure integrity of tax transactions.",
+    "Applied encryption and data protection to ensure integrity of fiscal transactions.",
   ],
   [
     "Integration and APIs",
-    "Worked with SOAP and REST WebServices, enabling efficient system communication.",
+    "Worked with SOAP and REST WebServices to connect external services and internal modules.",
   ],
   [
     "Maintenance and Support",
-    "Resolved internal calls and delivered stability improvements.",
+    "Resolved internal tickets and delivered production stability improvements.",
   ],
 ];
 
-const ESPECIALIZACOES = [
+// High-level capability buckets
+const SPECIALIZATIONS = [
   [
-    "Backend & Arquitetura",
-    ["Java EE (JPA, JSF, EJB)", "Python ([ ... ])", "Node.js"],
+    "Backend & Architecture",
+    ["Java EE (JPA, JSF, EJB)", "Python ([...])", "Node.js"],
   ],
   [
     "Data & Analytics",
     [
-      "Streamlit, PostgreSQL, ETL/OCR ...",
-      "IA preditiva e classificação (redes neurais)",
+      "Streamlit, PostgreSQL, ETL/OCR",
+      "Predictive AI and automated classification (neural networks)",
     ],
   ],
   [
-    "DevOps & Automação",
+    "DevOps & Automation",
     [
       "Git, Gitea, Docker, Kubernetes",
       "Terraform, Ansible",
-      "Monitoramento e rollback seguro",
+      "Monitoring and safe rollback",
     ],
   ],
   [
-    "Segurança & Blockchain",
-    ["Pentest, OWASP, auditoria de logs", "Hyperledger/Ethereum (Solidity)"],
+    "Security & Blockchain",
+    ["Pentest, OWASP, log auditing", "Hyperledger / Ethereum (Solidity)"],
   ],
   [
-    "Inteligência Artificial",
-    ["Previsão de tempo de análise", "Inadimplência", "Detecção de anomalias"],
+    "Applied AI",
+    [
+      "Analysis time prediction",
+      "Default / delinquency risk scoring",
+      "Anomaly detection in operational data",
+    ],
   ],
   [
-    "Frontend Moderno",
+    "Modern Frontend",
     ["React", "Angular", "PrimeFaces", "TypeScript", "Streamlit"],
   ],
 ];
 
+// Stack list, tech-oriented, not pitch
 const STACKS = [
   [
     "Backend",
     [
       "Java EE (JPA, JSF, EJB)",
-      "Python (FastApi, Flask, Streamlit)",
+      "Python (FastAPI, Flask, Streamlit)",
       "Node.js",
     ],
   ],
   [
     "Data & AI",
     [
-      "PostgreSQL/SQLite",
+      "PostgreSQL / SQLite",
       "MongoDB",
       "Pandas",
       "TensorFlow",
       "Scikit-Learn",
       "PyTorch",
-      "Numpy",
+      "NumPy",
     ],
   ],
   [
     "DevOps",
     [
       "Ansible",
-      "CI/CD (Gitea,GitHub Actions)",
+      "CI/CD (Gitea, GitHub Actions)",
       "Docker",
       "N8n",
       "Makefile",
@@ -121,11 +130,11 @@ const STACKS = [
     ],
   ],
   [
-    "Frontend",
+    "Frontend / UI",
     ["React", "Angular", "PrimeFaces", "TypeScript", "Bootstrap", "Streamlit"],
   ],
   [
-    "Segurança & Blockchain",
+    "Security & Blockchain",
     [
       "Linux",
       "OWASP Top 10",
@@ -137,6 +146,7 @@ const STACKS = [
   ],
 ];
 
+// Small presentational component that renders a 2-col list of titled cards
 const CVPillList = memo(function CVPillList({ items }) {
   return (
     <div className="cv-cols">
@@ -158,6 +168,7 @@ const CVPillList = memo(function CVPillList({ items }) {
   );
 });
 
+// One experience block (title, location/date meta + bullet cards)
 function ExperienceSection({ title, meta, contribs }) {
   return (
     <section className="cv-card">
@@ -171,37 +182,34 @@ function ExperienceSection({ title, meta, contribs }) {
 }
 
 export default function CodeCVUser() {
-  const [tab, setTab] = useState(0); // 0 = Atual, 1 = Anterior
+  const [tab, setTab] = useState(0);
 
   const about = useMemo(
-    () => `Sou Engenheiro de Software(Autodidata) com foco em inovação, automação e segurança. Desde 2016, atuo no desenvolvimento de sistemas corporativos e analíticos, com ênfase em escalabilidade, robustez e modernização tecnológica.
+    () =>
+      `I am a Software Engineer specialized in automation, applied AI, and secure modernization of mission-critical systems. Since 2016, I have been delivering and evolving corporate and analytical platforms, always prioritizing scalability, robustness, and governance.
 
-Atualmente, venho liderando projetos de dashboards inteligentes e interativos com Streamlit, PostgreSQL e Machine Learning, integrando IA em sistemas corporativos para otimizar auditoria, análise de ARTs, boletos, inadimplência e processos fiscais e ... .
+I design and deliver intelligent operational dashboards using Streamlit, PostgreSQL, and Machine Learning — applying AI directly inside corporate environments to optimize auditing, ART analysis, invoice management, default-risk scoring, inspection prioritization, and decision-making support.
 
-Faço sustentação de sistemas críticos em Java EE (JDK 8), PrimeFaces 13 e JSF 2.3, além de iniciativas modernas em IA, Blockchain e DevOps, conectando legado e inovação de forma segura e eficiente.
+My work spans two fronts: (1) sustaining and improving critical Java EE systems (JDK 8, PrimeFaces 13, JSF 2.3), and (2) building modern solutions with applied AI, Blockchain, and DevOps — bridging legacy and innovation in a secure, auditable, and efficient way.
 
-Minha trajetória vai desde a sustentação de sistemas críticos em Java EE até a criação de soluções modernas com IA aplicada, Blockchain e DevOps, conectando legado e inovação de forma segura e eficiente.
+Main Specializations
 
-Principais Especializações:
-APIs robustas com Java EE (JPA, JSF, EJB), Python (Flask, Django, Streamlit) e Node.js.
-Painéis analíticos interativos em Streamlit, integração com PostgreSQL, ETL de dados, IA preditiva e classificação automática com redes neurais.
-Pipelines CI/CD com Git, Gitea, Docker, Kubernetes, Terraform e Ansible. Deploys automatizados, monitoramento e rollback seguro.
-Pentest, OWASP, auditoria de logs e smart contracts com Hyperledger/Ethereum para rastreabilidade.
-Modelos preditivos e redes neurais para previsão de tempo de análise, inadimplência e detecção de anomalias em sistemas corporativos.
-Dashboards e UIs responsivas com React, Angular, PrimeFaces e TypeScript.
+• Development of APIs and corporate applications in Java EE (JPA, JSF, EJB), Python (Flask, Django, Streamlit), and Node.js.
+• Interactive analytical dashboards in Streamlit, integrated with PostgreSQL, data ETL, predictive AI, and automated classification using neural networks.
+• CI/CD pipelines with Git / Gitea, Docker, Kubernetes, Terraform, and Ansible — automated deployments, monitoring, and safe rollback.
+• Security and compliance: pentesting, OWASP, log auditing, and smart contracts (Hyperledger / Ethereum) for traceability and process integrity.
+• Predictive models and neural networks for analysis time prediction, default risk, document classification, and anomaly detection in internal systems.
+• Responsive dashboards and interfaces built with React, Angular, PrimeFaces, and TypeScript.
 
-Diferenciais Técnicos
-Especialista em modernização de sistemas corporativos JSF com integração de dashboards de IA.
-Experiência comprovada em unir sistemas legados + Streamlit + PostgreSQL + Machine Learning.
-Comunicação técnica clara entre Dev, Infra, QA e DevOps.
-Foco em automação, documentação e resolução de problemas complexos.
-Aberto a oportunidades remotas, internacionais ou presenciais em projetos de alto impacto, inovação e modernização tecnológica.`,
+Technical Differentials
+
+• Specialist in modernizing corporate JSF systems and embedding AI capabilities (forecasting, classification, anomaly detection) without breaking legacy code.
+• Proven experience integrating legacy systems + Streamlit + PostgreSQL + Machine Learning in production with full traceability and governance.
+• End-to-end mindset: I can work with Dev, Infra, QA, Audit, and Management and translate operational pain into actionable software.
+• Driven by automation, clarity, and measurable impact — especially in auditing, billing, compliance, and risk.`,
     []
   );
 
-  const savePDF = () => window.print();
-
-  // Acessibilidade: navegação por setas nas abas
   const onTabKeyDown = (e) => {
     if (e.key === "ArrowRight") setTab((t) => (t + 1) % 2);
     if (e.key === "ArrowLeft") setTab((t) => (t + 1 + 1) % 2);
@@ -209,92 +217,95 @@ Aberto a oportunidades remotas, internacionais ou presenciais em projetos de alt
 
   return (
     <section className="cv-wrap">
-      {/* <div className="cv-grid"> */}
+      {/* SUMMARY / HEADLINE */}
       <header className="cv-header cv-block" aria-labelledby="headline">
         <h2
           id="headline"
           className="cv-small-title"
           style={{ marginBottom: 6 }}
         >
-          Resumo
+          Summary
         </h2>
         <p className="cv-headline">{HEADLINE}</p>
       </header>
-      {/* </div> */}
 
+      {/* ABOUT */}
       <article className="cv-card cv-span-2">
-        <h2>Sobre</h2>
+        <h2>About</h2>
         <p className="cv-pre">{about}</p>
       </article>
 
-      {/* Especializações */}
+      {/* SPECIALIZATIONS */}
       <section className="cv-card">
-        <h2>Especializações</h2>
-        <CVPillList items={ESPECIALIZACOES} />
+        <h2>Specializations</h2>
+        <CVPillList items={SPECIALIZATIONS} />
       </section>
 
-      {/* Abas: Experiência Atual / Anterior */}
+      {/* EXPERIENCE TABS */}
       <nav
         className="cv-tabs"
         role="tablist"
-        aria-label="Experiências"
+        aria-label="Experience timeline"
         onKeyDown={onTabKeyDown}
       >
         <button
           role="tab"
-          id="tab-atual"
-          aria-controls="panel-atual"
+          id="tab-current"
+          aria-controls="panel-current"
           aria-selected={tab === 0}
           className={`cv-tab ${tab === 0 ? "is-active" : ""}`}
           onClick={() => setTab(0)}
           type="button"
         >
-          Atual
+          Current
         </button>
+
         <button
           role="tab"
-          id="tab-anterior"
-          aria-controls="panel-anterior"
+          id="tab-previous"
+          aria-controls="panel-previous"
           aria-selected={tab === 1}
           className={`cv-tab ${tab === 1 ? "is-active" : ""}`}
           onClick={() => setTab(1)}
           type="button"
         >
-          Anterior
+          Previous
         </button>
       </nav>
 
+      {/* CURRENT EXPERIENCE */}
       <div
         role="tabpanel"
-        id="panel-atual"
-        aria-labelledby="tab-atual"
+        id="panel-current"
+        aria-labelledby="tab-current"
         hidden={tab !== 0}
         className="cv-container"
       >
         <ExperienceSection
-          title="Experiência Atual — CREA-PI"
-          meta="Teresina, PI • 2024 – Atual"
-          contribs={CONTRIBS_ATUAL}
+          title="Current Experience — CREA-PI"
+          meta="Teresina, PI • 2024 – Present"
+          contribs={CONTRIBS_CURRENT}
         />
       </div>
 
+      {/* PREVIOUS EXPERIENCE */}
       <div
         role="tabpanel"
-        id="panel-anterior"
-        aria-labelledby="tab-anterior"
+        id="panel-previous"
+        aria-labelledby="tab-previous"
         hidden={tab !== 1}
         className="cv-container"
       >
         <ExperienceSection
-          title="Experiência Anterior — HANDpdv"
-          meta="Florianópolis, SC • mai 2022 – set 2022"
+          title="Previous Experience — HANDpdv"
+          meta="Florianópolis, SC • May 2022 – Sep 2022"
           contribs={CONTRIBS_HANDPDV}
         />
       </div>
 
-      {/* Stack utilizada */}
+      {/* STACK */}
       <section className="cv-card">
-        <h2>Stack Utilizada</h2>
+        <h2>Technology Stack</h2>
         <CVPillList items={STACKS} />
       </section>
     </section>

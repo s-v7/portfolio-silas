@@ -7,27 +7,32 @@ import Contact from "./pages/Contact.jsx";
 import Home from "./pages/Home.jsx";
 import Projects from "./pages/Projects.jsx";
 import CVInit from "./pages/CVInit.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 import "./styles/global.css";
-import ScrollToTop from "./components/ScrollToTop.jsx";
+import "./styles/layout.css";
+import "./styles/components.css";
+
+// import { HelmetProvider } from "react-helmet-async";
 
 export default function App() {
   return (
+    // <HelmetProvider>
     <Router basename={import.meta.env.BASE_URL}>
       {" "}
-      {/* "/" no dev; "/portfolio-silas/" no preview/prod */}
       <ScrollToTop />
       <Navbar />
       <main>
         <Routes>
-          <Route index element={<Home />} /> {/* em vez de path="/" */}
+          <Route index element={<Home />} />
           <Route path="cvinit" element={<CVInit />} />
           <Route path="projects" element={<Projects />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="*" element={<Home />} /> {/* fallback simples */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </main>
       <Footer />
     </Router>
+    // </HelmetProvider>
   );
 }
