@@ -1,7 +1,26 @@
-import { desc } from "framer-motion/client";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
-export default function CodeCVUser() {
+
+interface ContactInfo {
+  name: string;
+  area: string;
+  github: string;
+  linkedin: string;
+  location: string;
+}
+
+interface SpecializationBlock {
+  title: string;
+  items: string[];
+}
+
+interface Contribution {
+  title: string;
+  desc: string | string[];
+}
+
+
+const CodeCV: React.FC = () => {
   const headline =
     "Full Stack Software Engineer | DevSecOps | AI & Blockchain | Legacy Modernization | Data & Analytics (Streamlit, PostgreSQL, ML)";
 
@@ -15,7 +34,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
     []
   );
 
-  const contacts = {
+  const contacts: ContactInfo = {
     name: "Silas Vasconcelos Cruz",
     area: "Web · Infra · Data · AI",
     github: "github.com/s-v7",
@@ -23,7 +42,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
     location: "Brazil",
   };
 
-  const specializations = [
+  const specializations: SpecializationBlock[] = [
     {
       title: "Backend & Architecture",
       items: [
@@ -68,7 +87,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
     },
   ];
 
-  const contributions = [
+  const contributions: Contribution[] = [
     {
       title: "Intelligent Dashboards (Streamlit + PostgreSQL)",
       desc: "Operational panels for ART review, invoices, default prediction and auditing, powered by predictive AI (neural networks) and interactive visual analytics.",
@@ -81,8 +100,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
       title: "Legacy Modernization",
       desc: [
         "JDK 6/8 → 11/17, SQL/JPA tuning and >40% performance gain.",
-        "\n",
-        "PrimeFaces 3.x → 4.x → 5.x → 7.x → 10.x → 11.x → 13.x",
+        "PrimeFaces 3.x → 13.x progressive upgrades",
       ],
     },
     {
@@ -99,25 +117,27 @@ My background bridges the maintenance of critical Java EE systems with modern so
     },
   ];
 
-  async function copy(text) {
+
+  const copyToClipboard = async (text: string): Promise<void> => {
     try {
       await navigator.clipboard.writeText(text);
-    } catch {}
-  }
+    } catch {
+      console.warn("Clipboard API not available");
+    }
+  };
 
-  function downloadPDF() {
+  const downloadPDF = (): void => {
     window.print();
-  }
+  };
+
 
   return (
     <div className="mx-auto max-w-6xl p-6 text-slate-200">
-      {/* HEADER / CONTACT */}
+      {/* HEADER */}
       <section className="rounded-2xl bg-slate-900 shadow-xl ring-1 ring-white/10">
         <div className="flex flex-col md:flex-row items-center gap-6 p-6">
-          <div className="h-24 w-24 rounded-full overflow-hidden ring-4 ring-indigo-500">
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-400 to-cyan-400 text-3xl font-bold text-slate-900">
-              SC
-            </div>
+          <div className="h-24 w-24 rounded-full overflow-hidden ring-4 ring-indigo-500 flex items-center justify-center bg-gradient-to-br from-indigo-400 to-cyan-400 text-3xl font-bold text-slate-900">
+            SC
           </div>
 
           <div className="flex-1">
@@ -149,30 +169,11 @@ My background bridges the maintenance of critical Java EE systems with modern so
                 {contacts.location}
               </span>
             </div>
-
-            <div className="mt-4 flex flex-wrap gap-2 text-xs">
-              {[
-                "Python",
-                "PostgreSQL",
-                "Streamlit",
-                "Docker",
-                "Kubernetes",
-                "React",
-                "ML",
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-indigo-500/15 px-2.5 py-1 text-indigo-300 ring-1 ring-inset ring-indigo-500/20"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
 
           <div className="flex flex-col gap-2 w-full md:w-auto">
             <button
-              onClick={() => copy(headline)}
+              onClick={() => copyToClipboard(headline)}
               className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
             >
               Copy Headline
@@ -187,27 +188,16 @@ My background bridges the maintenance of critical Java EE systems with modern so
         </div>
       </section>
 
-      {/* ABOUT + HEADLINE */}
-      <section className="mt-6 grid gap-6 md:grid-cols-3">
-        <div className="md:col-span-2 rounded-2xl bg-slate-900 p-6 shadow ring-1 ring-white/10">
-          <h2 className="text-xl font-bold text-white">About</h2>
-          <p className="mt-3 whitespace-pre-line text-slate-300 leading-relaxed">
-            {about}
-          </p>
-          <button
-            onClick={() => copy(about)}
-            className="mt-4 rounded-lg bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-200 ring-1 ring-white/10 hover:bg-slate-700"
-          >
-            Copy Summary
-          </button>
-        </div>
-
-        <div className="rounded-2xl bg-slate-900 p-6 shadow ring-1 ring-white/10">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
-            Headline
-          </h3>
-          <p className="mt-2 text-slate-200">{headline}</p>
-        </div>
+      {/* ABOUT */}
+      <section className="mt-6 rounded-2xl bg-slate-900 p-6 shadow ring-1 ring-white/10">
+        <h2 className="text-xl font-bold text-white">About</h2>
+        <p className="mt-3 whitespace-pre-line text-slate-300">{about}</p>
+        <button
+          onClick={() => copyToClipboard(about)}
+          className="mt-4 rounded-lg bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-700"
+        >
+          Copy Summary
+        </button>
       </section>
 
       {/* SPECIALIZATIONS */}
@@ -232,15 +222,9 @@ My background bridges the maintenance of critical Java EE systems with modern so
 
       {/* EXPERIENCE */}
       <section className="mt-6 rounded-2xl bg-slate-900 p-6 shadow ring-1 ring-white/10">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">
-            Current Experience — CREA-PI
-          </h2>
-          <span className="text-sm text-slate-400">
-            Teresina, PI • 2024 – Present
-          </span>
-        </div>
-
+        <h2 className="text-xl font-bold text-white">
+          Current Experience — CREA-PI
+        </h2>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {contributions.map((c) => (
             <div
@@ -248,87 +232,26 @@ My background bridges the maintenance of critical Java EE systems with modern so
               className="rounded-xl bg-slate-800/50 p-4 ring-1 ring-white/10"
             >
               <h4 className="font-semibold text-slate-100">{c.title}</h4>
-              <p className="mt-1 text-slate-300">{c.desc}</p>
+              {Array.isArray(c.desc) ? (
+                <ul className="mt-1 list-disc pl-5 text-slate-300">
+                  {c.desc.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-1 text-slate-300">{c.desc}</p>
+              )}
             </div>
           ))}
         </div>
       </section>
 
-      {/* STACK */}
-      <section className="mt-6 rounded-2xl bg-slate-900 p-6 shadow ring-1 ring-white/10">
-        <h2 className="text-xl font-bold text-white">Tech Stack</h2>
-        <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              k: "Backend",
-              v: [
-                "Java EE (JPA, JSF, EJB)",
-                "Python (Flask, Streamlit, Django)",
-                "Node.js",
-              ],
-            },
-            {
-              k: "Data & AI",
-              v: [
-                "PostgreSQL",
-                "Pandas",
-                "TensorFlow",
-                "Scikit-Learn",
-                "PyTorch",
-                "NumPy",
-              ],
-            },
-            {
-              k: "DevOps",
-              v: [
-                "Docker",
-                "Kubernetes",
-                "CI/CD (Gitea, Jenkins, GitHub Actions)",
-                "Terraform",
-                "Ansible",
-              ],
-            },
-            {
-              k: "Frontend",
-              v: [
-                "Streamlit",
-                "React",
-                "Angular",
-                "PrimeFaces",
-                "TypeScript",
-                "Bootstrap",
-              ],
-            },
-            {
-              k: "Security & Blockchain",
-              v: [
-                "OWASP Top 10",
-                "Pentest",
-                "API Hardening",
-                "Hyperledger",
-                "Ethereum (Solidity)",
-              ],
-            },
-          ].map((grp) => (
-            <div
-              key={grp.k}
-              className="rounded-xl bg-slate-800/50 p-4 ring-1 ring-white/10"
-            >
-              <h4 className="font-semibold text-slate-100">{grp.k}</h4>
-              <ul className="mt-2 list-disc pl-5 text-slate-300">
-                {grp.v.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <footer className="mt-8 pb-4 text-center text-xs text-slate-500">
-        Final layout inspired by production dashboards (dark cards, responsive
-        grid, actionable CTAs).
+      <footer className="mt-8 text-center text-xs text-slate-500">
+        Modern CV layout inspired by production dashboards and real-world systems.
       </footer>
     </div>
   );
-}
+};
+
+export default CodeCV;
+

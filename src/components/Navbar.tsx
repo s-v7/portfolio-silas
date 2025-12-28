@@ -1,16 +1,16 @@
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const location = useLocation();
 
-  const isActive = (path) => {
+  const isActive = (path: string): boolean => {
     if (
       path === "/" &&
       (location.pathname === "/" || location.pathname === "")
     ) {
       return true;
     }
+
     return location.pathname.startsWith(path);
   };
 
@@ -38,7 +38,22 @@ const Navbar = () => {
             Profile / CV
           </Link>
         </li>
-
+	<li>
+          <Link 
+	    to="/education"
+	    className={`navbar-link ${isActive("/education") ? "actice": ""}`}
+          >
+      	    Education
+          </Link>
+	</li>
+	<li>
+      	  <Link 
+	    to="/experience"
+	    className={`navbar-link ${isActive("experience") ? "active" : ""}`}
+	  >
+	    Experience
+	  </Link>
+	</li>
         <li>
           <Link
             to="/projects"
@@ -73,3 +88,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
