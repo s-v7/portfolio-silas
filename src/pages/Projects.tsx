@@ -1,26 +1,22 @@
 import {
-  useEffect,
   useMemo,
   useState,
   useDeferredValue,
-  ChangeEvent,
 } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, cubicBezier } from "framer-motion";
 
 
 interface Project {
-  nome: string;
-  descricao: string;
-  tecnologias?: string[];
-  stacks?: string[];
-  link: string;
+  id: string;
+  name: string;
+  description: string;
+  stacks: string[];
+  technologies: string[];
+  category: "Enterprise" | "Gov" | "AI" | "Research" | "Legacy";
+  visibility: "public" | "private";
+  repoUrl?: string;
+  highlights: string[];
 }
-
-interface Filter {
-  key: string;
-  label: string;
-}
-
 
 const IconGithub: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
@@ -28,61 +24,83 @@ const IconGithub: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-const IconOpen: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
-    <path strokeWidth="2" d="M14 3h7v7M10 14 21 3M21 14v7h-7" />
-    <rect x="3" y="10" width="8" height="11" rx="2" strokeWidth="2" />
-  </svg>
-);
-
-
 const DATA: Project[] = [
   {
-    nome: "Audit System",
-    descricao: "Application for auditing using Flask and Angular.",
-    tecnologias: ["Python", "Angular", "SQLite"],
-    stacks: ["python", "data"],
-    link: "https://github.com/s-v7/sistema-auditoria",
+    id: "creapi-ai",
+    name: "CREAPI – Intelligent Analytics Platform",
+    description: "Intelligent analytics platform for a public-sector organization, integrating predictive models, OCR + NLP pipelines and statistical monitoring.",
+    category: "AI",
+    visibility: "private",
+    stacks: ["python", "ai", "data"],
+    technologies: ["FastAPI", "PostgreSQL", "OCR", "NLP", "DVC"],
+    highlights: []
   },
   {
-    nome: "Blockchain CREA-PI",
-    descricao: "Blockchain network for CREA-PI data integration.",
-    tecnologias: ["Blockchain", "Node.js"],
-    stacks: ["blockchain", "node"],
-    link: "https://github.com/s-v7/blockchain-crea-pi",
+    id: "ru-confea",
+    name: "RU ↔ CONFEA Integration Platform",
+    description: "Official integration platform automating SRP flows between CONFEA and CREAs using APIs and webhooks.",
+    category: "Gov",
+    visibility: "private",
+    stacks: ["java", "enterprise"],
+    technologies: ["Jakarta EE", "Webhooks", "OpenAPI", "PostgreSQL"],
+    highlights: []
   },
   {
-    nome: "RegistrationTrackingWorks",
-    descricao:
-      "Robust and modular system for managing information related to civil construction works.",
-    tecnologias: ["Python", "Angular", "PostgreSQL", "SQLite"],
-    stacks: ["python", "data"],
-    link: "https://github.com/s-v7/CadastroRastreamentoObras",
-  },
-  {
-    nome: "Sistema CREA-PI (Legacy → Modern)",
-    descricao:
-      "Java EE / JSF monolith modernization: PrimeFaces 3 → 13, layout refactor, dynamic config panels.",
-    tecnologias: ["Java", "JSF", "PrimeFaces", "EJB", "Maven"],
+    id: "crea-legacy",
+    name: "Sistema CREA-PI (Legacy → Modern)",
+    description: "Modernization of a Java EE / JSF monolith: PrimeFaces 3 → 13, layout refactor and dynamic configuration panels.",
+    category: "Legacy",
+    visibility: "private",
     stacks: ["java", "legacy"],
-    link: "https://github.com/s-v7",
+    technologies: ["Java", "JSF", "PrimeFaces", "Maven"],
+    highlights: []
+  },
+  {
+    id: "audit-system",
+    name: "Audit System",
+    description: "Full-stack auditing system built with Flask and Angular, focusing on traceability and modular architecture.",
+    category: "Enterprise",
+    visibility: "public",
+    stacks: ["python", "data"],
+    technologies: ["Python", "Flask", "Angular", "SQLite"],
+    repoUrl: "https://github.com/s-v7/sistema-auditoria",
+    highlights: []
+  },
+  {
+    id: "blockchain-crea",
+    name: "Blockchain CREA-PI",
+    description: "Blockchain-based network for secure CREA-PI data integration and traceability.",
+    category: "Research",
+    visibility: "public",
+    stacks: ["blockchain"],
+    technologies: ["Blockchain", "Node.js"],
+    repoUrl: "https://github.com/s-v7/blockchain-crea-pi",
+    highlights: []
+  },
+  {
+    id: "registration-works",
+    name: "Registration Tracking Works",
+    description: "Robust system for managing civil construction works data with modular backend and relational databases.",
+    category: "Enterprise",
+    visibility: "public",
+    stacks: ["python", "data"],
+    technologies: ["Python", "Angular", "PostgreSQL", "SQLite"],
+    repoUrl: "https://github.com/s-v7/CadastroRastreamentoObras",
+    highlights: []
   },
 ];
 
-const FILTERS: Filter[] = [
+
+const FILTERS = [
   { key: "all", label: "All" },
-  { key: "python", label: "Python" },
-  { key: "java", label: "Java" },
-  { key: "blockchain", label: "Blockchain" },
-  { key: "data", label: "Data/DB" },
-  { key: "legacy", label: "Legacy Modernization" },
+  { key: "Gov", label: "Government" },
+  { key: "Enterprise", label: "Enterprise" },
+  { key: "AI", label: "AI & Data" },
+  { key: "Legacy", label: "Legacy Modernization" },
+  { key: "Research", label: "Research" },
 ];
 
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
 
 const card = {
   hidden: { opacity: 0, y: 18, scale: 0.98 },
@@ -90,166 +108,101 @@ const card = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.35, ease: "easeOut" },
+    transition: { duration: 0.35, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) },
   },
-};
-
-
-const escapeRegExp = (value: string): string =>
-  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-const highlight = (text: string, term: string): React.ReactNode => {
-  if (!term) return text;
-
-  const re = new RegExp(`(${escapeRegExp(term)})`, "ig");
-  return String(text)
-    .split(re)
-    .map((part, i) =>
-      re.test(part) ? (
-        <mark
-          key={i}
-          className="rounded px-1 bg-indigo-500/30 text-white"
-        >
-          {part}
-        </mark>
-      ) : (
-        <span key={i}>{part}</span>
-      )
-    );
 };
 
 
 const Projects: React.FC = () => {
   const prefersReduce = useReducedMotion();
-  const [query, setQuery] = useState<string>("");
-  const [active, setActive] = useState<string>("all");
-
-  /* URL sync */
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const q = params.get("q") ?? "";
-    const f = params.get("f") ?? "all";
-    setQuery(q);
-    setActive(FILTERS.some((x) => x.key === f) ? f : "all");
-  }, []);
-
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (query) params.set("q", query);
-    if (active !== "all") params.set("f", active);
-    const qs = params.toString();
-    window.history.replaceState({}, "", qs ? `?${qs}` : location.pathname);
-  }, [query, active]);
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState("all");
 
   const dq = useDeferredValue(query);
   const q = dq.trim().toLowerCase();
 
-  const filteredByQuery = useMemo(() => {
-    if (!q) return DATA;
-    return DATA.filter((p) =>
-      `${p.nome} ${p.descricao} ${(p.tecnologias || []).join(" ")} ${(p.stacks ||
-        []).join(" ")}`.toLowerCase().includes(q)
-    );
-  }, [q]);
+  const filtered = useMemo(() => {
+    let base = DATA;
 
-  const projects = useMemo(() => {
-    if (active === "all") return filteredByQuery;
-    return filteredByQuery.filter((p) =>
-      (p.stacks || []).includes(active)
-    );
-  }, [filteredByQuery, active]);
+    if (active !== "all") {
+      base = base.filter(p => p.category === active);
+    }
 
-  const counts = useMemo(() => {
-    const base: Record<string, number> = { all: filteredByQuery.length };
-    FILTERS.filter((f) => f.key !== "all").forEach((f) => {
-      base[f.key] = filteredByQuery.filter((p) =>
-        (p.stacks || []).includes(f.key)
-      ).length;
-    });
-    return base;
-  }, [filteredByQuery]);
+    if (!q) return base;
+
+    return base.filter(p =>
+      `${p.name} ${p.description} ${p.technologies.join(" ")}`.toLowerCase().includes(q)
+    );
+  }, [q, active]);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 text-slate-200">
       {/* Header */}
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-2xl md:text-3xl font-extrabold">Projects</h2>
+          <h2 className="text-3xl font-extrabold">Projects</h2>
           <p className="text-sm text-slate-400">
-            Real-time search and stack-based filtering.
+            Selected professional and research projects.
           </p>
         </div>
 
         <input
           value={query}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setQuery(e.target.value)
-          }
-          placeholder="Search by name, tech, description…"
+          onChange={e => setQuery(e.target.value)}
+          placeholder="Search projects…"
           className="w-full sm:w-80 rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500/40"
         />
       </div>
 
-      {/* Filters */}
-      <div className="mb-3 flex flex-wrap gap-2" role="toolbar">
-        {FILTERS.map((f) => (
-          <button
-            key={f.key}
-            onClick={() => setActive(f.key)}
-            aria-pressed={active === f.key}
-            className={`rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition ${
-              active === f.key
-                ? "bg-indigo-500 text-white ring-transparent"
-                : "bg-slate-900/60 ring-white/10 hover:bg-slate-800"
-            }`}
-          >
-            {f.label} <span className="opacity-70">({counts[f.key] ?? 0})</span>
-          </button>
-        ))}
-      </div>
-
       {/* Grid */}
       <motion.div
-        variants={container}
         initial="hidden"
         animate="show"
-        className="grid gap-6 sm:grid-cols-2"
+        className="grid gap-6"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))" }}
       >
-        {projects.map((p) => (
+
+        {filtered.map(p => (
           <motion.article
-            key={p.nome}
+            key={p.id}
             variants={prefersReduce ? undefined : card}
             whileHover={prefersReduce ? undefined : { y: -4 }}
-            className="proj-card rounded-2xl p-5"
+            className="ds-card ds-card-pad ds-card-proj"
           >
-            <header className="mb-2 flex justify-between gap-3">
-              <h3 className="text-lg font-semibold">
-                {highlight(p.nome, q)}
-              </h3>
-              <div className="flex gap-2">
-                <a href={p.link} target="_blank" rel="noopener noreferrer">
-                  <IconGithub className="h-4 w-4" />
-                </a>
-                <a href={p.link} target="_blank" rel="noopener noreferrer">
-                  <IconOpen className="h-4 w-4" />
-                </a>
-              </div>
+
+            <header className="mb-2 flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold">{p.name}</h3>
+              {p.visibility === "private" && (
+                <span className="ds-chip text-xs">Private</span>
+              )}
             </header>
 
             <p className="mb-3 text-sm text-slate-300">
-              {highlight(p.descricao, q)}
+              {p.description}
             </p>
 
-            <div className="flex flex-wrap gap-2">
-              {(p.tecnologias || []).map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setQuery(t)}
-                  className="rounded-full border border-white/10 bg-slate-900/60 px-2 py-1 text-[11px]"
-                >
-                  {highlight(t, q)}
-                </button>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {p.technologies.map(t => (
+                <span key={t} className="ds-chip text-xs">
+                  {t}
+                </span>
               ))}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-400">
+                {p.category}
+              </span>
+
+              {p.repoUrl ? (
+                <a href={p.repoUrl} target="_blank" rel="noopener noreferrer">
+                  <IconGithub className="h-4 w-4" />
+                </a>
+              ) : (
+                <span className="text-xs text-slate-500">
+                  Private repository
+                </span>
+              )}
             </div>
           </motion.article>
         ))}
@@ -257,6 +210,7 @@ const Projects: React.FC = () => {
     </section>
   );
 };
+
 
 export default Projects;
 

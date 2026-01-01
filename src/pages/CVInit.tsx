@@ -1,13 +1,19 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+} from "react";
 import UserImagePro from "../components/UserImagePro";
 import profilePic from "../logo.svg";
 
-const CVInit = () => {
-  const mainSectionRef = useRef(null);
-  const [currentText, setCurrentText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+const CVInit: React.FC = () => {
+  const mainSectionRef = useRef<HTMLDivElement | null>(null);
+
+  const [currentText, setCurrentText] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [charIndex, setCharIndex] = useState<number>(0);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const textToType = useMemo(
     () => [
@@ -36,7 +42,6 @@ const CVInit = () => {
   );
 
   useEffect(() => {
-    // Aguarda a renderização antes de rolar
     setTimeout(() => {
       if (mainSectionRef.current) {
         mainSectionRef.current.scrollIntoView({

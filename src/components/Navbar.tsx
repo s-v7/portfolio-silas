@@ -32,8 +32,8 @@ const Navbar: React.FC = () => {
 
         <li>
           <Link
-            to="/cv"
-            className={`navbar-link ${isActive("/cv") ? "active" : ""}`}
+            to="/cvinit"
+            className={`navbar-link ${isActive("/cvinit") ? "active" : ""}`}
           >
             Profile / CV
           </Link>
@@ -45,14 +45,6 @@ const Navbar: React.FC = () => {
           >
       	    Education
           </Link>
-	</li>
-	<li>
-      	  <Link 
-	    to="/experience"
-	    className={`navbar-link ${isActive("experience") ? "active" : ""}`}
-	  >
-	    Experience
-	  </Link>
 	</li>
         <li>
           <Link

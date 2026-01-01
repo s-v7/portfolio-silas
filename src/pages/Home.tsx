@@ -14,7 +14,7 @@ const Home: React.FC = () => {
           <img
             className="cv-photo"
             src={photo}
-            alt="Profile picture of Silas Vasconcelos Cruz"
+            alt="Silas Vasconcelos Cruz"
             width={110}
             height={110}
             loading="lazy"

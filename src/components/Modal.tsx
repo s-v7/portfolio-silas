@@ -1,34 +1,39 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-interface ModalProps {
+export interface ModalProps {
+  open: boolean;
   title: string;
-  content: React.ReactNode;
   onClose: () => void;
+  children?: ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ title, content, onClose }) => {
+const Modal: React.FC<ModalProps> = ({
+  open,
+  title,
+  onClose,
+  children,
+}) => {
+  if (!open) return null;
+
   return (
-    <div
-      className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="bg-white p-6 rounded shadow-lg max-w-md w-full">
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
+    <div className="ds-overlay">
+      <div className="ds-modal">
+        <header className="mb-4 flex items-center justify-between">
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <button
+            onClick={onClose}
+            className="text-sm text-[var(--muted)] hover:text-[var(--text)]"
+          >
+            ✕
+          </button>
+        </header>
 
-        <div>{content}</div>
-
-        <button
-          onClick={onClose}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          aria-label="Close modal"
-        >
-          Fechar
-        </button>
+        <div>{children}</div>
       </div>
     </div>
   );
 };
+
 
 export default Modal;
 
