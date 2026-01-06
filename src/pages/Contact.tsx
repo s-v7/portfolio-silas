@@ -1,6 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 
-
 interface ContactFormData {
   nome: string;
   email: string;
@@ -8,6 +7,7 @@ interface ContactFormData {
   mensagem: string;
 }
 
+const WHATSAPP_NUMBER = "5547996919951";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -26,9 +26,21 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-
-    // Placeholder for real integration (API / email service)
     console.log("Contact form submitted:", formData);
+  };
+
+  const openWhatsApp = () => {
+    const text = `
+Olá! Gostaria de entrar em contato para saber mais informações.
+
+${formData.mensagem}
+    `.trim();
+
+    const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(
+      text
+    )}`;
+
+    window.open(url, "_blank");
   };
 
   return (
@@ -40,74 +52,54 @@ const Contact: React.FC = () => {
       >
         <h2 className="text-3xl font-bold mb-6 text-center">Contact</h2>
 
-        <div className="mb-4">
-          <label htmlFor="nome" className="sr-only">
-            Your name
-          </label>
-          <input
-            id="nome"
-            type="text"
-            name="nome"
-            placeholder="Your name"
-            value={formData.nome}
-            onChange={handleChange}
-            required
-            className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <input
+          name="nome"
+          placeholder="Your name"
+          value={formData.nome}
+          onChange={handleChange}
+          className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
+        />
 
-        <div className="mb-4">
-          <label htmlFor="email" className="sr-only">
-            Your email
-          </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Your email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
+        />
 
-        <div className="mb-4">
-          <label htmlFor="assunto" className="sr-only">
-            Subject
-          </label>
-          <input
-            id="assunto"
-            type="text"
-            name="assunto"
-            placeholder="Subject"
-            value={formData.assunto}
-            onChange={handleChange}
-            className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <input
+          name="assunto"
+          placeholder="Subject"
+          value={formData.assunto}
+          onChange={handleChange}
+          className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
+        />
 
-        <div className="mb-6">
-          <label htmlFor="mensagem" className="sr-only">
-            Message
-          </label>
-          <textarea
-            id="mensagem"
-            name="mensagem"
-            placeholder="Your message"
-            value={formData.mensagem}
-            onChange={handleChange}
-            rows={4}
-            required
-            className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <textarea
+          name="mensagem"
+          placeholder="Your message"
+          rows={4}
+          value={formData.mensagem}
+          onChange={handleChange}
+          className="w-full p-2 mb-6 rounded bg-gray-700 text-white"
+        />
 
         <button
           type="submit"
-          className="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition"
+          className="w-full py-2 mb-3 bg-blue-500 rounded hover:bg-blue-600 transition"
         >
           Send message
+        </button>
+
+        {/* WhatsApp direto */}
+        <button
+          type="button"
+          onClick={openWhatsApp}
+          className=" whatsapp-btn w-full py-2 bg-green-500 text-black font-semibold rounded hover:bg-green-600 transition"
+        >
+          💬 Contact via WhatsApp
         </button>
       </form>
     </div>
@@ -115,4 +107,3 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
-

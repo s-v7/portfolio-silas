@@ -38,14 +38,14 @@ const Navbar: React.FC = () => {
             Profile / CV
           </Link>
         </li>
-	<li>
-          <Link 
-	    to="/education"
-	    className={`navbar-link ${isActive("/education") ? "actice": ""}`}
+        <li>
+          <Link
+            to="/education"
+            className={`navbar-link ${isActive("/education") ? "actice" : ""}`}
           >
-      	    Education
+            Education
           </Link>
-	</li>
+        </li>
         <li>
           <Link
             to="/projects"
@@ -63,21 +63,9 @@ const Navbar: React.FC = () => {
             Contact
           </Link>
         </li>
-
-        <li className="navbar-cta">
-          <a
-            className="cv-button"
-            href="/CV_Silas.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Download CV
-          </a>
-        </li>
       </ul>
     </nav>
   );
 };
 
 export default Navbar;
-
