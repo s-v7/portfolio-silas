@@ -1,41 +1,47 @@
-# Portfólio de Silas Vasconcelos
+# Portfolio of Silas Vasconcelos Cruz
 
-Bem-vindo ao meu portfólio! Este projeto foi criado para apresentar minhas habilidades e projetos na área de desenvolvimento.
+Welcome to my portfolio! This project was created to showcase my skills and projects in the field of development.
 
+## About the Project
+This portfolio has been developed using **React.js** and demonstrates my experience with technologies such as **Java**, **Python**, **APIs**, **Webhooks**, **Security**, and **DevOps**. 
 
-## Sobre o Projeto
-Este portfólio foi desenvolvido usando **ReactJS** para demonstrar minha experiência com tecnologias como **Java, Python, Node.js, Angular, Flask, PostgreSQL e Blockchain**.
-
-Acesse o portfólio online: **[https://s-v7.github.io/portfolio-silas](https://s-v7.github.io/portfolio-silas)**
-
----
-
-## Tecnologias Utilizadas
--  **React.js** - Interface dinâmica e reativa
--  **Tailwind CSS** - Estilização moderna e responsiva
--  **GitHub Pages** - Deploy contínuo e hospedagem gratuita
--  **Firebase (opcional)** - Para autenticação ou armazenamento
+Access the online portfolio: **[https://s-v7.github.io/portfolio-silas](https://s-v7.github.io/portfolio-silas)**
 
 ---
 
-## Como Rodar o Projeto Localmente
-1. Clone este repositório:
+## Technologies Used
+- **Java** - Backend development and service-oriented architectures
+- **Python** - Rapid development and automation scripts
+- **APIs** - Building and integrating RESTful services
+- **Webhooks** - Event-driven integrations and automated workflows
+- **Security** - Implementing best practices for application security
+- **DevOps** - Streamlining development and operational processes
+- **React.js** - Dynamic and reactive user interface
+- **TypeScript** - Enhancing JavaScript with static typing
+- **Docker** - Containerization for consistent environments
+- **Nginx** - Web server and reverse proxy functionality
+- **Vite** - Fast development environment
+
+---
+
+## How to Run the Project Locally
+1. Clone this repository:
    ```bash
    git clone https://github.com/s-v7/portfolio-silas.git
    cd portfolio-silas
    ```
-2. Instale as dependências:
+2. Install the dependencies:
    ```bash
-    npm install
+   npm install
    ```
-3. Inicie o servidor de desenvolvimento:
+3. Start the development server:
    ```bash
    npm start
    ```
-4. O projeto será aberto em http://localhost:3000
+4. The project will open at http://localhost:3000
 
-### Licença
-Este projeto está sob a licença MIT. Sinta-se à vontade para contribuir e compartilhar!
+### License
+This project is licensed under the MIT License. Feel free to contribute and share!
 
 # React + Vite
 
@@ -46,6 +52,6 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Expanding the ESLint Configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
