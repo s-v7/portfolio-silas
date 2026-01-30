@@ -1,0 +1,3 @@
+Silas Vasconcelos Cruz — Senior Backend Developer specializing in Java and Python.  
+Designs and implements RESTful APIs and Webhooks, hardens services for security, and automates CI/CD and deployments with Docker and Nginx.  
+Maintains TypeScript/React frontends when integration requires full-stack delivery.
