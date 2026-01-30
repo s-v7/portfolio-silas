@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
         <li>
           <Link
             to="/education"
-            className={`navbar-link ${isActive("/education") ? "actice" : ""}`}
+            className={`navbar-link ${isActive("/education") ? "actice": ""}`}
           >
             Education
           </Link>

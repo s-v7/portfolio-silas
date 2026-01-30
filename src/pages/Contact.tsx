@@ -1,4 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 
 interface ContactFormData {
   nome: string;
@@ -17,92 +18,110 @@ const Contact: React.FC = () => {
     mensagem: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
+  ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    console.log("Contact form submitted:", formData);
-  };
+const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setStatus("idle");
 
-  const openWhatsApp = () => {
-    const text = `
-Olá! Gostaria de entrar em contato para saber mais informações.
+  try {
+    await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: formData.nome,
+        from_email: formData.email,
+        subject: formData.assunto,
+        message: formData.mensagem,
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    );
 
-${formData.mensagem}
-    `.trim();
+    setStatus("success");
+    setFormData({ nome: "", email: "", assunto: "", mensagem: "" });
+  } catch (err) {
+    console.error("EmailJS error:", err);
+    setStatus("error");
+  } finally {
+    setLoading(false);
+  }
+};
 
-    const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(
-      text
-    )}`;
 
-    window.open(url, "_blank");
-  };
+return (
+    <section className="ds-section">
+      <div className="ds-container max-w-xl">
+        <form onSubmit={handleSubmit} className="ds-card ds-card-pad space-y-4">
+          <h2 className="ds-title text-center">Contact</h2>
 
-  return (
-    <div className="min-h-screen bg-gray-900 text-white p-6 flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg"
-        noValidate
-      >
-        <h2 className="text-3xl font-bold mb-6 text-center">Contact</h2>
+          <input
+            name="nome"
+            placeholder="Your name"
+            value={formData.nome}
+            onChange={handleChange}
+            required
+            className="ds-input"
+          />
 
-        <input
-          name="nome"
-          placeholder="Your name"
-          value={formData.nome}
-          onChange={handleChange}
-          className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
-        />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="ds-input"
+          />
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Your email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
-        />
+          <input
+            name="assunto"
+            placeholder="Subject"
+            value={formData.assunto}
+            onChange={handleChange}
+            className="ds-input"
+          />
 
-        <input
-          name="assunto"
-          placeholder="Subject"
-          value={formData.assunto}
-          onChange={handleChange}
-          className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
-        />
+          <textarea
+            name="mensagem"
+            placeholder="Your message"
+            rows={4}
+            value={formData.mensagem}
+            onChange={handleChange}
+            required
+            className="ds-input"
+          />
 
-        <textarea
-          name="mensagem"
-          placeholder="Your message"
-          rows={4}
-          value={formData.mensagem}
-          onChange={handleChange}
-          className="w-full p-2 mb-6 rounded bg-gray-700 text-white"
-        />
+          <button
+            type="submit"
+            className="ds-btn ds-btn-primary w-full"
+            disabled={loading}
+          >
+            {loading ? "Sending..." : "Send message"}
+          </button>
 
-        <button
-          type="submit"
-          className="w-full py-2 mb-3 bg-blue-500 rounded hover:bg-blue-600 transition"
-        >
-          Send message
-        </button>
+          {status === "success" && (
+            <p className="text-green-400 text-sm text-center">
+              Message sent successfully 
+            </p>
+          )}
 
-        {/* WhatsApp direto */}
-        <button
-          type="button"
-          onClick={openWhatsApp}
-          className=" whatsapp-btn w-full py-2 bg-green-500 text-black font-semibold rounded hover:bg-green-600 transition"
-        >
-          💬 Contact via WhatsApp
-        </button>
-      </form>
-    </div>
+          {status === "error" && (
+            <p className="text-red-400 text-sm text-center">
+              Failed to send message. Try again later.
+            </p>
+          )}
+        </form>
+      </div>
+    </section>
   );
 };
 

@@ -38,6 +38,30 @@ const EVENTS: Event[] = [
   { title: "Minicourse: Introduction to quantum information using Qiskit", hours: "4h" },
 ];
 
+
+/*
+Cyber Attacks
+
+Cybersecurity Processes
+
+Cybersecurity Risk Management
+
+Cyber Threat Analysis
+
+Cyber Threat Intelligence
+
+Incident Response
+
+Information Security
+
+PWID-B0454800
+
+Security Strategies
+
+Social Engineering
+
+Threat Analysis
+*/
 const COURSES: Course[] = [
   {
     title: "Cybersecurity Fundamentals",
@@ -47,10 +71,10 @@ const COURSES: Course[] = [
     mode: "online",
     level: "basic",
     hours: "N/A",
-    skills: ["Cybersecurity", "Cryptography", "Compliance"],
+    skills: ["Cybersecurity", "Cryptography", "Compliance", "Vulnerability Management", "Threat Detection"],
     description:
       "Introduction to cybersecurity concepts, risk management, cryptography fundamentals and enterprise security practices.",
-    credentialUrl: "https://www.credly.com/..."
+    credentialUrl: "https://www.credly.com/badges/d0ca5898-8890-49e0-ae9e-59efec9dd764"
   }, 
   {
     title: "Student Journey Blockchain Training",

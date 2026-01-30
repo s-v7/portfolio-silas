@@ -171,7 +171,7 @@ a {
   font-size: var(--fs-sm);
 
   transition: transform 0.12s ease, background 0.12s ease,
-    border-color 0.12s ease;
+  border-color 0.12s ease;
 }
 
 .ds-btn:hover {
@@ -271,3 +271,19 @@ a {
   outline: 2px solid #22c55e;
   outline-offset: 3px;
 }
+
+.ds-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: var(--fs-sm);
+}
+
+.ds-input:focus {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
