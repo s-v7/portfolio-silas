@@ -22,24 +22,20 @@ def main():
 
     client = LLMClient()
 
-#    prompt = load_prompt(context)
     context["repo_structure"] = context["repo_structure"][:15]
     context["recent_commits"] = context["recent_commits"][:5]
     prompt = load_prompt(context)
     backup_readme()
 
-    print("🔁 Atualizando README.md com Atlas AI...")
     new_readme = client.generate(prompt, task="long_markdown")
-    print("🧪 RAW LLM RESPONSE LENGTH:", len(new_readme))
-    print("🧪 RAW LLM RESPONSE PREVIEW:", repr(new_readme[:200]))
 
     if not new_readme or not new_readme.strip():
-        raise RuntimeError("⚠️ A LLM retornou um conteúdo vazio. README não será sobrescrito.")
+        raise RuntimeError("A LLM retornou um conteúdo vazio. README não será sobrescrito.")
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(new_readme)
 
-    print("✅ README.md atualizado com sucesso!")
+    print("README.md atualizado com sucesso!")
 
 
 if __name__ == "__main__":
