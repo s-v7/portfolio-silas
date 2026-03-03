@@ -1,0 +1,17 @@
+flowchart TB
+    INPUT[Masked ART JSON]
+    PROMPT[Versioned Prompt]
+    LLM[LLM Model]
+    JSON[Structured JSON Output]
+    FLAGS[Technical Flags]
+    REVIEW[Human Review Loop]
+    MARKOV[Markov Weight Update]
+
+    INPUT → PROMPT
+    PROMPT → LLM
+    LLM → JSON
+    JSON → FLAGS
+    FLAGS → REVIEW
+    REVIEW → MARKOV
+    MARKOV → PROMPT
+

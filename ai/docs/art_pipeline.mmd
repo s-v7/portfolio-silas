@@ -1,0 +1,25 @@
+flowchart LR
+    DB[(DB ART)]
+    PDF[(PDF ART)]
+    EXTRACT[Extract Fields]
+    MASK[Mask Sensitive Data]
+    SEM[Semantic Normalize]
+    RULES[Audit Rules]
+    XCHECK[DB × PDF Crosscheck]
+    GUARD[Guard Filters]
+    LLM[LLM Enrichment]
+    STORE[(Traceable Store)]
+    DASH[Dashboard / API]
+
+    DB → EXTRACT
+    PDF → EXTRACT
+    EXTRACT → MASK
+    MASK → SEM
+    SEM → RULES
+    SEM → XCHECK
+    RULES → GUARD
+    XCHECK → GUARD
+    GUARD → LLM
+    LLM → STORE
+    STORE → DASH
+
