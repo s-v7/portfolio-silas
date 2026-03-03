@@ -1,5 +1,6 @@
 import CodeCVUser from "../components/CodeCVUser";
 import photo from "../assets/react.svg";
+import Section from "../components/Section";
 
 const Home: React.FC = () => {
   return (
@@ -61,11 +62,7 @@ const Home: React.FC = () => {
               </li>
             </ul>
 
-            <ul
-              className="cv-chips"
-              role="list"
-              aria-label="Core technologies"
-            >
+            <ul className="cv-chips" role="list" aria-label="Core technologies">
               {[
                 "Java",
                 "Python",
@@ -92,4 +89,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-

@@ -12,7 +12,6 @@
   --accent: #4fc1ff;
 }
 
-/* cartão tipo terminal com borda gradiente/glass */
 .cvcode-card {
   background: linear-gradient(
     180deg,
@@ -38,7 +37,6 @@
   z-index: 1;
 }
 
-/* barra superior */
 .cvcode-bar {
   display: flex;
   align-items: center;
@@ -65,9 +63,10 @@
 .cvcode-lights span:nth-child(2) {
   background: #ffbd2e;
 }
-cvcode-lights span:nth-child(3) {
+.cvcode-lights span:nth-child(3) {
   background: #28c840;
 }
+
 .cvcode-tabs {
   display: flex;
   gap: 6px;
@@ -98,7 +97,6 @@ cvcode-lights span:nth-child(3) {
   filter: brightness(1.1);
 }
 
-/* corpo com numeração */
 .cvcode-body {
   font-family: "Fira Code", ui-monospace, Menlo, Consolas, monospace;
   font-size: 14px;
@@ -122,7 +120,6 @@ cvcode-lights span:nth-child(3) {
   word-break: break-word;
 }
 
-/* sintaxe rápida (opcional, se quiser marcar manualmente com spans) */
 .cmt {
   color: var(--cmt);
 }
@@ -139,9 +136,6 @@ cvcode-lights span:nth-child(3) {
   color: var(--num);
 }
 
-/* FIM: code-cv.css */
-
-/* user-image-pro.css */
 .user-image-container {
   display: flex;
   align-items: center;
@@ -156,4 +150,89 @@ cvcode-lights span:nth-child(3) {
   border: 4px solid #00e0ff;
 }
 
-/* FIM: user-image-pro.css */
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin: 40px 0;
+}
+
+.art-grid img {
+  position: relative;
+}
+
+.art-grid img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(0, 180, 255, 0.12);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.art-grid img:hover::after {
+  opacity: 1;
+}
+
+/* .ai-card {
+  background: var(--card-bg, #111);
+  border: 1px solid var(--border-color, #222);
+  border-radius: 14px;
+  padding: var(--s-5);
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+} */
+
+.ai-card:hover {
+  transform: translateY(-4px);
+  border-color: #444;
+}
+
+.ai-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+
+.ai-card p {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.ai-card ul {
+  margin-top: 10px;
+  padding-left: 18px;
+  opacity: 0.85;
+  font-size: 0.9rem;
+}
+
+.ai-card {
+  background: linear-gradient(180deg, #0f1724, #0b1220);
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(120deg, #00b4ff22, #8b5cf622);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.ai-card:hover::before {
+  opacity: 1;
+}
+
+.art-grid img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 180, 255, 0.15);
+  background: #081426;
+  padding: 12px;
+}

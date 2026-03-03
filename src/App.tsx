@@ -4,12 +4,12 @@ import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
-import CVInit from "./pages/CVInit";  
+import CVInit from "./pages/CVInit";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Education from "./pages/Education";
 import Footer from "./components/Footer";
-
+import ArtEngine from "./pages/ArtEngine";
 
 import "./styles/global.css";
 import "./styles/layout.css";
@@ -28,6 +28,7 @@ const App: React.FC = () => {
           <Route path="cvinit" element={<CVInit />} />
           <Route path="projects" element={<Projects />} />
           <Route path="education" element={<Education />} />
+          <Route path="art-engine" element={<ArtEngine />} />
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<Home />} />
         </Routes>
@@ -39,4 +40,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
