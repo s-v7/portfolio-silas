@@ -2,8 +2,8 @@ name: Dependency Update
 
 on:
   schedule:
-    - cron: '0 0 * * 1'  
-  workflow_dispatch: 
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
 
 jobs:
   update-dependencies:
@@ -17,20 +17,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          cache: npm
 
-      - name: Atualizar dependências vulneráveis
+      - name: Atualizar dependências com segurança
         run: |
           npm install -g npm-check-updates
-          ncu -u
+          ncu -u -x @eslint/js,eslint,eslint-plugin-react-hooks,eslint-plugin-react-refresh,@eslint-community/eslint-utils
           npm install
-          npm audit fix --force
+          npm audit fix || true
 
       - name: Commit e Push se houver mudanças
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add package.json package-lock.json
-          git commit -m "Atualização automática de dependências" || exit 0
+          git commit -m "chore: atualização automática de dependências" || exit 0
           git push
-
