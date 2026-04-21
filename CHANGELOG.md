@@ -9,6 +9,21 @@ All notable technical changes to this project are documented here.
 
 ---
 
+## [0.3.0] – 2026-04-21
+### Added
+- Anthropic provider support in `ai/scripts/llm_client.py` via `anthropic==0.86.0` SDK
+- Automatic fallback to OpenAI when `ANTHROPIC_API_KEY` is absent
+- `ai/scripts/test_anthropic.py` smoke test (provider, model, elapsed time, output)
+- `get_model(task, provider)` routing function in `ai/core/model_router.py`
+- Provider/model logging in `LLMClient.generate()` and `update_bio` agent
+- Providers section and environment variable table in `ai/README.md`
+
+### Changed
+- `ai/core/model_router.py` refactored to dual-provider `MODEL_BY_TASK` structure
+- `LLM_PROVIDER=anthropic` selects `claude-sonnet-4-5` (short/analysis) and `claude-opus-4-5` (long markdown)
+
+---
+
 ## [0.2.0] – 2025-01
 ### Changed
 - Full migration from JavaScript (JS/JSX) to TypeScript (TS/TSX)
