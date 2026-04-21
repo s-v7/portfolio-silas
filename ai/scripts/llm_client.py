@@ -1,51 +1,68 @@
 import os
+import sys
 import requests
-from typing import Optional
 
-# Map de modelo por tipo de tarefa
-MODEL_BY_TASK = {
-        "long_markdown": "gpt-4o-mini",
-        "short_text": "gpt-5-mini",
-        "analysis": "gpt-5-mini",
-}
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "core"))
+from model_router import get_model
+
+try:
+    import anthropic as _anthropic_sdk
+    _ANTHROPIC_AVAILABLE = True
+except ImportError:
+    _ANTHROPIC_AVAILABLE = False
+
 
 class LLMClient:
     def __init__(self):
         self.provider = os.getenv("LLM_PROVIDER", "openai")
         self.api_key = os.getenv("LLM_API_KEY")
-
-        self.default_model = os.getenv("LLM_DEFAULT_MODEL", "gpt-4o-mini")
+        self.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
         self.max_tokens = int(os.getenv("LLM_MAX_TOKENS", "2000"))
 
-        if not self.api_key:
-            raise ValueError("LLM_API_KEY não definida no ambiente.")
+        if self.provider == "anthropic" and not self.anthropic_api_key:
+            print("[LLMClient] ANTHROPIC_API_KEY not set — falling back to OpenAI")
+            self.provider = "openai"
 
-        if self.provider != "openai":
-            raise NotImplementedError(f"Provider {self.provider} ainda não suportado.")
+        if self.provider == "openai":
+            if not self.api_key:
+                raise ValueError("LLM_API_KEY not set in environment.")
+
+        if self.provider == "anthropic":
+            if not _ANTHROPIC_AVAILABLE:
+                raise ImportError("anthropic package not installed (pip install anthropic==0.86.0).")
+            self._client = _anthropic_sdk.Anthropic(api_key=self.anthropic_api_key)
 
     def generate(self, prompt: str, task: str = "short_text") -> str:
-        model = MODEL_BY_TASK.get(task, self.default_model)
+        model = get_model(task, self.provider)
+        print(f"[LLMClient] provider={self.provider} model={model}")
 
+        if self.provider == "anthropic":
+            return self._generate_anthropic(prompt, model)
+        return self._generate_openai(prompt, model)
+
+    def _generate_anthropic(self, prompt: str, model: str) -> str:
+        message = self._client.messages.create(
+            model=model,
+            max_tokens=self.max_tokens,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return message.content[0].text.strip()
+
+    def _generate_openai(self, prompt: str, model: str) -> str:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
-
         payload = {
             "model": model,
-            "messages": [
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            "max_completion_tokens": self.max_tokens
+            "messages": [{"role": "user", "content": prompt}],
+            "max_completion_tokens": self.max_tokens,
         }
         response = requests.post(
             "https://api.openai.com/v1/chat/completions",
             headers=headers,
             json=payload,
-            timeout=60
+            timeout=60,
         )
         if response.status_code != 200:
             try:
@@ -53,8 +70,6 @@ class LLMClient:
                 message = err.get("error", {}).get("message", response.text)
             except Exception:
                 message = response.text
-            raise RuntimeError(
-                f"Erro ao chamar LLM: {response.status_code} - {message}"
-            )
+            raise RuntimeError(f"LLM error: {response.status_code} - {message}")
         data = response.json()
         return data["choices"][0]["message"].get("content", "").strip()
