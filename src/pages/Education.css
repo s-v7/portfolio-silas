@@ -1,0 +1,131 @@
+.edu-page {
+  padding-bottom: 4rem;
+}
+.edu-block {
+  margin-bottom: 3rem;
+}
+.block-label {
+  margin-bottom: 1rem;
+}
+.edu-card {
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  padding: 1.5rem;
+  border-left: 2px solid var(--g);
+}
+.edu-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.edu-card__degree {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+[data-theme="recruiter"] .edu-card__degree {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.1rem;
+}
+.edu-card__inst {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--g);
+}
+[data-theme="recruiter"] .edu-card__inst {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+.edu-card__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.edu-card__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line2);
+}
+.certs-list {
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+.cert-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--line2);
+  transition: background 0.15s;
+}
+.cert-row:last-child {
+  border-bottom: none;
+}
+.cert-row:hover {
+  background: var(--bg3);
+}
+.cert-name {
+  font-size: 12px;
+  color: var(--text);
+}
+[data-theme="recruiter"] .cert-name {
+  font-family: "Inter", sans-serif;
+}
+.lang-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.lang-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 40px;
+  align-items: center;
+  gap: 1.5rem;
+}
+.lang-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lang-name {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.lang-bar {
+  height: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+.lang-bar__fill {
+  height: 100%;
+  background: var(--g);
+  transition: width 1s ease;
+}
+.lang-pct {
+  text-align: right;
+}
+@media (max-width: 600px) {
+  .edu-card__header {
+    flex-direction: column;
+  }
+  .edu-card__meta {
+    align-items: flex-start;
+  }
+  .cert-row {
+    grid-template-columns: 1fr auto;
+  }
+  .cert-year {
+    display: none;
+  }
+  .lang-row {
+    grid-template-columns: 150px 1fr 36px;
+    gap: 0.75rem;
+  }
+}

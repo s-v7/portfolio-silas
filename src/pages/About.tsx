@@ -74,10 +74,10 @@ const About: React.FC = () => {
             </p>
 
             <p className="mb-6 leading-relaxed text-gray-300">
-              I actively participated in migrations from JDK 6 → 7 → 8, upgrades
-              of GlassFish and PrimeFaces, and the implementation of CI/CD,
-              automation, SSL/TLS renewal, database backup strategies, and secure
-              deployment pipelines.
+              I actively participated in migrations from JDK 6 → 7 → 8 → 11 →
+              17.[0], upgrades of GlassFish and PrimeFaces, and the
+              implementation of CI/CD, automation, SSL/TLS renewal, database
+              backup strategies, and secure deployment pipelines.
             </p>
 
             <h2 className="text-2xl mt-6 mb-4">Technologies Used</h2>
@@ -150,4 +150,3 @@ const About: React.FC = () => {
 };
 
 export default About;
-

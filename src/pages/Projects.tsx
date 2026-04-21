@@ -1,216 +1,218 @@
-import {
-  useMemo,
-  useState,
-  useDeferredValue,
-} from "react";
-import { motion, useReducedMotion, cubicBezier } from "framer-motion";
+import { useState } from "react";
+import { useTheme } from "../context/ThemeContext";
+import "./Projects.css";
 
-
-interface Project {
-  id: string;
-  name: string;
-  description: string;
-  stacks: string[];
-  technologies: string[];
-  category: "Enterprise" | "Gov" | "AI" | "Research" | "Legacy";
-  visibility: "public" | "private";
-  repoUrl?: string;
-  highlights: string[];
-}
-
-const IconGithub: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-    <path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.35-1.76-1.35-1.76-1.1-.75.08-.74.08-.74 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.84 1.32 3.53 1.01.11-.8.42-1.32.76-1.62-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.25-3.22-.13-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.3 1.23a11.48 11.48 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.7.25 2.96.13 3.27.78.84 1.25 1.91 1.25 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.09.81 2.2v3.26c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z" />
-  </svg>
-);
-
-const DATA: Project[] = [
+const PROJECTS = [
+  {
+    id: "sigec",
+    tag: "Fiscal Intelligence",
+    title: "SIGEC v2 — Fiscal Intelligence Engine",
+    desc: "Plataforma de rastreamento de obras com 1.1M+ ARTs em blockchain SHA-256, pipeline Sentinel-2→PostGIS para 20 açudes piauienses (NDWI), FiscalBot Telegram com alertas automáticos (cron seg 06:00 BRT), roteamento NetworkX/TSP nos 224 municípios, orchestrator OpenAI + Claude.",
+    stack: [
+      "Flask / Gunicorn",
+      "FastAPI",
+      "Angular 17",
+      "PostgreSQL 17",
+      "PostGIS",
+      "Blockchain",
+      "Sentinel-2",
+      "NetworkX",
+      "Telegram API",
+      "Claude API",
+    ],
+    category: "Gov",
+    link: "https://github.com/s-v7/CadastroRastreamentoObras",
+    status: "Production",
+    year: "2024–2025",
+    featured: true,
+  },
   {
     id: "creapi-ai",
-    name: "CREAPI – Intelligent Analytics Platform",
-    description: "Intelligent analytics platform for a public-sector organization, integrating predictive models, OCR + NLP pipelines and statistical monitoring.",
+    tag: "AI · Analytics",
+    title: "CREAPI — Intelligent Analytics Platform",
+    desc: "Plataforma de analytics preditivo para CREA-PI, integrando modelos ML, pipelines OCR + NLP e monitoramento estatístico de ARTs.",
+    stack: ["FastAPI", "PostgreSQL", "OCR", "NLP", "DVC"],
     category: "AI",
-    visibility: "private",
-    stacks: ["python", "ai", "data"],
-    technologies: ["FastAPI", "PostgreSQL", "OCR", "NLP", "DVC"],
-    highlights: []
+    link: null,
+    status: "Private",
+    year: "2024",
+    featured: false,
+  },
+  {
+    id: "fiscalbot",
+    tag: "AI · Telegram",
+    title: "FiscalBot & ART Engine",
+    desc: "Bot Telegram operacional com pipeline de alertas automáticos, processamento de 1.1M+ ARTs com ON CONFLICT DO NOTHING e motor de IA OpenAI + Claude para análise e classificação fiscal.",
+    stack: [
+      "FastAPI",
+      "Telegram Bot API",
+      "OpenAI",
+      "Claude API",
+      "PostgreSQL",
+    ],
+    category: "AI",
+    link: null,
+    status: "Production",
+    year: "2025",
+    featured: false,
   },
   {
     id: "ru-confea",
-    name: "RU ↔ CONFEA Integration Platform",
-    description: "Official integration platform automating SRP flows between CONFEA and CREAs using APIs and webhooks.",
+    tag: "Government · Integration",
+    title: "RU ↔ CONFEA Integration Platform",
+    desc: "Plataforma oficial de integração automatizando fluxos SRP entre CONFEA e CREAs usando APIs e webhooks. Comunicação bidirecional com garantias de entrega.",
+    stack: ["Jakarta EE", "Webhooks", "OpenAPI", "PostgreSQL"],
     category: "Gov",
-    visibility: "private",
-    stacks: ["java", "enterprise"],
-    technologies: ["Jakarta EE", "Webhooks", "OpenAPI", "PostgreSQL"],
-    highlights: []
+    link: null,
+    status: "Private",
+    year: "2024",
+    featured: false,
   },
   {
-    id: "crea-legacy",
-    name: "Sistema CREA-PI (Legacy → Modern)",
-    description: "Modernization of a Java EE / JSF monolith: PrimeFaces 3 → 13, layout refactor and dynamic configuration panels.",
-    category: "Legacy",
-    visibility: "private",
-    stacks: ["java", "legacy"],
-    technologies: ["Java", "JSF", "PrimeFaces", "Maven"],
-    highlights: []
-  },
-  {
-    id: "audit-system",
-    name: "Audit System",
-    description: "Full-stack auditing system built with Flask and Angular, focusing on traceability and modular architecture.",
+    id: "sistemacrea",
+    tag: "Legacy Modernization",
+    title: "SistemaCrea — Jakarta EE",
+    desc: "Modernização de ERP institucional legacy: Maven multi-module EAR, integração e-MEC (4.328 IES via Dados Abertos MEC), JSF/PrimeFaces 13 com design system vd-* e CSS variables light/dark/dim.",
+    stack: [
+      "Java EE 8",
+      "JSF / PrimeFaces",
+      "EJB",
+      "JPA",
+      "Payara 6",
+      "PostgreSQL",
+    ],
     category: "Enterprise",
-    visibility: "public",
-    stacks: ["python", "data"],
-    technologies: ["Python", "Flask", "Angular", "SQLite"],
-    repoUrl: "https://github.com/s-v7/sistema-auditoria",
-    highlights: []
+    link: null,
+    status: "Active",
+    year: "2024–Now",
+    featured: false,
   },
   {
-    id: "blockchain-crea",
-    name: "Blockchain CREA-PI",
-    description: "Blockchain-based network for secure CREA-PI data integration and traceability.",
+    id: "blockchain",
+    tag: "Research · Blockchain",
+    title: "Blockchain CREA-PI",
+    desc: "Rede blockchain para integração e rastreabilidade segura de dados do CREA-PI. Fundação do pipeline de 1.1M ARTs do SIGEC v2.",
+    stack: ["Blockchain", "Node.js", "SHA-256"],
     category: "Research",
-    visibility: "public",
-    stacks: ["blockchain"],
-    technologies: ["Blockchain", "Node.js"],
-    repoUrl: "https://github.com/s-v7/blockchain-crea-pi",
-    highlights: []
+    link: "https://github.com/s-v7/blockchain-crea-pi",
+    status: "Research",
+    year: "2023",
+    featured: false,
   },
   {
-    id: "registration-works",
-    name: "Registration Tracking Works",
-    description: "Robust system for managing civil construction works data with modular backend and relational databases.",
+    id: "audit",
+    tag: "Enterprise · Full Stack",
+    title: "Audit System",
+    desc: "Sistema full-stack de auditoria construído com Flask e Angular, com foco em rastreabilidade e arquitetura modular.",
+    stack: ["Python", "Flask", "Angular", "SQLite"],
     category: "Enterprise",
-    visibility: "public",
-    stacks: ["python", "data"],
-    technologies: ["Python", "Angular", "PostgreSQL", "SQLite"],
-    repoUrl: "https://github.com/s-v7/CadastroRastreamentoObras",
-    highlights: []
+    link: "https://github.com/s-v7/sistema-auditoria",
+    status: "Public",
+    year: "2023",
+    featured: false,
+  },
+  {
+    id: "tracking",
+    tag: "Enterprise",
+    title: "Registration Tracking Works",
+    desc: "Sistema para gestão de dados de obras de construção civil com backend modular e banco de dados relacional. Precursor do SIGEC v2.",
+    stack: ["Python", "Angular", "PostgreSQL", "SQLite"],
+    category: "Enterprise",
+    link: "https://github.com/s-v7/CadastroRastreamentoObras",
+    status: "Public",
+    year: "2022",
+    featured: false,
   },
 ];
 
-
-const FILTERS = [
-  { key: "all", label: "All" },
-  { key: "Gov", label: "Government" },
-  { key: "Enterprise", label: "Enterprise" },
-  { key: "AI", label: "AI & Data" },
-  { key: "Legacy", label: "Legacy Modernization" },
-  { key: "Research", label: "Research" },
-];
-
-
-
-const card = {
-  hidden: { opacity: 0, y: 18, scale: 0.98 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.35, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) },
-  },
+const CATS = ["All", "Gov", "AI", "Enterprise", "Research"];
+const S_COLOR: Record<string, string> = {
+  Production: "var(--g)",
+  Active: "var(--g)",
+  Public: "var(--g)",
+  MVP: "#EF9F27",
+  Development: "#EF9F27",
+  Private: "var(--text-dim)",
+  Research: "var(--text-dim)",
 };
 
-
-const Projects: React.FC = () => {
-  const prefersReduce = useReducedMotion();
-  const [query, setQuery] = useState("");
-  const [active, setActive] = useState("all");
-
-  const dq = useDeferredValue(query);
-  const q = dq.trim().toLowerCase();
-
-  const filtered = useMemo(() => {
-    let base = DATA;
-
-    if (active !== "all") {
-      base = base.filter(p => p.category === active);
-    }
-
-    if (!q) return base;
-
-    return base.filter(p =>
-      `${p.name} ${p.description} ${p.technologies.join(" ")}`.toLowerCase().includes(q)
-    );
-  }, [q, active]);
+export default function Projects() {
+  const { theme } = useTheme();
+  const isAdmin = theme === "admin";
+  const [f, setF] = useState("All");
+  const visible =
+    f === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === f);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-8 text-slate-200">
-      {/* Header */}
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="text-3xl font-extrabold">Projects</h2>
-          <p className="text-sm text-slate-400">
-            Selected professional and research projects.
-          </p>
+    <main className="projects-page">
+      <div className="container">
+        <header className="section-header" style={{ paddingTop: "3rem" }}>
+          <span className="section-num">02.</span>
+          <h1 className="section-title">{isAdmin ? "Projetos" : "Projects"}</h1>
+          <div className="section-rule" />
+        </header>
+        <div className="filter-bar" role="group">
+          {CATS.map((c) => (
+            <button
+              key={c}
+              onClick={() => setF(c)}
+              className={`filter-btn${f === c ? " filter-btn--active" : ""}`}
+              aria-pressed={f === c}
+            >
+              {c}
+            </button>
+          ))}
         </div>
-
-        <input
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          placeholder="Search projects…"
-          className="w-full sm:w-80 rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500/40"
-        />
+        <div className="projects-full-list">
+          {visible.map((p) => (
+            <article
+              key={p.id}
+              id={p.id}
+              className={`proj-full-card${p.featured ? " proj-full-card--featured" : ""}`}
+            >
+              <div className="proj-full-header">
+                <div>
+                  <p className="proj-full-tag t-label">{p.tag}</p>
+                  <h2 className="proj-full-title t-heading">{p.title}</h2>
+                </div>
+                <div className="proj-full-badges">
+                  <span
+                    className="proj-status"
+                    style={{ "--c": S_COLOR[p.status] } as any}
+                  >
+                    <span
+                      className="proj-status__dot"
+                      style={{ background: S_COLOR[p.status] }}
+                    />
+                    <span style={{ color: S_COLOR[p.status] }}>{p.status}</span>
+                  </span>
+                  <span className="t-label">{p.year}</span>
+                </div>
+              </div>
+              <p className="proj-full-desc">{p.desc}</p>
+              <div className="proj-full-footer">
+                <ul className="proj-full-stack">
+                  {p.stack.map((t) => (
+                    <li key={t} className="tag">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+                {p.link && (
+                  <a
+                    className="btn btn-ghost"
+                    href={p.link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    GitHub →
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
-
-      {/* Grid */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        className="grid gap-6"
-        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))" }}
-      >
-
-        {filtered.map(p => (
-          <motion.article
-            key={p.id}
-            variants={prefersReduce ? undefined : card}
-            whileHover={prefersReduce ? undefined : { y: -4 }}
-            className="ds-card ds-card-pad ds-card-proj"
-          >
-
-            <header className="mb-2 flex items-center justify-between gap-3">
-              <h3 className="text-lg font-semibold">{p.name}</h3>
-              {p.visibility === "private" && (
-                <span className="ds-chip text-xs">Private</span>
-              )}
-            </header>
-
-            <p className="mb-3 text-sm text-slate-300">
-              {p.description}
-            </p>
-
-            <div className="mb-4 flex flex-wrap gap-2">
-              {p.technologies.map(t => (
-                <span key={t} className="ds-chip text-xs">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-slate-400">
-                {p.category}
-              </span>
-
-              {p.repoUrl ? (
-                <a href={p.repoUrl} target="_blank" rel="noopener noreferrer">
-                  <IconGithub className="h-4 w-4" />
-                </a>
-              ) : (
-                <span className="text-xs text-slate-500">
-                  Private repository
-                </span>
-              )}
-            </div>
-          </motion.article>
-        ))}
-      </motion.div>
-    </section>
+    </main>
   );
-};
-
-
-export default Projects;
-
+}

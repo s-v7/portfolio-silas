@@ -1,0 +1,76 @@
+.exp-list {
+  margin-bottom: 3rem;
+}
+.exp-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line2);
+}
+.exp-item:last-child {
+  border-bottom: none;
+}
+.exp-date {
+  padding-top: 3px;
+  line-height: 1.5;
+}
+.exp-role {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+[data-theme="recruiter"] .exp-role {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.05rem;
+}
+.exp-org {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--g);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+[data-theme="recruiter"] .exp-org {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+.exp-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.cta-banner {
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.cta-banner__headline {
+  font-size: 1.05rem;
+  color: var(--text);
+  max-width: 380px;
+}
+[data-theme="recruiter"] .cta-banner__headline {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.2rem;
+}
+.cta-banner__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .exp-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

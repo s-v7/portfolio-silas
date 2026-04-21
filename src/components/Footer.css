@@ -1,0 +1,54 @@
+.footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0;
+}
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer__copy {
+  font-size: 11px;
+  color: var(--muted);
+}
+[data-theme="recruiter"] .footer__copy {
+  font-family: "Inter", sans-serif;
+}
+.footer__links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer__links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+[data-theme="recruiter"] .footer__links a {
+  font-family: "Inter", sans-serif;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+.footer__links a:hover {
+  color: var(--g);
+}
+.footer__sig {
+  font-family: "Syne", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--g);
+  letter-spacing: -0.5px;
+}
+[data-theme="recruiter"] .footer__sig {
+  font-family: "DM Serif Display", serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+}

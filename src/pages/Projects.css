@@ -1,0 +1,139 @@
+.projects-page {
+  padding-bottom: 4rem;
+}
+.filter-bar {
+  display: flex;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  width: fit-content;
+  margin-bottom: 2rem;
+  border-radius: var(--radius);
+}
+.filter-btn {
+  background: var(--bg);
+  border: none;
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+[data-theme="recruiter"] .filter-btn {
+  font-family: "Inter", sans-serif;
+  text-transform: none;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.filter-btn:hover {
+  background: var(--bg3);
+  color: var(--text);
+}
+.filter-btn--active {
+  background: var(--g);
+  color: var(--bg);
+  font-weight: 700;
+}
+.projects-full-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.proj-full-card {
+  background: var(--bg);
+  padding: 2rem;
+  border-left: 2px solid transparent;
+  transition: background 0.2s;
+}
+.proj-full-card:hover {
+  background: var(--bg3);
+}
+.proj-full-card--featured {
+  border-left-color: var(--g);
+  background: var(--bg2);
+}
+.proj-full-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.proj-full-tag {
+  margin-bottom: 4px;
+}
+.proj-full-title {
+  font-size: 1.1rem;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+[data-theme="recruiter"] .proj-full-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.2rem;
+  letter-spacing: 0;
+}
+.proj-full-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.proj-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+[data-theme="recruiter"] .proj-status {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+.proj-status__dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.proj-full-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 700px;
+  margin-bottom: 1.5rem;
+}
+.proj-full-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.proj-full-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .proj-full-card {
+    padding: 1.25rem;
+  }
+  .proj-full-header {
+    flex-direction: column;
+  }
+  .proj-full-badges {
+    align-items: flex-start;
+  }
+}

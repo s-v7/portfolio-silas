@@ -1,0 +1,155 @@
+.cv-page {
+  padding-bottom: 4rem;
+}
+.cv-header {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.cv-name {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text);
+  margin-bottom: 8px;
+}
+[data-theme="recruiter"] .cv-name {
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+}
+.cv-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+[data-theme="recruiter"] .cv-subtitle {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+}
+.cv-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+.cv-contacts a {
+  color: var(--g);
+}
+.cv-block {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line2);
+}
+.cv-block__label {
+  margin-bottom: 1rem;
+}
+.cv-block__text {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 680px;
+}
+[data-theme="recruiter"] .cv-block__text {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+.cv-skills {
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+.cv-skill-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--line2);
+  align-items: baseline;
+}
+.cv-skill-row:last-child {
+  border-bottom: none;
+}
+.cv-skill-group {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--g);
+  font-family: var(--mono);
+}
+[data-theme="recruiter"] .cv-skill-group {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.cv-skill-items {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+[data-theme="recruiter"] .cv-skill-items {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+}
+.cv-exp-item {
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--line);
+}
+.cv-exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.cv-exp-role {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+[data-theme="recruiter"] .cv-exp-role {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.05rem;
+}
+.cv-exp-org {
+  font-size: 11px;
+  color: var(--g);
+  font-family: var(--mono);
+}
+[data-theme="recruiter"] .cv-exp-org {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+.cv-exp-bullets {
+  padding-left: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cv-exp-bullets li {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+[data-theme="recruiter"] .cv-exp-bullets li {
+  font-family: "Inter", sans-serif;
+}
+@media (max-width: 600px) {
+  .cv-header {
+    flex-direction: column;
+  }
+  .cv-skill-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .cv-exp-header {
+    flex-direction: column;
+  }
+}

@@ -26,7 +26,7 @@ const Chat = () => {
             model: "gpt-4",
             messages: [...messages, userMessage],
           }),
-        }
+        },
       );
 
       const data = await response.json();

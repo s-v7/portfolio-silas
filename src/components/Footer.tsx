@@ -1,44 +1,32 @@
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-
-const Footer: React.FC = () => {
+import { useTheme } from "../context/ThemeContext";
+import "./Footer.css";
+export default function Footer() {
+  const { theme } = useTheme();
+  const isAdmin = theme === "admin";
+  const year = new Date().getFullYear();
   return (
-    <footer className="footer fade-in">
-      <div className="container mx-auto text-center">
-        <p>
-          © {new Date().getFullYear()} Silas Vasconcelos Cruz portfolio. All rights
-          reserved.
-        </p>
-
-        <div className="social-icons">
-          <a
-            href="https://github.com/s-v7"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub profile"
-          >
-            <FaGithub />
+    <footer className="footer">
+      <div className="container footer__inner">
+        <span className="footer__copy">
+          © {year} Silas Vasconcelos Cruz · Teresina, PI
+        </span>
+        <div className="footer__links">
+          <a href="https://github.com/s-v7" target="_blank" rel="noreferrer">
+            GitHub
           </a>
-
           <a
-            href="https://www.linkedin.com/in/silas-v-053293255/"
+            href="https://linkedin.com/in/s-v7"
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn profile"
+            rel="noreferrer"
           >
-            <FaLinkedin />
+            LinkedIn
           </a>
-
-          <a
-            href="mailto:svasconceloscruz7@gmail.com"
-            aria-label="Send email"
-          >
-            <FaEnvelope />
+          <a href="mailto:svasconceloscruz7@gmail.com">
+            {isAdmin ? "Email" : "Email"}
           </a>
         </div>
+        <span className="footer__sig">{isAdmin ? "s▪v7" : "Silas Cruz"}</span>
       </div>
     </footer>
   );
-};
-
-export default Footer;
-
+}

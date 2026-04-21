@@ -15,4 +15,3 @@ const Section = ({ title, subtitle, children }: Props) => (
 );
 
 export default Section;
-
