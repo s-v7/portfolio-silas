@@ -3,10 +3,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(ROOT / "ai" / "scripts"))
+sys.path.append(str(ROOT / "ai" / "core"))
 
 import json
 from llm_client import LLMClient
 from context_collector import ContextCollector
+from model_router import get_model
 
 
 
@@ -30,6 +32,7 @@ def main():
 
     prompt = load_prompt(context)
     bio = client.generate(prompt, task="short_text")
+    print(f"[update_bio] provider={client.provider} model={get_model('short_text', client.provider)}")
 
     if not bio or not bio.strip():
         raise RuntimeError("LLM returned empty bio.")
