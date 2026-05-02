@@ -53,3 +53,6 @@ webpack.config.js
 *.bak
 1/
 
+ai/**/__pycache__/
+ai/core/__pycache__/
+check.txt
