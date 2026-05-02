@@ -56,3 +56,7 @@ webpack.config.js
 ai/**/__pycache__/
 ai/core/__pycache__/
 check.txt
+__pycache__/
+*.pyc
+estrutura_diretorios_servicosonline.svg
+check.txt
