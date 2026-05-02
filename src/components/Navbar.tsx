@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import "./Navbar.css";
@@ -46,59 +47,91 @@ function IconRec() {
   );
 }
 
+function SystemHeader() {
+  const [time, setTime] = useState(new Date());
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+  const fmt = time.toISOString().replace("T", " ").slice(0, 19);
+  return (
+    <div className="sys-header">
+      <div className="container sys-header__inner">
+        <span>SYS · <b>online</b></span>
+        <span>UPTIME · <b>847d 12h</b></span>
+        <span>NODE · <b>teresina-pi.br</b></span>
+        <span>LOAD · <b>0.42 0.51 0.48</b></span>
+        <span>TS · <b>{fmt} UTC</b></span>
+      </div>
+    </div>
+  );
+}
+
 export default function Navbar() {
-  const { theme, toggle } = useTheme();
+  const { theme, toggle, accentH, setAccentH } = useTheme();
   const isRec = theme === "recruiter";
   const links = isRec ? LINKS_REC : LINKS_ADMIN;
 
   return (
-    <header className="nav">
-      <div className="nav-inner container">
-        <a href="/" className="nav-brand" aria-label="home">
-          {isRec ? (
-            <span className="nav-brand-rec">
-              Silas <em>Cruz</em>
-            </span>
-          ) : (
-            <span className="nav-brand-admin">
-              s<span>▪</span>v7
-            </span>
-          )}
-        </a>
-        <nav aria-label="Main navigation">
-          <ul className="nav-links">
-            {links.map(({ to, label }) => (
-              <li key={to}>
-                <NavLink
-                  to={to}
-                  end={to === "/"}
-                  className={({ isActive }) =>
-                    `nav-link${isActive ? " nav-link--active" : ""}`
-                  }
-                >
-                  {label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className="nav-right">
-          <div className="nav-status" aria-label="Available for work">
-            <span className="status-dot" aria-hidden="true" />
-            <span>{isRec ? "open to work" : "available"}</span>
+    <>
+      <SystemHeader />
+      <header className="nav">
+        <div className="nav-inner container">
+          <a href="/" className="nav-brand" aria-label="home">
+            {isRec ? (
+              <span className="nav-brand-rec">
+                Silas <em>Cruz</em>
+              </span>
+            ) : (
+              <span className="nav-brand-admin">
+                s<span>▪</span>v7
+              </span>
+            )}
+          </a>
+          <nav aria-label="Main navigation">
+            <ul className="nav-links">
+              {links.map(({ to, label }) => (
+                <li key={to}>
+                  <NavLink
+                    to={to}
+                    end={to === "/"}
+                    className={({ isActive }) =>
+                      `nav-link${isActive ? " nav-link--active" : ""}`
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="nav-right">
+            <div className="nav-accent-wrap" title="Accent hue">
+              <input
+                type="range"
+                min={0}
+                max={360}
+                value={accentH}
+                onChange={(e) => setAccentH(Number(e.target.value))}
+                className="nav-hue-slider"
+                aria-label="Accent hue"
+              />
+            </div>
+            <div className="nav-status" aria-label="Available for work">
+              <span className="status-dot" aria-hidden="true" />
+              <span>{isRec ? "open to work" : "available"}</span>
+            </div>
+            <button
+              className="theme-toggle"
+              onClick={toggle}
+              aria-label={`Switch to ${isRec ? "admin" : "recruiter"} theme`}
+              title={isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"}
+            >
+              {isRec ? <IconAdmin /> : <IconRec />}
+            </button>
           </div>
-          <button
-            className="theme-toggle"
-            onClick={toggle}
-            aria-label={`Switch to ${isRec ? "admin" : "recruiter"} theme`}
-            title={
-              isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"
-            }
-          >
-            {isRec ? <IconAdmin /> : <IconRec />}
-          </button>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
