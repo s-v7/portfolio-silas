@@ -1,7 +1,6 @@
 import os
 import sys
 import requests
-
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "core"))
 from model_router import get_model
 
@@ -19,6 +18,10 @@ class LLMClient:
         self.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
         self.max_tokens = int(os.getenv("LLM_MAX_TOKENS", "2000"))
 
+        # ── expose after each generate() call ──
+        self.last_provider: str = self.provider
+        self.last_model: str = ""
+
         if self.provider == "anthropic" and not self.anthropic_api_key:
             print("[LLMClient] ANTHROPIC_API_KEY not set — falling back to OpenAI")
             self.provider = "openai"
@@ -29,15 +32,30 @@ class LLMClient:
 
         if self.provider == "anthropic":
             if not _ANTHROPIC_AVAILABLE:
-                raise ImportError("anthropic package not installed (pip install anthropic==0.86.0).")
+                raise ImportError("anthropic package not installed (pip install anthropic).")
             self._client = _anthropic_sdk.Anthropic(api_key=self.anthropic_api_key)
 
     def generate(self, prompt: str, task: str = "short_text") -> str:
         model = get_model(task, self.provider)
-        print(f"[LLMClient] provider={self.provider} model={model}")
+
+        # record what was actually used
+        self.last_provider = self.provider
+        self.last_model = model
+
+        print(f"[LLMClient] provider={self.last_provider} model={self.last_model}")
 
         if self.provider == "anthropic":
-            return self._generate_anthropic(prompt, model)
+            try:
+                return self._generate_anthropic(prompt, model)
+            except Exception as e:
+                print(f"[LLMClient] Anthropic error: {e} — falling back to OpenAI")
+                if not self.api_key:
+                    raise
+                self.last_provider = "openai"
+                self.last_model = get_model(task, "openai")
+                print(f"[LLMClient] fallback provider={self.last_provider} model={self.last_model}")
+                return self._generate_openai(prompt, self.last_model)
+
         return self._generate_openai(prompt, model)
 
     def _generate_anthropic(self, prompt: str, model: str) -> str:

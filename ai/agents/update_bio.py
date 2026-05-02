@@ -19,7 +19,7 @@ def load_prompt(context: dict) -> str:
     base_prompt = prompt_path.read_text(encoding="utf-8")
     return base_prompt.replace("{{CONTEXT}}", json.dumps(context, indent=2))
 
-def main():
+def main(output_file: Path = OUTPUT_FILE):
     print("Generating professional bio with Atlas AI...")
 
     collector = ContextCollector(repo_root=".")
@@ -37,8 +37,8 @@ def main():
     if not bio or not bio.strip():
         raise RuntimeError("LLM returned empty bio.")
 
-    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_text(bio.strip(), encoding="utf-8")
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    output_file.write_text(bio.strip(), encoding="utf-8")
 
     print("Bio generated successfully!")
     print("REVIEW:")
