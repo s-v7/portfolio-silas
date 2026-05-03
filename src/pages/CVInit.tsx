@@ -60,9 +60,9 @@ export default function CVInit() {
       <div className="container">
         <header className="cv-header">
           <div>
-            <h1 className="cv-name t-display">Silas Vasconcelos Cruz</h1>
+            <h1 className="cv-name t-display">Silas Vasconcelos </h1>
             <p className="cv-subtitle">
-              Full Stack Developer — Java / Python / React + DevOps &
+              Full Stack Developer — Java / Python / TypeScript + DevOps &
               Distributed Systems
             </p>
             <div className="cv-contacts">
@@ -86,7 +86,7 @@ export default function CVInit() {
                 linkedin.com/in/s-v7
               </a>
               <span>·</span>
-              <span>Teresina, PI — Brasil</span>
+              <span>PI — Brasil</span>
             </div>
           </div>
           <a

@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <span className="footer__copy">
-          © {year} Silas Vasconcelos Cruz · Teresina, PI
+          © {year} Silas Vasconcelos · Brasil, PI
         </span>
         <div className="footer__links">
           <a href="https://github.com/s-v7" target="_blank" rel="noreferrer">
@@ -25,7 +25,7 @@ export default function Footer() {
             {isAdmin ? "Email" : "Email"}
           </a>
         </div>
-        <span className="footer__sig">{isAdmin ? "s▪v7" : "Silas Cruz"}</span>
+        <span className="footer__sig">{isAdmin ? "s▪v7" : "Silas Vasconcelos"}</span>
       </div>
     </footer>
   );

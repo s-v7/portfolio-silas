@@ -80,7 +80,7 @@ export default function Navbar() {
           <a href="/" className="nav-brand" aria-label="home">
             {isRec ? (
               <span className="nav-brand-rec">
-                Silas <em>Cruz</em>
+                Silas <em>Vasconcelos</em>
               </span>
             ) : (
               <span className="nav-brand-admin">
