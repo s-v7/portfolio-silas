@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import "./Contact.css";
+import "../styles/pages/Contact.css";
 const LINKS = [
   {
     label: "Email",

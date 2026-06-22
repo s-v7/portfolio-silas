@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import "./Education.css";
+import "../styles/pages/Education.css";
 const EDU = [
   {
     degree: "Tecnólogo em Segurança da Informação",

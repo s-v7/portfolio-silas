@@ -9,7 +9,6 @@ import Projects from "./pages/Projects";
 import Education from "./pages/Education";
 import CVInit from "./pages/CVInit";
 import ArtEngine from "./pages/ArtEngine";
-import "./styles/global.css";
 
 export default function App() {
   return (

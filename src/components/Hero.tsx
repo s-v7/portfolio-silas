@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import "./Hero.css";
+import "../styles/components/Hero.css";
 
 // Canvas 2D particle system (replaces Three.js)
 function useParticles(ref: React.RefObject<HTMLCanvasElement>, active: boolean) {

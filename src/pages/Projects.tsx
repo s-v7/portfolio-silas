@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import "./Projects.css";
+import "../styles/pages/Projects.css";
 
 type Lang = "en" | "pt";
 type I18n = string | { en: string; pt: string };

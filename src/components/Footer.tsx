@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import "./Footer.css";
+import "../styles/components/Footer.css";
 export default function Footer() {
   const { theme } = useTheme();
   const isAdmin = theme === "admin";

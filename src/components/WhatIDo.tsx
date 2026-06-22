@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import "./WhatIDo.css";
+import "../styles/components/WhatIDo.css";
 
 const PROJECTS = [
   {

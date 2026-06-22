@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import "./CVInit.css";
+import "../styles/pages/CVInit.css";
 
 const SKILLS = [
   {

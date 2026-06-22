@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import "./ArtEngine.css";
+import "../styles/pages/ArtEngine.css";
 
 const CAPS = [
   {
