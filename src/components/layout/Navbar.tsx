@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import "../styles/components/Navbar.css";
+import { useTheme } from "../../context/ThemeContext";
+import "../../styles/components/Navbar.css";
 
 const LINKS_ADMIN = [
   { to: "/", label: "Home" },

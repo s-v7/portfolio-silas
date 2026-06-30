@@ -1,21 +1,8 @@
 import { Link } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import "../styles/components/CTASection.css";
+import { useTheme } from "../../context/ThemeContext";
+import "../../styles/components/CTASection.css";
 
-const EXP = [
-  {
-    date: "May 2024 — Present",
-    role: "Technology & Information Security Advisor",
-    org: "CREA-PI · Teresina, Brasil",
-    desc: "Arquiteto solo do ecossistema FIE — SIGEC v2, FiscalBot, ART Engine, SistemaCrea. Modernização Java EE, análise de segurança e pipeline Sentinel-2 para monitoramento hídrico piauiense.",
-  },
-  {
-    date: "May 2022 — Sep 2022",
-    role: "Java Full Stack Developer",
-    org: "EDM Software · Florianópolis, Brasil",
-    desc: "Desenvolvimento e manutenção de aplicações enterprise JSF/PrimeFaces, correção de bugs e suporte a melhorias contínuas no produto principal.",
-  },
-];
+import { ROLES } from '../../data/experience';
 
 export default function CTASection() {
   const { theme } = useTheme();
@@ -35,13 +22,13 @@ export default function CTASection() {
           <div className="section-rule" />
         </header>
         <div className="exp-list">
-          {EXP.map((e) => (
-            <article key={e.role} className="exp-item">
-              <time className="exp-date t-label">{e.date}</time>
+          {ROLES.map((e) => (
+            <article key={e.id} className="exp-item">
+              <time className="exp-date t-label">{typeof e.period === "string" ? e.period : e.period.en}</time>
               <div>
-                <h3 className="exp-role t-heading">{e.role}</h3>
-                <p className="exp-org">{e.org}</p>
-                <p className="exp-desc">{e.desc}</p>
+                <h3 className="exp-role t-heading">{typeof e.title === "string" ? e.title : e.title.en}</h3>
+                <p className="exp-org">{e.org} · {typeof e.location === "string" ? e.location : e.location.pt}</p>
+                <p className="exp-desc">{typeof e.bullets[0] === "string" ? e.bullets[0] : e.bullets[0].pt}</p>
               </div>
             </article>
           ))}

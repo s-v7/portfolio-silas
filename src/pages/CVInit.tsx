@@ -1,56 +1,8 @@
 import { useTheme } from "../context/ThemeContext";
 import "../styles/pages/CVInit.css";
 
-const SKILLS = [
-  {
-    group: "Languages",
-    items: "Java · Python · TypeScript · JavaScript (ES6+) · C",
-  },
-  {
-    group: "Web",
-    items:
-      "Angular 17+ · React · JSF (PrimeFaces) · Spring Boot · FastAPI · Node.js",
-  },
-  { group: "Databases", items: "PostgreSQL · PostGIS · MongoDB" },
-  {
-    group: "DevOps",
-    items:
-      "Git · Docker · Kubernetes · CI/CD · Nginx · Cloudflare · Linux / systemd",
-  },
-  {
-    group: "Data & AI",
-    items:
-      "Pandas · NumPy · TensorFlow · Scikit-learn · OpenAI API · Claude API · Sentinel-2",
-  },
-  {
-    group: "Security",
-    items: "Pentest · OWASP · Log auditing · Cryptography · LGPD compliance",
-  },
-];
-
-const EXP = [
-  {
-    role: "Technology & Information Security Advisor",
-    org: "CREA-PI — Teresina, Brasil",
-    period: "May 2024 — Present",
-    bullets: [
-      "Sole architect of the FIE ecosystem: SIGEC v2, FiscalBot, ART Engine, SistemaCrea and SertLedgerToken.",
-      "Java EE 8 systems development and enhancement (GlassFish, JSF/PrimeFaces, Hibernate, PostgreSQL, Linux).",
-      "Sentinel-2→PostgreSQL pipeline for water resource monitoring of Piauí reservoirs via NDWI spectral analysis.",
-      "Shell script automation and Telegram bot integration for institutional alerts.",
-      "Security analysis, vulnerability mitigation and compliance reviews for government systems.",
-    ],
-  },
-  {
-    role: "Java Full Stack Developer",
-    org: "EDM Software — Florianópolis, Brasil",
-    period: "May 2022 — Sep 2022",
-    bullets: [
-      "Developed and maintained enterprise web application features using JSF (PrimeFaces), JavaScript, XHTML/CSS.",
-      "Bug fixes and continuous improvement support for the main product.",
-    ],
-  },
-];
+import { SKILLS } from "../data/cv";
+import { ROLES } from "../data/experience";
 
 export default function CVInit() {
   const { theme } = useTheme();
@@ -132,18 +84,18 @@ export default function CVInit() {
           <p className="cv-block__label t-label">
             {isAdmin ? "// Experiência" : "// Experience"}
           </p>
-          {EXP.map((e) => (
-            <div key={e.role} className="cv-exp-item">
+          {ROLES.map((e) => (
+            <div key={e.id} className="cv-exp-item">
               <div className="cv-exp-header">
                 <div>
-                  <h2 className="cv-exp-role t-heading">{e.role}</h2>
-                  <p className="cv-exp-org">{e.org}</p>
+                  <h2 className="cv-exp-role t-heading">{typeof e.title === "string" ? e.title : e.title.en}</h2>
+                  <p className="cv-exp-org">{e.org} — {typeof e.location === "string" ? e.location : e.location.pt}</p>
                 </div>
-                <time className="t-label">{e.period}</time>
+                <time className="t-label">{typeof e.period === "string" ? e.period : e.period.en}</time>
               </div>
               <ul className="cv-exp-bullets">
                 {e.bullets.map((b) => (
-                  <li key={b}>{b}</li>
+                  <li key={typeof b === "string" ? b : b.en}>{typeof b === "string" ? b : b.en}</li>
                 ))}
               </ul>
             </div>
@@ -158,11 +110,11 @@ export default function CVInit() {
             <div className="cv-exp-header">
               <div>
                 <h2 className="cv-exp-role t-heading">
-                  Technologist in Information Security (Distance Learning)
+                  computer engineering
                 </h2>
                 <p className="cv-exp-org">
-                  Universidade Paulista (UNIP) — Brasil
-                </p>
+                  Brasil
+          	</p>
               </div>
               <time className="t-label">Aug 2024 — Dec 2026 (expected)</time>
             </div>

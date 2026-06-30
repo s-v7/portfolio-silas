@@ -1,37 +1,9 @@
 import { useTheme } from "../context/ThemeContext";
 import "../styles/pages/Education.css";
-const EDU = [
-  {
-    degree: "Tecnólogo em Segurança da Informação",
-    inst: "Universidade Paulista (UNIP)",
-    period: "Aug 2024 — Dec 2026 (expected)",
-    mode: "Distance Learning",
-    status: "In progress",
-    topics: [
-      "Cryptography",
-      "Pentesting",
-      "Networks",
-      "LGPD",
-      "Application Security",
-      "Vulnerability Analysis",
-    ],
-  },
-];
-const CERTS = [
-  { name: "Docker & Kubernetes — Fundamentals", issuer: "Udemy", year: "2023" },
-  { name: "Java EE — Enterprise Applications", issuer: "Alura", year: "2022" },
-  { name: "Advanced PostgreSQL", issuer: "Dio", year: "2022" },
-  { name: "Machine Learning with Python", issuer: "Coursera", year: "2021" },
-  { name: "React — Fundamentals & Hooks", issuer: "Rocketseat", year: "2021" },
-];
-const LANGS = [
-  { lang: "Portuguese", level: "Native", pct: 100 },
-  {
-    lang: "English",
-    level: "Intermediate (reading) / Basic (writing)",
-    pct: 58,
-  },
-];
+
+import { EDU, CERTS, LANGS } from "../data/education";
+
+
 export default function Education() {
   const { theme } = useTheme();
   const isAdmin = theme === "admin";
@@ -71,13 +43,18 @@ export default function Education() {
         </section>
         <section className="edu-block">
           <p className="block-label t-label">// Certifications</p>
-          <div className="certs-list">
+          <div className="cert-grid">
             {CERTS.map((c) => (
-              <div key={c.name} className="cert-row">
-                <span className="cert-name">{c.name}</span>
-                <span className="t-label">{c.issuer}</span>
-                <span className="t-label cert-year">{c.year}</span>
-              </div>
+              <article key={c.name} className="cert-card">
+                <div>
+                  <h3 className="cert-card__title">{c.name}</h3>
+                  <p className="cert-card__issuer">{c.issuer}</p>
+                </div>
+                <div className="cert-card__meta">
+                  <span>{c.year}</span>
+                  {c.hours && <span>{c.hours}</span>}
+                </div>
+              </article>
             ))}
           </div>
         </section>

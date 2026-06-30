@@ -1,5 +1,5 @@
-import { useTheme } from "../context/ThemeContext";
-import "../styles/components/Footer.css";
+import { useTheme } from "../../context/ThemeContext";
+import "../../styles/components/Footer.css";
 export default function Footer() {
   const { theme } = useTheme();
   const isAdmin = theme === "admin";
@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <span className="footer__copy">
-          © {year} Silas Vasconcelos · Brasil, PI
+          © {year} Silas Vasconcelos · Brasil
         </span>
         <div className="footer__links">
           <a href="https://github.com/s-v7" target="_blank" rel="noreferrer">
