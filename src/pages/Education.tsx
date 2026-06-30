@@ -3,7 +3,6 @@ import "../styles/pages/Education.css";
 
 import { EDU, CERTS, LANGS } from "../data/education";
 
-
 export default function Education() {
   const { theme } = useTheme();
   const isAdmin = theme === "admin";
