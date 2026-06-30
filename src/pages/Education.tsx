@@ -1,52 +1,8 @@
 import { useTheme } from "../context/ThemeContext";
-import "./Education.css";
-const EDU = [
-  {
-    degree: "Tecnólogo em Segurança da Informação",
-    inst: "Universidade Paulista (UNIP)",
-    period: "Aug 2024 — Dec 2026 (expected)",
-    mode: "Distance Learning",
-    status: "In progress",
-    topics: [
-      "Cryptography",
-      "Pentesting",
-      "Networks",
-      "LGPD",
-      "Application Security",
-      "Vulnerability Analysis",
-    ],
-  },
-];
-const CERTS = [
-  { name: 'Inteligência Artificial aplicada à Saúde e Segurança do Trabalho', issuer: 'Universidade de São Paulo - USP', year: 'abr/2026', hours: '4h' },
-  { name: 'Introdução às Redes Complexas, com Aplicações, Utilizando Python e IA/LLM', issuer: 'Universidade de São Paulo - USP / EACH', year: 'mar/2026', hours: '8h' },
+import "../styles/pages/Education.css";
 
-  { name: 'Student Journey Blockchain Training', issuer: 'Universidade Federal de Santa Catarina - UFSC', year: 'fev/2023', hours: '4h' },
-  { name: 'Cybersecurity Fundamentals', issuer: 'IBM', year: 'jun/2020', hours: null },
-  { name: 'Fundamentals of Programming', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'ago/2021', hours: '60h' },
-  { name: 'Front-End Programming', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'ago/2021', hours: '40h' },
-  { name: 'Back-End Programming', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'ago/2021', hours: '60h' },
-  { name: 'Database', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'ago/2021', hours: '40h' },
-  { name: 'Configuration of Linux Computer Networks', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'jun/2021', hours: '60h' },
-  { name: 'Object Oriented Programming in Java', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'jun/2018', hours: '100h' },
-  { name: 'Starting and Protection of Electric Motors', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'mai/2017', hours: '50h' },
-  { name: 'Electropneumatic Systems', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'jun/2017', hours: '40h' },
-  { name: 'Programmable Logic Controllers', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'out/2017', hours: '40h' },
-  { name: 'Arduino - Basic Level', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'dez/2017', hours: '28h' },
-  { name: 'Basic Electronics', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'dez/2017', hours: '40h' },
-  { name: 'Power Factor Correction and Electric Energy Quality', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'out/2016', hours: '20h' },
-  { name: 'Microcomputer Support and Maintenance', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'jun/2016', hours: '72h' },
-  { name: 'Introduction to Computer Programming', issuer: 'IFSC - Instituto Federal de Santa Catarina', year: 'jun/2016', hours: '80h' },
-  { name: 'Microcomputer Operator', issuer: 'Estação Digital Abelha Rainha', year: 'dez/2010', hours: '60h' },
-];
-const LANGS = [
-  { lang: "Portuguese", level: "Native", pct: 100 },
-  {
-    lang: "English",
-    level: "Intermediate (reading) / Basic (writing)",
-    pct: 58,
-  },
-];
+import { EDU, CERTS, LANGS } from "../data/education";
+
 export default function Education() {
   const { theme } = useTheme();
   const isAdmin = theme === "admin";
@@ -86,13 +42,18 @@ export default function Education() {
         </section>
         <section className="edu-block">
           <p className="block-label t-label">// Certifications</p>
-          <div className="certs-list">
+          <div className="cert-grid">
             {CERTS.map((c) => (
-              <div key={c.name} className="cert-row">
-                <span className="cert-name">{c.name}</span>
-                <span className="t-label">{c.issuer}</span>
-                <span className="t-label cert-year">{c.year}</span>
-              </div>
+              <article key={c.name} className="cert-card">
+                <div>
+                  <h3 className="cert-card__title">{c.name}</h3>
+                  <p className="cert-card__issuer">{c.issuer}</p>
+                </div>
+                <div className="cert-card__meta">
+                  <span>{c.year}</span>
+                  {c.hours && <span>{c.hours}</span>}
+                </div>
+              </article>
             ))}
           </div>
         </section>

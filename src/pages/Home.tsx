@@ -1,8 +1,5 @@
 import { useEffect } from "react";
-import Hero from "../components/Hero";
-import SkillCards from "../components/SkillCards";
-import WhatIDo from "../components/WhatIDo";
-import CTASection from "../components/CTASection";
+import Hero from "../components/sections/Hero";
 
 export default function Home() {
   useEffect(() => {
@@ -19,9 +16,6 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <SkillCards />
-      <WhatIDo />
-      <CTASection />
     </main>
   );
 }

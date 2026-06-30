@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useTheme } from "../context/ThemeContext";
-import "./SkillCards.css";
+import { useTheme } from "../../context/ThemeContext";
+import "../../styles/components/SkillCards.css";
 
 const STACK_RADAR = [
   { axis: "Backend", score: 95, items: ["Java EE 8/17", "Spring Boot", "FastAPI", "Flask", "Node.js"] },

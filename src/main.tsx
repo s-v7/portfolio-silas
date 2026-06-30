@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./app/App";
+
+import "./styles/base/global.css";
+import "./styles/base/design-system.css";
+import "./styles/base/layout.css";
 import "./index.css";
 
 // Disable browser scroll restoration (SPA behav...)

@@ -129,3 +129,58 @@
     gap: 0.75rem;
   }
 }
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.cert-card {
+  border: 1px solid rgba(255, 153, 0, 0.18);
+  background: linear-gradient(135deg, rgba(255, 153, 0, 0.055), transparent 45%),
+    rgba(10, 8, 4, 0.66);
+  padding: 18px 20px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cert-card__title {
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.45;
+  margin: 0 0 10px;
+}
+
+.cert-card__issuer {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cert-card__meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.cert-card__meta span {
+  border: 1px solid rgba(255, 153, 0, 0.22);
+  color: var(--g);
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+}
