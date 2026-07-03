@@ -2,6 +2,7 @@ import { useTheme } from "../context/ThemeContext";
 import "../styles/pages/CVInit.css";
 
 import { SKILLS } from "../data/cv";
+import { EDU } from "../data/education";
 import { ROLES } from "../data/experience";
 
 export default function CVInit() {
@@ -13,10 +14,12 @@ export default function CVInit() {
         <header className="cv-header">
           <div>
             <h1 className="cv-name t-display">Silas Vasconcelos </h1>
+
             <p className="cv-subtitle">
-              Full Stack Developer — Java / Python / TypeScript + DevOps &
-              Distributed Systems
+              Software Engineer — Java / Python / Node.js / TypeScript / IA
+              Generativa
             </p>
+
             <div className="cv-contacts">
               <a href="mailto:svasconceloscruz7@gmail.com">
                 svasconceloscruz7@gmail.com
@@ -55,14 +58,9 @@ export default function CVInit() {
             {isAdmin ? "// Resumo" : "// Summary"}
           </p>
           <p className="cv-block__text">
-            Full Stack Developer with experience building distributed web
-            applications in Java and Python. Skilled in front-end development
-            (React, Angular) and back-end frameworks (Spring Boot, FastAPI),
-            with hands-on DevOps experience (Docker, Kubernetes, CI/CD). Sole
-            architect of the FIE ecosystem at CREA-PI — 1.1M+ engineering
-            records on-chain, Sentinel-2 geospatial analytics, fiscal AI
-            orchestration across 224 municipalities of Piauí. Designed for
-            national adoption by CONFEA across 27 regional councils.
+            {isAdmin
+              ? "Software Engineer com experiência no desenvolvimento e modernização de sistemas corporativos utilizando Java, Python, Node.js e TypeScript. Atuação com backend, APIs REST, PostgreSQL, integração entre sistemas e evolução de sistemas legados. Atualmente trabalho na modernização de sistemas Java EE para arquiteturas mais modernas, além do desenvolvimento de serviços com NestJS, Angular e soluções envolvendo IA Generativa, LLMs e automação de processos."
+              : "Software Engineer with experience in developing and modernizing corporate systems using Java, Python, Node.js and TypeScript. Skilled in backend development, REST APIs, PostgreSQL, system integration and legacy system modernization. Currently working on the evolution of Java EE systems toward modern architectures, while building services with NestJS, Angular and solutions involving Generative AI, LLMs and process automation."}
           </p>
         </section>
 
@@ -88,37 +86,29 @@ export default function CVInit() {
             <div key={e.id} className="cv-exp-item">
               <div className="cv-exp-header">
                 <div>
-                  <h2 className="cv-exp-role t-heading">{typeof e.title === "string" ? e.title : e.title.en}</h2>
-                  <p className="cv-exp-org">{e.org} — {typeof e.location === "string" ? e.location : e.location.pt}</p>
+                  <h2 className="cv-exp-role t-heading">
+                    {typeof e.title === "string" ? e.title : e.title.en}
+                  </h2>
+                  <p className="cv-exp-org">
+                    {e.org} —{" "}
+                    {typeof e.location === "string"
+                      ? e.location
+                      : e.location.pt}
+                  </p>
                 </div>
-                <time className="t-label">{typeof e.period === "string" ? e.period : e.period.en}</time>
+                <time className="t-label">
+                  {typeof e.period === "string" ? e.period : e.period.en}
+                </time>
               </div>
               <ul className="cv-exp-bullets">
                 {e.bullets.map((b) => (
-                  <li key={typeof b === "string" ? b : b.en}>{typeof b === "string" ? b : b.en}</li>
+                  <li key={typeof b === "string" ? b : b.en}>
+                    {typeof b === "string" ? b : b.en}
+                  </li>
                 ))}
               </ul>
             </div>
           ))}
-        </section>
-
-        <section className="cv-block">
-          <p className="cv-block__label t-label">
-            {isAdmin ? "// Formação" : "// Education"}
-          </p>
-          <div className="cv-exp-item">
-            <div className="cv-exp-header">
-              <div>
-                <h2 className="cv-exp-role t-heading">
-                  computer engineering
-                </h2>
-                <p className="cv-exp-org">
-                  Brasil
-          	</p>
-              </div>
-              <time className="t-label">Aug 2024 — Dec 2026 (expected)</time>
-            </div>
-          </div>
         </section>
       </div>
     </main>

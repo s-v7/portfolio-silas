@@ -6,14 +6,12 @@ import Footer from "../components/layout/Footer";
 import ScrollToTop from "../components/layout/ScrollToTop";
 
 import Home from "../pages/Home";
-import About from "../pages/About";
-import Skills from "../pages/Skills";
-import Experience from "../pages/Experience";
 import Education from "../pages/Education";
 import Projects from "../pages/Projects";
 import ArtEngine from "../pages/ArtEngine";
 import Contact from "../pages/Contact";
 import CVInit from "../pages/CVInit";
+import Chat from "../pages/Chat";
 
 import "../styles/components/Navbar.css";
 import "../styles/components/Footer.css";
@@ -31,6 +29,8 @@ export default function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/art-engine" element={<ArtEngine />} />
+	  <Route path="/chat" element={<Chat />} />
+	  <Route path="/ai-career" element={<Chat />} />	  
           <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />

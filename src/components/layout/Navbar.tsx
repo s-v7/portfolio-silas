@@ -5,18 +5,17 @@ import "../../styles/components/Navbar.css";
 
 const LINKS_ADMIN = [
   { to: "/", label: "Home" },
-  { to: "/profile", label: "Profile / CV" },
-  { to: "/education", label: "Education" },
+  { to: "/ai-career", label: "AI Career" },
+  { to: "/profile", label: "Profile" },
   { to: "/projects", label: "Projects" },
-  { to: "/art-engine", label: "ART Engine" },
   { to: "/contact", label: "Contact" },
 ];
+
 const LINKS_REC = [
   { to: "/", label: "Home" },
+  { to: "/ai-career", label: "AI Career" },  
   { to: "/profile", label: "Profile" },
-  { to: "/education", label: "Education" },
   { to: "/projects", label: "Projects" },
-  { to: "/art-engine", label: "ART Engine" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -57,11 +56,21 @@ function SystemHeader() {
   return (
     <div className="sys-header">
       <div className="container sys-header__inner">
-        <span>SYS · <b>online</b></span>
-        <span>UPTIME · <b>847d 12h</b></span>
-        <span>NODE · <b>teresina-pi.br</b></span>
-        <span>LOAD · <b>0.42 0.51 0.48</b></span>
-        <span>TS · <b>{fmt} UTC</b></span>
+        <span>
+          SYS · <b>online</b>
+        </span>
+        <span>
+          UPTIME · <b>847d 12h</b>
+        </span>
+        <span>
+          NODE · <b>teresina-pi.br</b>
+        </span>
+        <span>
+          LOAD · <b>0.42 0.51 0.48</b>
+        </span>
+        <span>
+          TS · <b>{fmt} UTC</b>
+        </span>
       </div>
     </div>
   );
@@ -125,7 +134,9 @@ export default function Navbar() {
               className="theme-toggle"
               onClick={toggle}
               aria-label={`Switch to ${isRec ? "admin" : "recruiter"} theme`}
-              title={isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"}
+              title={
+                isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"
+              }
             >
               {isRec ? <IconAdmin /> : <IconRec />}
             </button>

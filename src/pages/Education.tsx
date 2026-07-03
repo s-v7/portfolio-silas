@@ -5,7 +5,6 @@ import { EDU, CERTS, LANGS } from "../data/education";
 
 export default function Education() {
   const { theme } = useTheme();
-  const isAdmin = theme === "admin";
   return (
     <main className="edu-page">
       <div className="container">
@@ -26,7 +25,13 @@ export default function Education() {
                 <div className="edu-card__meta">
                   <span className="tag tag-active">{e.status}</span>
                   <span className="t-label">
-                    {e.mode} · {e.period}
+                    {typeof e.mode === "string"
+                      ? e.mode
+                      : (e.mode as { en: string }).en}{" "}
+                    ·{" "}
+                    {typeof e.period === "string"
+                      ? e.period
+                      : (e.period as { en: string }).en}
                   </span>
                 </div>
               </div>

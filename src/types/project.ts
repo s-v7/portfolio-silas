@@ -27,4 +27,4 @@ export interface Project {
 }
 
 export const t = (v: I18n, lang: Lang): string =>
-  typeof v === "string" ? v : v[lang] ?? v.en;
+  typeof v === "string" ? v : (v[lang] ?? v.en);

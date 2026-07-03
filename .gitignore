@@ -60,3 +60,4 @@ __pycache__/
 *.pyc
 estrutura_diretorios_servicosonline.svg
 check.txt
+.env

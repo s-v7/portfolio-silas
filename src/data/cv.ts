@@ -1,32 +1,42 @@
 export const SKILLS = [
   {
     group: "Languages",
-    items: "Java · Python · JavaScript (ES6+) · TypeScript · C",
+    items: "Java · Python · TypeScript · JavaScript · SQL · C",
   },
   {
-    group: "Web",
+    group: "Backend",
     items:
-      "Angular 7+ · React · JSF (PrimeFaces)3.1+ · Spring Boot · FastAPI · Node.js",
+      "Spring Boot · Java EE · Jakarta EE · NestJS · Node.js · FastAPI · Flask",
+  },
+  {
+    group: "Frontend",
+    items:
+      "React · Angular · Flutter · JSF (PrimeFaces) · HTML5 · CSS3 · Bootstrap",
   },
   {
     group: "Databases",
-    items: "PostgreSQL · PostGIS · MongoDB · Oracle",
+    items: "PostgreSQL · MongoDB · PostGIS · Oracle",
   },
   {
-    group: "DevSecOps",
-    items: "Docker, K8s, Nginx, Cloudflare Tunnel, Systemd, CI/CD",
+    group: "Architecture",
+    items:
+      "REST APIs · Microservices · SOA · SOAP/WSDL · System Integration · Clean Code",
   },
   {
-    group: "(Machine & Deep) Learnig",
-    items: "TensorFlow, Scikit-Learnig, Numpy, Pandas, Matphotlib,Anthropic, Nvidia,OpenaAI, LangGraph" 
+    group: "Cloud & DevOps",
+    items: "Docker · Kubernetes · Git · GitHub · CI/CD · Linux · Nginx · AWS",
   },
   {
-    group: "Blockchain",
-    items: "SHA-256 chains, Hyperledger, Smart Contracts, QR traceability"
+    group: "Generative AI",
+    items:
+      "OpenAI · Anthropic · NVIDIA NIM · RAG · LLM Engineering · LangGraph",
+  },
+  {
+    group: "Data & ML",
+    items: "Pandas · NumPy · Scikit-learn · TensorFlow · PyTorch · Matplotlib",
   },
   {
     group: "Security",
-    items: "OWASP, Pentest, LGPD, Cryptography, PII masking"
-  }
-   
+    items: "LGPD · OWASP · Cryptography · PII Masking · Secure APIs",
+  },
 ];

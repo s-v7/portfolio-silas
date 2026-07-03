@@ -1,14 +1,17 @@
 import { useTheme } from "../context/ThemeContext";
 import "../styles/pages/Projects.css";
 import { PROJECTS } from "../data/projects";
-import type { Lang, ProjectStatus } from "../types/project";
+import type { Lang, Project, ProjectStatus } from "../types/project";
 import { t } from "../types/project";
 
-
 const STATUS_CLASS: Record<ProjectStatus, string> = {
-  Production: "", Active: "", Public: "",
-  MVP: "warn", Development: "warn",
-  Private: "dim", Research: "dim",
+  Production: "",
+  Active: "",
+  Public: "",
+  MVP: "warn",
+  Development: "warn",
+  Private: "dim",
+  Research: "dim",
 };
 
 function FeaturedViz() {
@@ -19,10 +22,10 @@ function FeaturedViz() {
           {Array.from({ length: 14 }).map((_, i) => (
             <line
               key={i}
-              x1={20 + (i * 13) % 160}
-              y1={20 + (i * 37) % 120}
-              x2={20 + ((i + 5) * 17) % 160}
-              y2={20 + ((i + 3) * 23) % 120}
+              x1={20 + ((i * 13) % 160)}
+              y1={20 + ((i * 37) % 120)}
+              x2={20 + (((i + 5) * 17) % 160)}
+              y2={20 + (((i + 3) * 23) % 120)}
             />
           ))}
         </g>
@@ -30,8 +33,8 @@ function FeaturedViz() {
           {Array.from({ length: 18 }).map((_, i) => (
             <circle
               key={i}
-              cx={20 + (i * 11) % 160}
-              cy={20 + (i * 29) % 120}
+              cx={20 + ((i * 11) % 160)}
+              cy={20 + ((i * 29) % 120)}
               r={1.5}
               opacity={0.35 + (i % 3) * 0.2}
             />
@@ -64,7 +67,9 @@ function ProjectCard({ p, lang }: { p: Project; lang: Lang }) {
     <>
       <div className="bento-card__top">
         <div className="bento-card__tag">{t(p.tag, lang)}</div>
-        <div className={`bento-card__status${STATUS_CLASS[p.status] ? " " + STATUS_CLASS[p.status] : ""}`}>
+        <div
+          className={`bento-card__status${STATUS_CLASS[p.status] ? " " + STATUS_CLASS[p.status] : ""}`}
+        >
           <span className="sd" />
           {p.status}
         </div>
@@ -78,7 +83,9 @@ function ProjectCard({ p, lang }: { p: Project; lang: Lang }) {
       <p className="bento-card__desc">{t(p.desc, lang)}</p>
       <div className="bento-card__stack">
         {p.stack.slice(0, maxStack).map((s) => (
-          <span key={s} className="tag">{s}</span>
+          <span key={s} className="tag">
+            {s}
+          </span>
         ))}
       </div>
       <div className="bento-card__foot">
@@ -91,7 +98,14 @@ function ProjectCard({ p, lang }: { p: Project; lang: Lang }) {
 
   if (p.link) {
     return (
-      <a className={cls} data-size={p.size} href={p.link} target="_blank" rel="noreferrer" onMouseMove={onMove}>
+      <a
+        className={cls}
+        data-size={p.size}
+        href={p.link}
+        target="_blank"
+        rel="noreferrer"
+        onMouseMove={onMove}
+      >
         {content}
       </a>
     );

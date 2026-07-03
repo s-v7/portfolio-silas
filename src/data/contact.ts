@@ -1,4 +1,3 @@
-
 export const LINKS = [
   {
     label: "Email",
@@ -16,6 +15,5 @@ export const LINKS = [
     href: "https://www.linkedin.com/in/silas-v-053293255/",
   },
   { label: "Phone", value: "+55 (47) 99691-9951", href: "tel:+5547996919951" },
-  { label: "Location", value: "Teresina, Piauí — Brasil", href: null },
+  { label: "Location", value: "Brasil", href: null },
 ];
-

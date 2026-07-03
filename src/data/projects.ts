@@ -1,17 +1,32 @@
-import { Project } from '';
+import { Project } from "../types/project";
 
 export const PROJECTS: Project[] = [
   {
     id: "sigec",
     size: "featured",
-    tag: { en: "Fiscal Intelligence · CREA-PI", pt: "Inteligência Fiscal · CREA-PI" },
+    tag: {
+      en: "Fiscal Intelligence · CREA-PI",
+      pt: "Inteligência Fiscal · CREA-PI",
+    },
     title: "SIGEC v2",
-    subtitle: { en: "Fiscal Intelligence Engine", pt: "Motor de Inteligência Fiscal" },
+    subtitle: {
+      en: "Fiscal Intelligence Engine",
+      pt: "Motor de Inteligência Fiscal",
+    },
     desc: {
       en: "1.1M+ ARTs on a SHA-256 blockchain. Sentinel-2 → PostGIS pipeline monitoring 20 reservoirs (NDWI). FiscalBot Telegram with auto-alerts (cron Mon 06:00 BRT). NetworkX/TSP routing across 224 municipalities of Piauí.",
       pt: "1.1M+ ARTs em blockchain SHA-256. Pipeline Sentinel-2 → PostGIS monitorando 20 açudes (NDWI). FiscalBot Telegram com alertas automáticos (cron seg 06:00 BRT). Roteamento NetworkX/TSP nos 224 municípios do Piauí.",
     },
-    stack: ["Flask", "FastAPI", "Angular 17", "PostgreSQL 17", "PostGIS", "Blockchain", "Sentinel-2", "NetworkX"],
+    stack: [
+      "Flask",
+      "FastAPI",
+      "Angular 17",
+      "PostgreSQL 17",
+      "PostGIS",
+      "Blockchain",
+      "Sentinel-2",
+      "NetworkX",
+    ],
     status: "Production",
     year: "2024–2025",
     link: "https://github.com/s-v7/CadastroRastreamentoObras",
@@ -115,4 +130,3 @@ export const PROJECTS: Project[] = [
     link: "https://github.com/s-v7/CadastroRastreamentoObras",
   },
 ];
-

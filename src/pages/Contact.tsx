@@ -1,7 +1,7 @@
 import { useTheme } from "../context/ThemeContext";
 import "../styles/pages/Contact.css";
 
-import { LINKS } from '../data/contact';
+import { LINKS } from "../data/contact";
 
 export default function Contact() {
   const { theme } = useTheme();

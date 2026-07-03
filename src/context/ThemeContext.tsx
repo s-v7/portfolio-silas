@@ -9,7 +9,12 @@ interface ThemeCtx {
   setAccentH: (h: number) => void;
 }
 
-const Ctx = createContext<ThemeCtx>({ theme: "admin", toggle: () => {}, accentH: 165, setAccentH: () => {} });
+const Ctx = createContext<ThemeCtx>({
+  theme: "admin",
+  toggle: () => {},
+  accentH: 165,
+  setAccentH: () => {},
+});
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
@@ -17,7 +22,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return saved === "recruiter" ? "recruiter" : "admin";
   });
   const [accentH, setAccentH] = useState<number>(() =>
-    localStorage.getItem("sv7-theme") === "recruiter" ? 60 : 165
+    localStorage.getItem("sv7-theme") === "recruiter" ? 60 : 165,
   );
 
   useEffect(() => {
@@ -32,7 +37,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const toggle = () => setTheme((t) => (t === "admin" ? "recruiter" : "admin"));
 
-  return <Ctx.Provider value={{ theme, toggle, accentH, setAccentH }}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={{ theme, toggle, accentH, setAccentH }}>
+      {children}
+    </Ctx.Provider>
+  );
 }
 
 export const useTheme = () => useContext(Ctx);

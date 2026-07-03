@@ -14,27 +14,27 @@ const Skills = () => {
       {currentPage === 1 && (
         <ul className="skills-list">
           <li>
-            ✔️ Backend: Java (JDK 8, 11, 17), EJB, JPA, JSF, PrimeFaces; Python
+            Backend: Java (JDK 8, 11, 17), EJB, JPA, JSF, PrimeFaces; Python
             (Flask, Django); Node.js
           </li>
           <li>
-            ✔️ Frontend: React, Angular, JavaScript, HTML, CSS/SCSS, Bootstrap
+            Frontend: React, Angular, JavaScript, HTML, CSS/SCSS, Bootstrap
           </li>
-          <li>✔️ Databases: PostgreSQL, MySQL, SQLite, MongoDB</li>
+          <li>Databases: PostgreSQL, MySQL, SQLite, MongoDB</li>
           <li>
-            ✔️ DevOps & Automation: Gitea, CI/CD, Webhooks, Docker, Kubernetes,
+            DevOps & Automation: Gitea, CI/CD, Webhooks, Docker, Kubernetes,
             Terraform, Ansible
           </li>
           <li>
-            ✔️ Security: OWASP, API Hardening, Pentesting, Blockchain,
-            Compliance & Audit Logging
+            Security: OWASP, API Hardening, Pentesting, Blockchain, Compliance &
+            Audit Logging
           </li>
           <li>
-            ✔️ AI & Machine Learning: TensorFlow, Scikit-Learn, Pandas, PyTorch,
+            AI & Machine Learning: TensorFlow, Scikit-Learn, Pandas, PyTorch,
             Anomaly Detection
           </li>
           <li>
-            ✔️ IT Governance & Management: ITIL 4, COBIT 2019, BPMN, Systems
+            IT Governance & Management: ITIL 4, COBIT 2019, BPMN, Systems
             Architecture
           </li>
         </ul>
