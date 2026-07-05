@@ -139,8 +139,8 @@
 
 .cert-card {
   border: 1px solid rgba(255, 153, 0, 0.18);
-  background: linear-gradient(135deg, rgba(255, 153, 0, 0.055), transparent 45%),
-    rgba(10, 8, 4, 0.66);
+  background:
+    linear-gradient(135deg, rgba(255, 153, 0, 0.055), transparent 45%), rgba(10, 8, 4, 0.66);
   padding: 18px 20px;
   min-height: 120px;
   display: flex;

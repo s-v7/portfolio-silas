@@ -4,10 +4,7 @@ type Props = {
 };
 
 const Card = ({ children, className = "" }: Props) => (
-  <div className={`ds-card ds-card-pad ${className}`}>
-    {children}
-  </div>
+  <div className={`ds-card ds-card-pad ${className}`}>{children}</div>
 );
 
 export default Card;
-

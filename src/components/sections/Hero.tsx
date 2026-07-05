@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/components/Hero.css";
 
-function useParticles(ref: React.RefObject<HTMLCanvasElement>, active: boolean) {
+const useParticles = (ref: React.RefObject<HTMLCanvasElement>, active: boolean) => {
   useEffect(() => {
     if (!active) return;
     const canvas = ref.current;
@@ -11,7 +11,8 @@ function useParticles(ref: React.RefObject<HTMLCanvasElement>, active: boolean) 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     let raf: number;
-    let w = 0, h = 0;
+    let w = 0,
+      h = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
@@ -36,15 +37,18 @@ function useParticles(ref: React.RefObject<HTMLCanvasElement>, active: boolean) 
     const tick = () => {
       ctx.clearRect(0, 0, w, h);
       pts.forEach((p) => {
-        p.x += p.vx; p.y += p.vy;
+        p.x += p.vx;
+        p.y += p.vy;
         if (p.x < 0 || p.x > w) p.vx *= -1;
         if (p.y < 0 || p.y > h) p.vy *= -1;
       });
       ctx.lineWidth = 0.4;
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
-          const a = pts[i], b = pts[j];
-          const dx = a.x - b.x, dy = a.y - b.y;
+          const a = pts[i],
+            b = pts[j];
+          const dx = a.x - b.x,
+            dy = a.y - b.y;
           const d2 = dx * dx + dy * dy;
           if (d2 < 11000) {
             const o = 1 - d2 / 11000;
@@ -71,18 +75,24 @@ function useParticles(ref: React.RefObject<HTMLCanvasElement>, active: boolean) 
       window.removeEventListener("resize", resize);
     };
   }, [ref, active]);
-}
+};
 
 // Abstract SV initials portrait (SVG/CSS-generated, no image files)
 const PORTRAIT_GRID = (() => {
   const cells = Array<number>(80).fill(0);
-  [1, 2, 3, 4, 5, 8, 16, 17, 18, 19, 20, 21, 30, 31, 33, 34, 35, 36, 38, 39].forEach((i) => { cells[i] = 1; });
-  [42, 46, 49, 50, 53, 57, 60, 65, 67, 73].forEach((i) => { cells[i] = 1; });
-  [0, 7, 40, 47, 72, 79].forEach((i) => { cells[i] = 2; });
+  [1, 2, 3, 4, 5, 8, 16, 17, 18, 19, 20, 21, 30, 31, 33, 34, 35, 36, 38, 39].forEach((i) => {
+    cells[i] = 1;
+  });
+  [42, 46, 49, 50, 53, 57, 60, 65, 67, 73].forEach((i) => {
+    cells[i] = 1;
+  });
+  [0, 7, 40, 47, 72, 79].forEach((i) => {
+    cells[i] = 2;
+  });
   return cells;
 })();
 
-function Portrait({ isAdmin }: { isAdmin: boolean }) {
+const Portrait = ({ isAdmin }: Readonly<{ isAdmin: boolean }>) => {
   const meta = [
     [isAdmin ? "FOCO" : "Focus", "Backend · AI"],
     [isAdmin ? "DESDE" : "Since", "2015"],
@@ -114,7 +124,7 @@ function Portrait({ isAdmin }: { isAdmin: boolean }) {
       </div>
     </div>
   );
-}
+};
 
 // Animated typing terminal
 const TERM_LINES = [
@@ -123,12 +133,16 @@ const TERM_LINES = [
   { prompt: true, txt: "cat stack.txt" },
   { prompt: false, txt: "Java EE · Python · Angular · FastAPI · PostgreSQL", val: true },
   { prompt: true, txt: "ls projetos/" },
-  { prompt: false, txt: "SIGEC-v2/  ART-Engine/  FiscalBot/  CadastroRastreamentoObras/", val: true },
+  {
+    prompt: false,
+    txt: "SIGEC-v2/  ART-Engine/  FiscalBot/  CadastroRastreamentoObras/",
+    val: true,
+  },
   { prompt: true, txt: "uptime" },
   { prompt: false, txt: "847 days, 0 incidents · CREA-PI cluster", val: true },
 ];
 
-function Terminal() {
+const Terminal = () => {
   const [shown, setShown] = useState(0);
   useEffect(() => {
     if (shown >= TERM_LINES.length) return;
@@ -147,7 +161,11 @@ function Terminal() {
       </div>
       {TERM_LINES.slice(0, shown).map((l, i) => (
         <div key={i} className={`terminal__line${l.val ? " terminal__line--val" : ""}`}>
-          {l.prompt ? <span className="terminal__prompt">$ </span> : <span className="terminal__indent" />}
+          {l.prompt ? (
+            <span className="terminal__prompt">$ </span>
+          ) : (
+            <span className="terminal__indent" />
+          )}
           <span>{l.txt}</span>
         </div>
       ))}
@@ -159,18 +177,30 @@ function Terminal() {
       )}
     </div>
   );
-}
+};
 
 const TICKER_ITEMS = [
-  <><b>SIGEC v2</b> ARTs processed: <b>1,142,338</b></>,
-  <>last block · <b>#0x3f7a91</b> · 12s ago</>,
-  <>FiscalBot · cron · <b>mon 06:00 BRT</b></>,
-  <>Sentinel-2 tiles · <b>20 reservoirs · NDWI ok</b></>,
-  <>systemd · <b>8/8 services up</b></>,
-  <>Cloudflare Tunnel · <b>edge:gru</b> · <b>43ms</b></>,
+  <>
+    <b>SIGEC v2</b> ARTs processed: <b>1,142,338</b>
+  </>,
+  <>
+    last block · <b>#0x3f7a91</b> · 12s ago
+  </>,
+  <>
+    FiscalBot · cron · <b>mon 06:00 BRT</b>
+  </>,
+  <>
+    Sentinel-2 tiles · <b>20 reservoirs · NDWI ok</b>
+  </>,
+  <>
+    systemd · <b>8/8 services up</b>
+  </>,
+  <>
+    Cloudflare Tunnel · <b>edge:gru</b> · <b>43ms</b>
+  </>,
 ];
 
-export default function Hero() {
+export const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const { theme } = useTheme();
   const isAdmin = theme === "admin";
@@ -209,9 +239,7 @@ export default function Hero() {
               <br />
             </h1>
           ) : (
-            <h1 className="hero__name">
-              Silas Vasconcelos
-            </h1>
+            <h1 className="hero__name">Silas Vasconcelos</h1>
           )}
 
           <p className="hero__handle">
@@ -225,21 +253,19 @@ export default function Hero() {
           {isAdmin && <Terminal />}
 
           <p className="hero__tagline">
-            Construo <strong>infraestrutura de software crítica</strong> — de
-            modernização Java&nbsp;EE a pipelines de IA e blockchain para
-            rastreabilidade de obras de engenharia.
+            Construo <strong>infraestrutura de software crítica</strong> — de modernização
+            Java&nbsp;EE a pipelines de IA e blockchain para rastreabilidade de obras de engenharia.
           </p>
 
           <div className="hero__editorial">
             <p className="hero__quote">
-              Building critical software infrastructure — from Java EE legacy
-              modernization to AI pipelines and blockchain traceability.
+              Building critical software infrastructure — from Java EE legacy modernization to AI
+              pipelines and blockchain traceability.
             </p>
             <p className="hero__bio">
-              Technology & Information Security Advisor at CREA-PI. Architect of
-              the FIE ecosystem — 1.1M+ engineering records on-chain, Sentinel-2
-              geospatial analytics, fiscal routing across 224 municipalities of
-              Piauí.
+              Technology & Information Security Advisor at CREA-PI. Architect of the FIE ecosystem —
+              1.1M+ engineering records on-chain, Sentinel-2 geospatial analytics, fiscal routing
+              across 224 municipalities of Piauí.
             </p>
           </div>
 
@@ -268,4 +294,4 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+};

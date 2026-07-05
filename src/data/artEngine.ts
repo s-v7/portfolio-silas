@@ -1,4 +1,3 @@
-
 export const CAPS = [
   {
     title: "Deterministic audit rules",
@@ -63,4 +62,3 @@ export const DEPLOY = [
   "8 systemd services in production",
   "Cloudflare Tunnel (zero-config TLS)",
 ];
-

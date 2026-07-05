@@ -13,11 +13,7 @@
 }
 
 .cvcode-card {
-  background: linear-gradient(
-    180deg,
-    rgba(20, 26, 34, 0.85),
-    rgba(15, 21, 29, 0.92)
-  );
+  background: linear-gradient(180deg, rgba(20, 26, 34, 0.85), rgba(15, 21, 29, 0.92));
   border-radius: 16px;
   padding: 0;
   position: relative;

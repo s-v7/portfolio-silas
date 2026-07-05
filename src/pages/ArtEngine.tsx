@@ -1,7 +1,7 @@
 import { useTheme } from "../context/ThemeContext";
 import "../styles/pages/ArtEngine.css";
 
-import { CAPS, PIPELINE, GOV, LEARN, DEPLOY } from '../data/artEngine';
+import { CAPS, PIPELINE, GOV, LEARN, DEPLOY } from "../data/artEngine";
 
 export default function ArtEngine() {
   const { theme } = useTheme();
@@ -53,21 +53,22 @@ export default function ArtEngine() {
           </h2>
         </div>
         <div className="pipeline">
-          {PIPELINE.map((s, i) => (
-            <>
-              <div
-                key={s}
-                className={`pipe-step${i === 4 || i === 5 ? " pipe-step--accent" : ""}`}
-              >
+          {PIPELINE.flatMap((s, i) => {
+            const step = (
+              <div key={s} className={`pipe-step${i === 4 || i === 5 ? " pipe-step--accent" : ""}`}>
                 {s}
               </div>
-              {i < PIPELINE.length - 1 && (
-                <span className="pipe-arrow" key={`a${i}`}>
-                  →
-                </span>
-              )}
-            </>
-          ))}
+            );
+
+            if (i === PIPELINE.length - 1) return [step];
+
+            return [
+              step,
+              <span className="pipe-arrow" key={`${s}-${PIPELINE[i + 1]}`}>
+                →
+              </span>,
+            ];
+          })}
         </div>
 
         {/* Capabilities */}
@@ -94,7 +95,7 @@ export default function ArtEngine() {
         {/* Governance + Learning */}
         <div className="art-blocks">
           <div className="art-block">
-            <p className="art-block__label t-label">// LLM Governance Model</p>
+            <p className="art-block__label t-label">LLM Governance Model</p>
             <ul className="art-block__list">
               {GOV.map((g) => (
                 <li key={g}>{g}</li>
@@ -102,7 +103,7 @@ export default function ArtEngine() {
             </ul>
           </div>
           <div className="art-block">
-            <p className="art-block__label t-label">// Continuous Learning</p>
+            <p className="art-block__label t-label">Continuous Learning</p>
             <ul className="art-block__list">
               {LEARN.map((l) => (
                 <li key={l}>{l}</li>
@@ -114,7 +115,7 @@ export default function ArtEngine() {
         {/* Deployment */}
         <div className="art-deploy">
           <div className="art-deploy__col">
-            <p className="art-deploy__label t-label">// Deployment model</p>
+            <p className="art-deploy__label t-label">Deployment model</p>
             <div className="art-deploy__items">
               {DEPLOY.map((d) => (
                 <span key={d} className="tag">
@@ -124,7 +125,7 @@ export default function ArtEngine() {
             </div>
           </div>
           <div className="art-deploy__col">
-            <p className="art-deploy__label t-label">// Stack</p>
+            <p className="art-deploy__label t-label">Stack</p>
             <div className="art-deploy__items">
               {[
                 "FastAPI",

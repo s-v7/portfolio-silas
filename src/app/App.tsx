@@ -29,8 +29,8 @@ export default function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/art-engine" element={<ArtEngine />} />
-	  <Route path="/chat" element={<Chat />} />
-	  <Route path="/ai-career" element={<Chat />} />	  
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/ai-career" element={<Chat />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />

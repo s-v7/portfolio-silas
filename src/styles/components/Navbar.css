@@ -17,7 +17,10 @@
   gap: 1.5rem;
 }
 
-.nav-brand { text-decoration: none; flex-shrink: 0; }
+.nav-brand {
+  text-decoration: none;
+  flex-shrink: 0;
+}
 .nav-brand-admin {
   font-family: var(--mono);
   font-size: 14px;
@@ -25,14 +28,20 @@
   letter-spacing: 0.05em;
   color: var(--g);
 }
-.nav-brand-admin span { color: var(--text); opacity: 0.35; }
+.nav-brand-admin span {
+  color: var(--text);
+  opacity: 0.35;
+}
 .nav-brand-rec {
   font-family: "DM Serif Display", serif;
   font-size: 20px;
   font-weight: 400;
   color: var(--text);
 }
-.nav-brand-rec em { color: var(--g); font-style: italic; }
+.nav-brand-rec em {
+  color: var(--g);
+  font-style: italic;
+}
 
 .nav-links {
   display: flex;
@@ -54,7 +63,9 @@
   color: var(--muted);
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
   white-space: nowrap;
 }
 [data-theme="recruiter"] .nav-link {
@@ -64,8 +75,13 @@
   font-weight: 500;
   letter-spacing: 0.02em;
 }
-.nav-link:hover { color: var(--text-dim); }
-.nav-link--active { color: var(--g); border-bottom-color: var(--g); }
+.nav-link:hover {
+  color: var(--text-dim);
+}
+.nav-link--active {
+  color: var(--g);
+  border-bottom-color: var(--g);
+}
 
 .nav-right {
   display: flex;
@@ -92,14 +108,18 @@
 }
 
 /* accent hue slider */
-.nav-accent-wrap { display: flex; align-items: center; }
+.nav-accent-wrap {
+  display: flex;
+  align-items: center;
+}
 .nav-hue-slider {
   -webkit-appearance: none;
   appearance: none;
   width: 72px;
   height: 4px;
   border-radius: 99px;
-  background: linear-gradient(to right,
+  background: linear-gradient(
+    to right,
     oklch(64% 0.13 0),
     oklch(64% 0.13 60),
     oklch(64% 0.13 120),
@@ -160,7 +180,13 @@
 }
 
 @media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-status { display: none; }
-  .nav-accent-wrap { display: none; }
+  .nav-links {
+    display: none;
+  }
+  .nav-status {
+    display: none;
+  }
+  .nav-accent-wrap {
+    display: none;
+  }
 }

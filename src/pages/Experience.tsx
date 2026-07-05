@@ -9,7 +9,9 @@ function RoleCard({ r, lang }: { r: Role; lang: Lang }) {
     <article className="exp-card">
       <div className="exp-card__head">
         <h3 className="exp-card__title">{t(r.title, lang)}</h3>
-        {r.current && <span className="exp-card__badge">{lang === "pt" ? "Atual" : "Current"}</span>}
+        {r.current && (
+          <span className="exp-card__badge">{lang === "pt" ? "Atual" : "Current"}</span>
+        )}
       </div>
       <div className="exp-card__meta">
         <span className="exp-card__org">{r.org}</span>
@@ -25,7 +27,9 @@ function RoleCard({ r, lang }: { r: Role; lang: Lang }) {
       </ul>
       <div className="exp-card__stack">
         {r.stack.map((s) => (
-          <span key={s} className="tag">{s}</span>
+          <span key={s} className="tag">
+            {s}
+          </span>
         ))}
       </div>
     </article>
@@ -44,7 +48,9 @@ export default function Experience() {
           <span className="section-num">03.</span>
           <h1 className="section-title">{isAdmin ? "Experiência" : "Experience"}</h1>
           <div className="section-rule" />
-          <span className="t-label">{ROLES.length} {isAdmin ? "cargos" : "roles"}</span>
+          <span className="t-label">
+            {ROLES.length} {isAdmin ? "cargos" : "roles"}
+          </span>
         </header>
         <div className="exp-list">
           {ROLES.map((r) => (

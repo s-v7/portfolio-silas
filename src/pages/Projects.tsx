@@ -76,9 +76,7 @@ function ProjectCard({ p, lang }: { p: Project; lang: Lang }) {
       </div>
       <h3 className="bento-card__title">
         {t(p.title, lang)}
-        {p.subtitle && (
-          <span className="bento-card__subtitle">{t(p.subtitle, lang)}</span>
-        )}
+        {p.subtitle && <span className="bento-card__subtitle">{t(p.subtitle, lang)}</span>}
       </h3>
       <p className="bento-card__desc">{t(p.desc, lang)}</p>
       <div className="bento-card__stack">

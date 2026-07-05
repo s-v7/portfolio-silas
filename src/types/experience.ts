@@ -20,5 +20,4 @@ export interface HomeExperience {
   desc: string;
 }
 
-export const t = (v: I18n, lang: Lang): string =>
-  typeof v === "string" ? v : v[lang] ?? v.en;
+export const t = (v: I18n, lang: Lang): string => (typeof v === "string" ? v : (v[lang] ?? v.en));

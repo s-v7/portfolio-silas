@@ -6,17 +6,11 @@ import "../../styles/components/Navbar.css";
 const LINKS_ADMIN = [
   { to: "/", label: "Home" },
   { to: "/ai-career", label: "AI Career" },
-  { to: "/profile", label: "Profile" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
 ];
 
 const LINKS_REC = [
   { to: "/", label: "Home" },
-  { to: "/ai-career", label: "AI Career" },  
-  { to: "/profile", label: "Profile" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
+  { to: "/ai-career", label: "AI Career" },
 ];
 
 function IconAdmin() {
@@ -104,9 +98,7 @@ export default function Navbar() {
                   <NavLink
                     to={to}
                     end={to === "/"}
-                    className={({ isActive }) =>
-                      `nav-link${isActive ? " nav-link--active" : ""}`
-                    }
+                    className={({ isActive }) => `nav-link${isActive ? " nav-link--active" : ""}`}
                   >
                     {label}
                   </NavLink>
@@ -134,9 +126,7 @@ export default function Navbar() {
               className="theme-toggle"
               onClick={toggle}
               aria-label={`Switch to ${isRec ? "admin" : "recruiter"} theme`}
-              title={
-                isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"
-              }
+              title={isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"}
             >
               {isRec ? <IconAdmin /> : <IconRec />}
             </button>

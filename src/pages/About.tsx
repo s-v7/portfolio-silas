@@ -19,17 +19,15 @@ const About: React.FC = () => {
             <h1 className="text-4xl font-bold mb-6 text-teal-400">About Me</h1>
 
             <p className="mb-6 leading-relaxed text-gray-300">
-              I am a Full Stack Software Engineer with experience in developing
-              web and enterprise systems, focused on information security,
-              applied artificial intelligence, and integration with external
-              APIs such as SEFAZ.
+              I am a Full Stack Software Engineer with experience in developing web and enterprise
+              systems, focused on information security, applied artificial intelligence, and
+              integration with external APIs such as SEFAZ.
             </p>
 
             <p className="mb-6 leading-relaxed text-gray-300">
-              With more than 5 years of experience, I have worked on system
-              implementation and maintenance, requirements analysis, feature
-              development, infrastructure, and security — always focused on
-              optimization and technological evolution.
+              With more than 5 years of experience, I have worked on system implementation and
+              maintenance, requirements analysis, feature development, infrastructure, and security
+              — always focused on optimization and technological evolution.
             </p>
 
             <p className="mb-6 leading-relaxed text-gray-300">
@@ -42,10 +40,9 @@ const About: React.FC = () => {
               >
                 HANDpdv
               </a>
-              , I developed and improved web and mobile systems for issuing
-              electronic invoices and integrating with SEFAZ, working with Java,
-              JSF, PrimeFaces, Hibernate, WebServices (SOAP/REST), and database
-              optimization.
+              , I developed and improved web and mobile systems for issuing electronic invoices and
+              integrating with SEFAZ, working with Java, JSF, PrimeFaces, Hibernate, WebServices
+              (SOAP/REST), and database optimization.
             </p>
           </section>
         )}
@@ -54,8 +51,7 @@ const About: React.FC = () => {
         {currentPage === 2 && (
           <section>
             <p className="mb-6 leading-relaxed text-gray-300">
-              Currently, I work as a{" "}
-              <strong>Technology and Information Security Advisor</strong> at{" "}
+              Currently, I work as a <strong>Technology and Information Security Advisor</strong> at{" "}
               <a
                 href="https://crea-pi.org.br/"
                 target="_blank"
@@ -68,16 +64,15 @@ const About: React.FC = () => {
             </p>
 
             <p className="mb-6 leading-relaxed text-gray-300">
-              My responsibilities include maintaining and modernizing legacy
-              systems, implementing new features, resolving critical issues, and
-              introducing new technologies into the corporate environment.
+              My responsibilities include maintaining and modernizing legacy systems, implementing
+              new features, resolving critical issues, and introducing new technologies into the
+              corporate environment.
             </p>
 
             <p className="mb-6 leading-relaxed text-gray-300">
-              I actively participated in migrations from JDK 6 → 7 → 8 → 11 →
-              17.[0], upgrades of GlassFish and PrimeFaces, and the
-              implementation of CI/CD, automation, SSL/TLS renewal, database
-              backup strategies, and secure deployment pipelines.
+              I actively participated in migrations from JDK 6 → 7 → 8 → 11 → 17.[0], upgrades of
+              GlassFish and PrimeFaces, and the implementation of CI/CD, automation, SSL/TLS
+              renewal, database backup strategies, and secure deployment pipelines.
             </p>
 
             <h2 className="text-2xl mt-6 mb-4">Technologies Used</h2>
@@ -106,10 +101,9 @@ const About: React.FC = () => {
             </h2>
 
             <p className="mb-4 text-gray-300">
-              <strong>Description:</strong> Institutional legacy management
-              system originally developed with JSF 2.0, PrimeFaces 3.1, EJB, and
-              GlassFish 3.1. I led a full modernization effort while preserving
-              critical workflows and EAR modular structure.
+              <strong>Description:</strong> Institutional legacy management system originally
+              developed with JSF 2.0, PrimeFaces 3.1, EJB, and GlassFish 3.1. I led a full
+              modernization effort while preserving critical workflows and EAR modular structure.
             </p>
 
             <ul className="list-disc pl-6 text-gray-300 mb-4">
@@ -121,8 +115,8 @@ const About: React.FC = () => {
             </ul>
 
             <p className="mb-4 text-gray-300">
-              <strong>Technologies:</strong> Java 8, JSF 2.3, PrimeFaces 13,
-              GlassFish, PostgreSQL, Maven, Git, SonarQube
+              <strong>Technologies:</strong> Java 8, JSF 2.3, PrimeFaces 13, GlassFish, PostgreSQL,
+              Maven, Git, SonarQube
             </p>
           </section>
         )}
@@ -136,9 +130,7 @@ const About: React.FC = () => {
             disabled={currentPage === page}
             onClick={() => changePage(page as PageIndex)}
             className={`px-4 py-2 rounded transition ${
-              currentPage === page
-                ? "bg-gray-600 cursor-default"
-                : "bg-blue-500 hover:bg-teal-600"
+              currentPage === page ? "bg-gray-600 cursor-default" : "bg-blue-500 hover:bg-teal-600"
             }`}
           >
             Page {page}

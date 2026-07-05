@@ -102,8 +102,7 @@ export const LANGS = [
   },
   {
     lang: "English",
-    level:
-      "Intermediate reading and technical comprehension; basic writing and conversation",
+    level: "Intermediate reading and technical comprehension; basic writing and conversation",
     pct: 55,
   },
 ];

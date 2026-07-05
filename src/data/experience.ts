@@ -64,15 +64,7 @@ export const ROLES: Role[] = [
         pt: "Integração de sistemas com web services SOAP/REST e documentos fiscais brasileiros como NF-e e NFC-e.",
       },
     ],
-    stack: [
-      "Java 7/8",
-      "JSF/PrimeFaces",
-      "JPA",
-      "Hibernate",
-      "Tomcat",
-      "SQL",
-      "SOAP/REST",
-    ],
+    stack: ["Java 7/8", "JSF/PrimeFaces", "JPA", "Hibernate", "Tomcat", "SQL", "SOAP/REST"],
   },
   {
     id: "megi9",
@@ -100,13 +92,6 @@ export const ROLES: Role[] = [
         pt: "Suporte a sistemas integrados com Oracle e MySQL, com foco em estabilidade, correção de bugs e melhoria contínua de processos de negócio.",
       },
     ],
-    stack: [
-      "Java",
-      "JSF/PrimeFaces",
-      "JavaScript",
-      "XHTML/CSS",
-      "Oracle",
-      "MySQL",
-    ],
+    stack: ["Java", "JSF/PrimeFaces", "JavaScript", "XHTML/CSS", "Oracle", "MySQL"],
   },
 ];

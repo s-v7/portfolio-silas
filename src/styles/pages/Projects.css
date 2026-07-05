@@ -1,4 +1,6 @@
-.projects-page { padding-bottom: 4rem; }
+.projects-page {
+  padding-bottom: 4rem;
+}
 
 /* bento grid */
 .proj-bento {
@@ -8,8 +10,16 @@
   gap: 1.25rem;
   padding-bottom: 3rem;
 }
-@media (max-width: 1000px) { .proj-bento { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 640px) { .proj-bento { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) {
+  .proj-bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .proj-bento {
+    grid-template-columns: 1fr;
+  }
+}
 
 .bento-card {
   position: relative;
@@ -30,30 +40,66 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--g-soft), transparent 60%);
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    var(--g-soft),
+    transparent 60%
+  );
   opacity: 0;
   transition: opacity 0.3s;
   z-index: -1;
 }
-.bento-card:hover { border-color: var(--g); transform: translateY(-3px); }
-.bento-card:hover::before { opacity: 1; }
+.bento-card:hover {
+  border-color: var(--g);
+  transform: translateY(-3px);
+}
+.bento-card:hover::before {
+  opacity: 1;
+}
 
 /* grid spanning */
-.bento-card[data-size="featured"] { grid-column: span 4; grid-row: span 2; }
-.bento-card[data-size="tall"]     { grid-column: span 2; grid-row: span 2; }
-.bento-card[data-size="wide"]     { grid-column: span 4; }
-.bento-card[data-size="med"]      { grid-column: span 3; }
-.bento-card[data-size="sm"]       { grid-column: span 2; }
+.bento-card[data-size="featured"] {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+.bento-card[data-size="tall"] {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.bento-card[data-size="wide"] {
+  grid-column: span 4;
+}
+.bento-card[data-size="med"] {
+  grid-column: span 3;
+}
+.bento-card[data-size="sm"] {
+  grid-column: span 2;
+}
 
 @media (max-width: 1000px) {
-  .bento-card[data-size="featured"] { grid-column: span 3; grid-row: span 2; }
-  .bento-card[data-size="tall"]     { grid-column: span 3; grid-row: auto; }
-  .bento-card[data-size="wide"]     { grid-column: span 3; }
-  .bento-card[data-size="med"]      { grid-column: span 3; }
-  .bento-card[data-size="sm"]       { grid-column: span 3; }
+  .bento-card[data-size="featured"] {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  .bento-card[data-size="tall"] {
+    grid-column: span 3;
+    grid-row: auto;
+  }
+  .bento-card[data-size="wide"] {
+    grid-column: span 3;
+  }
+  .bento-card[data-size="med"] {
+    grid-column: span 3;
+  }
+  .bento-card[data-size="sm"] {
+    grid-column: span 3;
+  }
 }
 @media (max-width: 640px) {
-  .bento-card[data-size] { grid-column: 1 !important; grid-row: auto !important; }
+  .bento-card[data-size] {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
 }
 
 /* card internals */
@@ -72,7 +118,11 @@
   color: var(--g);
   font-weight: 700;
 }
-[data-theme="recruiter"] .bento-card__tag { font-family: "Inter", sans-serif; font-weight: 600; letter-spacing: 0.06em; }
+[data-theme="recruiter"] .bento-card__tag {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
 
 .bento-card__status {
   display: flex;
@@ -92,9 +142,19 @@
   letter-spacing: 0;
   text-transform: none;
 }
-.bento-card__status .sd { width: 5px; height: 5px; border-radius: 50%; background: var(--g); flex-shrink: 0; }
-.bento-card__status.warn .sd { background: var(--warn); }
-.bento-card__status.dim .sd { background: var(--text-dim); }
+.bento-card__status .sd {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--g);
+  flex-shrink: 0;
+}
+.bento-card__status.warn .sd {
+  background: var(--warn);
+}
+.bento-card__status.dim .sd {
+  background: var(--text-dim);
+}
 
 .bento-card__title {
   font-family: var(--display);
@@ -112,8 +172,12 @@
   letter-spacing: 0;
   line-height: 1.15;
 }
-.bento-card[data-size="featured"] .bento-card__title { font-size: 1.7rem; }
-[data-theme="recruiter"] .bento-card[data-size="featured"] .bento-card__title { font-size: 2.2rem; }
+.bento-card[data-size="featured"] .bento-card__title {
+  font-size: 1.7rem;
+}
+[data-theme="recruiter"] .bento-card[data-size="featured"] .bento-card__title {
+  font-size: 2.2rem;
+}
 
 .bento-card__subtitle {
   display: block;
@@ -123,10 +187,21 @@
   margin-top: 4px;
   letter-spacing: 0;
 }
-[data-theme="recruiter"] .bento-card__subtitle { font-family: "Inter", sans-serif; }
+[data-theme="recruiter"] .bento-card__subtitle {
+  font-family: "Inter", sans-serif;
+}
 
-.bento-card__desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; flex: 1; }
-[data-theme="recruiter"] .bento-card__desc { font-size: 14px; line-height: 1.55; }
+.bento-card__desc {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+[data-theme="recruiter"] .bento-card__desc {
+  font-size: 14px;
+  line-height: 1.55;
+}
 .bento-card[data-size="sm"] .bento-card__desc {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -135,7 +210,12 @@
   overflow: hidden;
 }
 
-.bento-card__stack { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.8rem; }
+.bento-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 0.8rem;
+}
 .bento-card__foot {
   display: flex;
   justify-content: space-between;
@@ -146,9 +226,20 @@
   letter-spacing: 0.06em;
   margin-top: auto;
 }
-[data-theme="recruiter"] .bento-card__foot { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0; }
-.bento-card__arrow { transition: transform 0.25s; color: var(--g); font-size: 14px; }
-.bento-card:hover .bento-card__arrow { transform: translateX(4px); }
+[data-theme="recruiter"] .bento-card__foot {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.bento-card__arrow {
+  transition: transform 0.25s;
+  color: var(--g);
+  font-size: 14px;
+}
+.bento-card:hover .bento-card__arrow {
+  transform: translateX(4px);
+}
 
 /* blockchain viz overlay on featured card */
 .featured-viz {
@@ -160,4 +251,7 @@
   pointer-events: none;
   opacity: 0.55;
 }
-.featured-viz svg { width: 100%; height: 100%; }
+.featured-viz svg {
+  width: 100%;
+  height: 100%;
+}

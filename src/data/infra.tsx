@@ -1,3 +1,4 @@
+import { FaCloud, FaCodeBranch, FaNetworkWired, FaServer, FaShieldAlt } from "react-icons/fa";
 
 export const sections = [
   {
@@ -45,4 +46,3 @@ export const sections = [
     ],
   },
 ];
-
