@@ -1,5 +1,6 @@
-
 export type ProviderId = "anthropic" | "nvidia" | "openai";
+
+export type ChatRole = "user" | "assistant" | "system";
 
 export type CareerMessage = {
   id: string;
@@ -19,4 +20,3 @@ export type ChatResponse = {
   provider: ProviderId;
   answer: string;
 };
-

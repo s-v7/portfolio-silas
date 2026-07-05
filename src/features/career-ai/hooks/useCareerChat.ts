@@ -6,18 +6,17 @@ const INITIAL_MESSAGE: CareerMessage = {
   id: crypto.randomUUID(),
   role: "assistant",
   content:
-    "Olá! Sou o AI Career Assistant do Silas. Posso responder perguntas sobre trajetória, projetos, tecnologias, experiência profissional, formação e objetivos de carreira.",
+    "Olá! Sou o AI Career Assistant do Silas.\n\nPosso responder perguntas sobre trajetória, projetos, tecnologias, experiência profissional, e também posso fornecer sugestões de prompts para você interagir comigo. Sinta-se à vontade para perguntar qualquer coisa!",
   provider: "openai",
 };
 
 export function useCareerChat() {
   const [provider, setProvider] = useState<ProviderId>("openai");
-  const [messages, setMessages] = useState<CareerMessage[]>([
-    INITIAL_MESSAGE,
-  ]);
+  const [messages, setMessages] = useState<CareerMessage[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // sourcery skip: avoid-function-declarations-in-blocks
   async function sendMessage(customText?: string) {
     const text = (customText ?? input).trim();
 
@@ -77,4 +76,3 @@ export function useCareerChat() {
     clearConversation,
   };
 }
-

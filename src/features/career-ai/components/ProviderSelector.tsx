@@ -1,43 +1,14 @@
-import type { ProviderId, ProviderOption } from "../types";
+import { PROVIDERS, Props } from "../../../data/providerSelector";
 
-const PROVIDERS: ProviderOption[] = [
-  {
-    id: "openai",
-    label: "OpenAI",
-    status: "online",
-    description: "GPT model",
-  },
-  {
-    id: "nvidia",
-    label: "NVIDIA",
-    status: "online",
-    description: "Llama / NIM",
-  },
-  {
-    id: "anthropic",
-    label: "Claude",
-    status: "disabled",
-    description: "Sem créditos",
-  },
-];
-
-type Props = {
-  provider: ProviderId;
-  onChange: (provider: ProviderId) => void;
-};
-
-export function ProviderSelector({ provider, onChange }: Props) {
+export function ProviderSelector({ provider, onChange }: Readonly<Props>) {
   return (
     <section>
-      <h2>Provider</h2>
-
+      <h2>Providers</h2>
       <div className="provider-list">
         {PROVIDERS.map((p) => (
           <button
             key={p.id}
-            className={`provider-card ${
-              provider === p.id ? "provider-card--active" : ""
-            }`}
+            className={`provider-card ${provider === p.id ? "provider-card--active" : ""}`}
             onClick={() => onChange(p.id)}
             disabled={p.status === "disabled"}
             type="button"

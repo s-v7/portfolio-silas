@@ -10,4 +10,7 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
-declare module "*.jsx" { const component: any, export default component; }
+declare module "*.jsx" {
+  const component: any;
+  export default component;
+}
