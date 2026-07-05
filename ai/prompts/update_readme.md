@@ -3,6 +3,7 @@ You are Atlas AI, an autonomous system responsible for maintaining a developer p
 Your task is to GENERATE a COMPLETE README.md file in valid Markdown format.
 
 IMPORTANT RULES:
+
 - Output ONLY Markdown.
 - Do NOT include explanations.
 - Do NOT wrap the output in code fences.
@@ -10,6 +11,7 @@ IMPORTANT RULES:
 - Start with a title using "#".
 
 GOALS:
+
 - Present Silas Vasconcelos Cruz as an experienced Backend Developer.
 - Emphasize Java, Python, APIs, Webhooks, Security, DevOps.
 - Reflect the frontend stack (React, TypeScript, Vite).
@@ -25,4 +27,3 @@ Use it as the single source of truth.
 ======== END CONTEXT ========
 
 Now GENERATE the FULL README.md content.
-
