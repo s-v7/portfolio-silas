@@ -12,6 +12,7 @@ export default function Chat() {
     setInput,
     loading,
     sendMessage,
+    rateMessage,
     clearConversation,
   } = useCareerChat();
 
@@ -26,6 +27,7 @@ export default function Chat() {
       onInputCHange={setInput}
       onSend={() => sendMessage()}
       onClear={clearConversation}
+      onFeedback={rateMessage}
     />
   );
 }

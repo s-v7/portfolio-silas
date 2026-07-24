@@ -1,4 +1,8 @@
-import { CareerMessage, ProviderId } from "@/features/career-ai/types";
+import type {
+  CareerMessage,
+  FeedbackPayload,
+  ProviderId,
+} from "@/features/career-ai/types";
 
 export type Props = {
   provider: ProviderId;
@@ -8,4 +12,9 @@ export type Props = {
   onInputChange: (value: string) => void;
   onSend: () => void;
   onClear: () => void;
+  onFeedback: (
+    messageId: string,
+    interactionId: string,
+    feedback: FeedbackPayload
+  ) => Promise<void>;
 };
