@@ -61,3 +61,6 @@ __pycache__/
 estrutura_diretorios_servicosonline.svg
 check.txt
 .env
+
+# Generated Worker context
+dist_worker_context.js
