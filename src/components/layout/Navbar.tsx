@@ -57,7 +57,7 @@ function SystemHeader() {
           UPTIME · <b>847d 12h</b>
         </span>
         <span>
-          NODE · <b>teresina-pi.br</b>
+          NODE · <b>arbitrary</b>
         </span>
         <span>
           LOAD · <b>0.42 0.51 0.48</b>
