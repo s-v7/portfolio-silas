@@ -12,15 +12,21 @@ import ArtEngine from "../pages/ArtEngine";
 import Contact from "../pages/Contact";
 import CVInit from "../pages/CVInit";
 import Chat from "../pages/Chat";
+import LearningDashboard from "../pages/LearningDashboard";
 
 import "../styles/components/Navbar.css";
 import "../styles/components/Footer.css";
 import "../styles/components.css";
 
+const routerBase =
+  import.meta.env.BASE_URL === "/"
+    ? "/"
+    : import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={routerBase}>
         <ScrollToTop />
         <Navbar />
         <Routes>
@@ -32,6 +38,9 @@ export default function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/ai-career" element={<Chat />} />
           <Route path="/contact" element={<Contact />} />
+          {import.meta.env.DEV && (
+            <Route path="/admin/learning" element={<LearningDashboard />} />
+          )}
         </Routes>
         <Footer />
       </BrowserRouter>
