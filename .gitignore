@@ -61,3 +61,15 @@ __pycache__/
 estrutura_diretorios_servicosonline.svg
 check.txt
 .env
+
+# Python automation
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Portfolio AI generated artifacts
+ai/output/
+ai/logs/
+.venv/
