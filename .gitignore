@@ -78,3 +78,6 @@ ai/logs/
 *.egg-info/
 build/
 dist/
+
+# AI-generated local drafts
+ai/output/drafts/
