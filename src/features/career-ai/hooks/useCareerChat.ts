@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { askCareerAssistant } from "../services/api";
-import type { CareerMessage, ProviderId } from "../types";
+import { askCareerAssistant, sendCareerFeedback } from "../services/api";
+import type { CareerMessage, FeedbackPayload, ProviderId } from "../types";
 
-const INITIAL_MESSAGE: CareerMessage = {
+const createInitialMessage = (): CareerMessage => ({
   id: crypto.randomUUID(),
   role: "assistant",
   content:
-    "Olá! Sou o AI Career Assistant do Silas. Posso responder perguntas sobre trajetória, projetos, tecnologias, experiência profissional, formação e objetivos de carreira.",
+    "Hello! I am Silas's AI Career Assistant.\n\nI can answer questions about his professional background, projects, technologies, enterprise modernization, applied AI, and education.",
   provider: "openai",
-};
+});
 
 export function useCareerChat() {
   const [provider, setProvider] = useState<ProviderId>("openai");
-  const [messages, setMessages] = useState<CareerMessage[]>([
-    INITIAL_MESSAGE,
-  ]);
+  const [messages, setMessages] = useState<CareerMessage[]>([createInitialMessage()]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,36 +21,41 @@ export function useCareerChat() {
 
     if (!text || loading) return;
 
-    const userMessage: CareerMessage = {
-      id: crypto.randomUUID(),
-      role: "user",
-      content: text,
-    };
+    setMessages((previous) => [
+      ...previous,
+      {
+        id: crypto.randomUUID(),
+        role: "user",
+        content: text,
+      },
+    ]);
 
-    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
       const data = await askCareerAssistant(provider, text);
 
-      const assistantMessage: CareerMessage = {
-        id: crypto.randomUUID(),
-        role: "assistant",
-        content: data.answer || "Sem resposta.",
-        provider,
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
-      const err = error instanceof Error ? error.message : "Erro desconhecido";
-
-      setMessages((prev) => [
-        ...prev,
+      setMessages((previous) => [
+        ...previous,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: `Não foi possível obter resposta agora. ${err}`,
+          content: data.answer || "Sem resposta.",
+          provider: data.provider,
+          intent: data.intent,
+          interactionId: data.interactionId,
+        },
+      ]);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
+
+      setMessages((previous) => [
+        ...previous,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: `Não foi possível obter resposta agora. ${message}`,
           provider,
         },
       ]);
@@ -61,8 +64,18 @@ export function useCareerChat() {
     }
   }
 
+  async function rateMessage(messageId: string, interactionId: string, feedback: FeedbackPayload) {
+    await sendCareerFeedback(interactionId, feedback);
+
+    setMessages((previous) =>
+      previous.map((message) =>
+        message.id === messageId ? { ...message, feedback: feedback.rating } : message
+      )
+    );
+  }
+
   function clearConversation() {
-    setMessages([INITIAL_MESSAGE]);
+    setMessages([createInitialMessage()]);
     setInput("");
   }
 
@@ -74,7 +87,7 @@ export function useCareerChat() {
     setInput,
     loading,
     sendMessage,
+    rateMessage,
     clearConversation,
   };
 }
-

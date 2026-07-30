@@ -14,29 +14,21 @@ const Skills = () => {
       {currentPage === 1 && (
         <ul className="skills-list">
           <li>
-            Backend: Java (JDK 8, 11, 17), EJB, JPA, JSF, PrimeFaces; Python
-            (Flask, Django); Node.js
+            Backend: Java (JDK 8, 11, 17), EJB, JPA, JSF, PrimeFaces; Python (Flask, Django);
+            Node.js
           </li>
-          <li>
-            Frontend: React, Angular, JavaScript, HTML, CSS/SCSS, Bootstrap
-          </li>
+          <li>Frontend: React, Angular, JavaScript, HTML, CSS/SCSS, Bootstrap</li>
           <li>Databases: PostgreSQL, MySQL, SQLite, MongoDB</li>
           <li>
-            DevOps & Automation: Gitea, CI/CD, Webhooks, Docker, Kubernetes,
-            Terraform, Ansible
+            DevOps & Automation: Gitea, CI/CD, Webhooks, Docker, Kubernetes, Terraform, Ansible
           </li>
           <li>
-            Security: OWASP, API Hardening, Pentesting, Blockchain, Compliance &
-            Audit Logging
+            Security: OWASP, API Hardening, Pentesting, Blockchain, Compliance & Audit Logging
           </li>
           <li>
-            AI & Machine Learning: TensorFlow, Scikit-Learn, Pandas, PyTorch,
-            Anomaly Detection
+            AI & Machine Learning: TensorFlow, Scikit-Learn, Pandas, PyTorch, Anomaly Detection
           </li>
-          <li>
-            IT Governance & Management: ITIL 4, COBIT 2019, BPMN, Systems
-            Architecture
-          </li>
+          <li>IT Governance & Management: ITIL 4, COBIT 2019, BPMN, Systems Architecture</li>
         </ul>
       )}
 
@@ -46,20 +38,17 @@ const Skills = () => {
           <ul className="skills-list">
             <li>Specialist in modernizing large JSF-based corporate systems</li>
             <li>
-              Able to read, refactor and evolve systems that are 10+ years old
-              without breaking mission-critical flows
+              Able to read, refactor and evolve systems that are 10+ years old without breaking
+              mission-critical flows
+            </li>
+            <li>Deep understanding of layout, DOM behavior, and dynamic/custom JS</li>
+            <li>
+              Hands-on experience with production systems under high compliance and public/financial
+              accountability
             </li>
             <li>
-              Deep understanding of layout, DOM behavior, and dynamic/custom JS
-            </li>
-            <li>
-              Hands-on experience with production systems under high compliance
-              and public/financial accountability
-            </li>
-            <li>
-              Strong balance between maintaining stability in legacy platforms
-              and introducing modern best practices (automation, observability,
-              security, AI augmentation)
+              Strong balance between maintaining stability in legacy platforms and introducing
+              modern best practices (automation, observability, security, AI augmentation)
             </li>
           </ul>
         </div>

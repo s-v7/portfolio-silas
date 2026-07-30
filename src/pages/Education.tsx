@@ -4,7 +4,7 @@ import "../styles/pages/Education.css";
 import { EDU, CERTS, LANGS } from "../data/education";
 
 export default function Education() {
-  const { theme } = useTheme();
+  useTheme();
   return (
     <main className="edu-page">
       <div className="container">
@@ -14,7 +14,7 @@ export default function Education() {
           <div className="section-rule" />
         </header>
         <section className="edu-block">
-          <p className="block-label t-label">// Academic</p>
+          <p className="block-label t-label">Academic</p>
           {EDU.map((e) => (
             <div key={e.degree} className="edu-card">
               <div className="edu-card__header">
@@ -25,13 +25,8 @@ export default function Education() {
                 <div className="edu-card__meta">
                   <span className="tag tag-active">{e.status}</span>
                   <span className="t-label">
-                    {typeof e.mode === "string"
-                      ? e.mode
-                      : (e.mode as { en: string }).en}{" "}
-                    ·{" "}
-                    {typeof e.period === "string"
-                      ? e.period
-                      : (e.period as { en: string }).en}
+                    {typeof e.mode === "string" ? e.mode : (e.mode as { en: string }).en} ·{" "}
+                    {typeof e.period === "string" ? e.period : (e.period as { en: string }).en}
                   </span>
                 </div>
               </div>
@@ -46,7 +41,7 @@ export default function Education() {
           ))}
         </section>
         <section className="edu-block">
-          <p className="block-label t-label">// Certifications</p>
+          <p className="block-label t-label">Certifications</p>
           <div className="cert-grid">
             {CERTS.map((c) => (
               <article key={c.name} className="cert-card">
@@ -63,7 +58,7 @@ export default function Education() {
           </div>
         </section>
         <section className="edu-block">
-          <p className="block-label t-label">// Languages</p>
+          <p className="block-label t-label">Languages</p>
           <div className="lang-list">
             {LANGS.map((l) => (
               <div key={l.lang} className="lang-row">
@@ -72,10 +67,7 @@ export default function Education() {
                   <span className="t-label">{l.level}</span>
                 </div>
                 <div className="lang-bar">
-                  <div
-                    className="lang-bar__fill"
-                    style={{ width: `${l.pct}%` }}
-                  />
+                  <div className="lang-bar__fill" style={{ width: `${l.pct}%` }} />
                 </div>
                 <span className="t-label lang-pct">{l.pct}%</span>
               </div>

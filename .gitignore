@@ -62,6 +62,9 @@ estrutura_diretorios_servicosonline.svg
 check.txt
 .env
 
+# Generated Worker context
+dist_worker_context.js
+
 # Python automation
 __pycache__/
 *.py[cod]
@@ -81,3 +84,4 @@ dist/
 
 # AI-generated local drafts
 ai/output/drafts/
+

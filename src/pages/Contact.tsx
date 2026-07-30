@@ -32,18 +32,14 @@ export default function Contact() {
                 <p className="contact-label t-label">{label}</p>
                 <p className="contact-value">{value}</p>
               </div>
-            ),
+            )
           )}
         </div>
         <div className="contact-message">
           <p className="t-label" style={{ marginBottom: "1rem" }}>
             {isAdmin ? "// Mensagem rápida" : "// Quick message"}
           </p>
-          <form
-            action="https://formspree.io/f/YOUR_FORM_ID"
-            method="POST"
-            className="contact-form"
-          >
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" className="contact-form">
             <div className="form-row">
               <div className="form-field">
                 <label htmlFor="name" className="t-label">
@@ -61,13 +57,7 @@ export default function Contact() {
                 <label htmlFor="email" className="t-label">
                   Email
                 </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="your@email.com"
-                  required
-                />
+                <input id="email" type="email" name="email" placeholder="your@email.com" required />
               </div>
             </div>
             <div className="form-field">
@@ -78,11 +68,7 @@ export default function Contact() {
                 id="message"
                 name="message"
                 rows={5}
-                placeholder={
-                  isAdmin
-                    ? "Descreva o projeto..."
-                    : "Describe the project or role..."
-                }
+                placeholder={isAdmin ? "Descreva o projeto..." : "Describe the project or role..."}
                 required
               />
             </div>

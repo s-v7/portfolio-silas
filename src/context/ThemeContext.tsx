@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type Theme = "admin" | "recruiter";
 
@@ -16,17 +16,17 @@ const Ctx = createContext<ThemeCtx>({
   setAccentH: () => {},
 });
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem("sv7-theme") as Theme | null;
     return saved === "recruiter" ? "recruiter" : "admin";
   });
   const [accentH, setAccentH] = useState<number>(() =>
-    localStorage.getItem("sv7-theme") === "recruiter" ? 60 : 165,
+    localStorage.getItem("sv7-theme") === "recruiter" ? 60 : 165
   );
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.dataset.theme = theme;
     localStorage.setItem("sv7-theme", theme);
     setAccentH(theme === "recruiter" ? 60 : 165);
   }, [theme]);
@@ -37,11 +37,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const toggle = () => setTheme((t) => (t === "admin" ? "recruiter" : "admin"));
 
-  return (
-    <Ctx.Provider value={{ theme, toggle, accentH, setAccentH }}>
-      {children}
-    </Ctx.Provider>
+  const value = useMemo(
+    () => ({ theme, toggle, accentH, setAccentH }),
+    [theme, toggle, accentH, setAccentH]
   );
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export const useTheme = () => useContext(Ctx);

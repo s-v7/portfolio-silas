@@ -1,19 +1,18 @@
-const KNOWLEDGE_ITEMS = [
-  { label: "CV", description: "Resumo profissional" },
-  { label: "Experiência", description: "CREA-PI, EDM, MEGi9" },
-  { label: "Projetos", description: "Portfólio e laboratórios" },
-  { label: "Skills", description: "Stack técnica" },
-  { label: "Formação", description: "Graduação e certificações" },
-];
+import { KNOWLEDGE_ITEMS, Props } from "../../../data/knowledgeBase";
 
-export function KnowledgeBase() {
+export function KnowledgeBase({ loading, onSelect }: Readonly<Props>) {
   return (
     <section className="knowledge-base">
       <h2>Knowledge Base</h2>
-
       <div className="knowledge-list">
         {KNOWLEDGE_ITEMS.map((item) => (
-          <button key={item.label} type="button" className="knowledge-card">
+          <button
+            key={item.label}
+            type="button"
+            className="knowledge-card"
+            disabled={loading}
+            onClick={() => onSelect(item.prompt)}
+          >
             <strong>{item.label}</strong>
             <small>{item.description}</small>
           </button>

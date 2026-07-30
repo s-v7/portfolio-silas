@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 
-
 interface ContactInfo {
   name: string;
   area: string;
@@ -18,7 +17,6 @@ interface Contribution {
   title: string;
   desc: string | string[];
 }
-
 
 const CodeCV: React.FC = () => {
   const headline =
@@ -45,11 +43,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
   const specializations: SpecializationBlock[] = [
     {
       title: "Backend & Architecture",
-      items: [
-        "Java EE (JPA, JSF, EJB)",
-        "Python (Flask/FastAPI, Django, Streamlit)",
-        "Node.js",
-      ],
+      items: ["Java EE (JPA, JSF, EJB)", "Python (Flask/FastAPI, Django, Streamlit)", "Node.js"],
     },
     {
       title: "Data & Analytics",
@@ -68,18 +62,11 @@ My background bridges the maintenance of critical Java EE systems with modern so
     },
     {
       title: "Security & Blockchain",
-      items: [
-        "Pentest, OWASP, log auditing",
-        "Hyperledger / Ethereum (Solidity)",
-      ],
+      items: ["Pentest, OWASP, log auditing", "Hyperledger / Ethereum (Solidity)"],
     },
     {
       title: "Applied AI",
-      items: [
-        "Analysis time prediction",
-        "Delinquency / default scoring",
-        "Anomaly detection",
-      ],
+      items: ["Analysis time prediction", "Delinquency / default scoring", "Anomaly detection"],
     },
     {
       title: "Modern Frontend",
@@ -117,7 +104,6 @@ My background bridges the maintenance of critical Java EE systems with modern so
     },
   ];
 
-
   const copyToClipboard = async (text: string): Promise<void> => {
     try {
       await navigator.clipboard.writeText(text);
@@ -127,9 +113,8 @@ My background bridges the maintenance of critical Java EE systems with modern so
   };
 
   const downloadPDF = (): void => {
-    window.print();
+    globalThis.print();
   };
-
 
   return (
     <div className="mx-auto max-w-6xl p-6 text-slate-200">
@@ -141,12 +126,8 @@ My background bridges the maintenance of critical Java EE systems with modern so
           </div>
 
           <div className="flex-1">
-            <h1 className="text-3xl font-extrabold text-white">
-              {contacts.name}
-            </h1>
-            <p className="mt-1 text-base text-slate-300">
-              Software Engineer — {contacts.area}
-            </p>
+            <h1 className="text-3xl font-extrabold text-white">{contacts.name}</h1>
+            <p className="mt-1 text-base text-slate-300">Software Engineer — {contacts.area}</p>
 
             <div className="mt-3 flex flex-wrap gap-3 text-sm">
               <a
@@ -165,9 +146,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
               >
                 {contacts.linkedin}
               </a>
-              <span className="rounded-full bg-slate-800 px-3 py-1">
-                {contacts.location}
-              </span>
+              <span className="rounded-full bg-slate-800 px-3 py-1">{contacts.location}</span>
             </div>
           </div>
 
@@ -205,10 +184,7 @@ My background bridges the maintenance of critical Java EE systems with modern so
         <h2 className="text-xl font-bold text-white">Specializations</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {specializations.map((block) => (
-            <div
-              key={block.title}
-              className="rounded-xl bg-slate-800/50 p-4 ring-1 ring-white/10"
-            >
+            <div key={block.title} className="rounded-xl bg-slate-800/50 p-4 ring-1 ring-white/10">
               <h4 className="font-semibold text-slate-100">{block.title}</h4>
               <ul className="mt-2 list-disc pl-5 text-slate-300">
                 {block.items.map((it) => (
@@ -222,15 +198,10 @@ My background bridges the maintenance of critical Java EE systems with modern so
 
       {/* EXPERIENCE */}
       <section className="mt-6 rounded-2xl bg-slate-900 p-6 shadow ring-1 ring-white/10">
-        <h2 className="text-xl font-bold text-white">
-          Current Experience — CREA-PI
-        </h2>
+        <h2 className="text-xl font-bold text-white">Current Experience — CREA-PI</h2>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {contributions.map((c) => (
-            <div
-              key={c.title}
-              className="rounded-xl bg-slate-800/50 p-4 ring-1 ring-white/10"
-            >
+            <div key={c.title} className="rounded-xl bg-slate-800/50 p-4 ring-1 ring-white/10">
               <h4 className="font-semibold text-slate-100">{c.title}</h4>
               {Array.isArray(c.desc) ? (
                 <ul className="mt-1 list-disc pl-5 text-slate-300">
@@ -254,4 +225,3 @@ My background bridges the maintenance of critical Java EE systems with modern so
 };
 
 export default CodeCV;
-

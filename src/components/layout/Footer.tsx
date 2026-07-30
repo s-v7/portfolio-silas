@@ -7,23 +7,15 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container footer__inner">
-        <span className="footer__copy">
-          © {year} Silas Vasconcelos · Brasil
-        </span>
+        <span className="footer__copy">© 2016 - {year} Silas Vasconcelos · Brasil</span>
         <div className="footer__links">
           <a href="https://github.com/s-v7" target="_blank" rel="noreferrer">
             GitHub
           </a>
-          <a
-            href="https://linkedin.com/in/s-v7"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://linkedin.com/in/s-v7" target="_blank" rel="noreferrer">
             LinkedIn
           </a>
-          <a href="mailto:svasconceloscruz7@gmail.com">
-            {isAdmin ? "Email" : "Email"}
-          </a>
+          <a href="mailto:svasconceloscruz7@gmail.com">{isAdmin ? "Email" : "Email"}</a>
         </div>
         <span className="footer__sig">{isAdmin ? "s▪v7" : "Silas Vasconcelos"}</span>
       </div>

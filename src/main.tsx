@@ -7,13 +7,12 @@ import "./styles/base/design-system.css";
 import "./styles/base/layout.css";
 import "./index.css";
 
-// Disable browser scroll restoration (SPA behav...)
 if ("scrollRestoration" in history) {
-  window.history.scrollRestoration = "manual";
+  globalThis.history.scrollRestoration = "manual";
 }
 
-window.addEventListener("load", () => {
-  window.scrollTo(0, 0);
+globalThis.addEventListener("load", () => {
+  globalThis.scrollTo(0, 0);
 });
 
 const rootElement = document.getElementById("root");
@@ -25,5 +24,5 @@ if (!rootElement) {
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );

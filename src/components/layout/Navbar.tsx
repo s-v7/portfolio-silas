@@ -1,23 +1,7 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/components/Navbar.css";
-
-const LINKS_ADMIN = [
-  { to: "/", label: "Home" },
-  { to: "/ai-career", label: "AI Career" },
-  { to: "/profile", label: "Profile" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
-];
-
-const LINKS_REC = [
-  { to: "/", label: "Home" },
-  { to: "/ai-career", label: "AI Career" },  
-  { to: "/profile", label: "Profile" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
-];
 
 function IconAdmin() {
   return (
@@ -63,7 +47,7 @@ function SystemHeader() {
           UPTIME · <b>847d 12h</b>
         </span>
         <span>
-          NODE · <b>teresina-pi.br</b>
+          NODE · <b>arbitrary</b>
         </span>
         <span>
           LOAD · <b>0.42 0.51 0.48</b>
@@ -79,14 +63,13 @@ function SystemHeader() {
 export default function Navbar() {
   const { theme, toggle, accentH, setAccentH } = useTheme();
   const isRec = theme === "recruiter";
-  const links = isRec ? LINKS_REC : LINKS_ADMIN;
 
   return (
     <>
       <SystemHeader />
       <header className="nav">
         <div className="nav-inner container">
-          <a href="/" className="nav-brand" aria-label="home">
+          <Link to="/" className="nav-brand" aria-label="AI Career home">
             {isRec ? (
               <span className="nav-brand-rec">
                 Silas <em>Vasconcelos</em>
@@ -96,24 +79,7 @@ export default function Navbar() {
                 s<span>▪</span>v7
               </span>
             )}
-          </a>
-          <nav aria-label="Main navigation">
-            <ul className="nav-links">
-              {links.map(({ to, label }) => (
-                <li key={to}>
-                  <NavLink
-                    to={to}
-                    end={to === "/"}
-                    className={({ isActive }) =>
-                      `nav-link${isActive ? " nav-link--active" : ""}`
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          </Link>
           <div className="nav-right">
             <div className="nav-accent-wrap" title="Accent hue">
               <input
@@ -134,9 +100,7 @@ export default function Navbar() {
               className="theme-toggle"
               onClick={toggle}
               aria-label={`Switch to ${isRec ? "admin" : "recruiter"} theme`}
-              title={
-                isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"
-              }
+              title={isRec ? "Switch to Admin theme" : "Switch to Recruiter theme"}
             >
               {isRec ? <IconAdmin /> : <IconRec />}
             </button>

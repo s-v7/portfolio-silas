@@ -3,13 +3,15 @@
 Welcome to my portfolio! This project was created to showcase my skills and projects in the field of development.
 
 ## About the Project
-This portfolio has been developed using **React.js** and demonstrates my experience with technologies such as **Java**, **Python**, **APIs**, **Webhooks**, **Security**, and **DevOps**. 
+
+This portfolio has been developed using **React.js** and demonstrates my experience with technologies such as **Java**, **Python**, **APIs**, **Webhooks**, **Security**, and **DevOps**.
 
 Access the online portfolio: **[https://s-v7.github.io/portfolio-silas](https://s-v7.github.io/portfolio-silas)**
 
 ---
 
 ## Technologies Used
+
 - **Java** - Backend development and service-oriented architectures
 - **Python** - Rapid development and automation scripts
 - **APIs** - Building and integrating RESTful services
@@ -25,6 +27,7 @@ Access the online portfolio: **[https://s-v7.github.io/portfolio-silas](https://
 ---
 
 ## How to Run the Project Locally
+
 1. Clone this repository:
    ```bash
    git clone https://github.com/s-v7/portfolio-silas.git
@@ -41,6 +44,7 @@ Access the online portfolio: **[https://s-v7.github.io/portfolio-silas](https://
 4. The project will open at http://localhost:3000
 
 ### License
+
 This project is licensed under the MIT License. Feel free to contribute and share!
 
 # React + Vite

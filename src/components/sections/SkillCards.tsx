@@ -2,17 +2,16 @@ import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/components/SkillCards.css";
 
-const STACK_RADAR = [
-  { axis: "Backend", score: 95, items: ["Java EE 8/17", "Spring Boot", "FastAPI", "Flask", "Node.js"] },
-  { axis: "Frontend", score: 78, items: ["Angular 17+", "React", "TypeScript", "JSF/PrimeFaces", "Three.js"] },
-  { axis: "DevSecOps", score: 88, items: ["Docker", "K8s", "Nginx", "Cloudflare Tunnel", "systemd", "CI/CD"] },
-  { axis: "Data + AI", score: 84, items: ["PostgreSQL", "PostGIS", "Sentinel-2", "OpenAI", "Claude", "LangGraph"] },
-  { axis: "Blockchain", score: 72, items: ["SHA-256 chains", "Hyperledger", "Smart Contracts", "QR traceability"] },
-  { axis: "Security", score: 80, items: ["OWASP", "Pentest", "LGPD", "Cryptography", "PII masking"] },
-];
+import { STACK_RADAR } from "../../data/skillCards";
 
-function Radar({ active, setActive }: { active: number; setActive: (i: number) => void }) {
-  const size = 480, cx = size / 2, cy = size / 2, R = 160;
+function Radar({
+  active,
+  setActive,
+}: Readonly<{ active: number; setActive: (i: number) => void }>) {
+  const size = 480,
+    cx = size / 2,
+    cy = size / 2,
+    R = 160;
   const N = STACK_RADAR.length;
   const angle = (i: number) => (Math.PI * 2 * i) / N - Math.PI / 2;
   const pt = (i: number, r: number): [number, number] => [

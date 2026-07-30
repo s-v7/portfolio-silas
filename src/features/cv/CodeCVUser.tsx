@@ -1,9 +1,6 @@
 import { useMemo, useState, memo } from "react";
 
-
-type PillItem =
-  | [title: string, description: string]
-  | [title: string, description: string[]];
+type PillItem = [title: string, description: string] | [title: string, description: string[]];
 
 interface CVPillListProps {
   items: PillItem[];
@@ -39,10 +36,7 @@ const CONTRIBS_CURRENT: PillItem[] = [
     "Cybersecurity",
     "Anomaly detection in logs using neural models, plus hardening of internal services and infrastructure.",
   ],
-  [
-    "Blockchain",
-    "Smart contracts (Hyperledger / Ethereum) for document and process traceability.",
-  ],
+  ["Blockchain", "Smart contracts (Hyperledger / Ethereum) for document and process traceability."],
 ];
 
 const CONTRIBS_HANDPDV: PillItem[] = [
@@ -72,63 +66,21 @@ const SPECIALIZATIONS: PillItem[] = [
   ["Backend & Architecture", ["Java EE (JPA, JSF, EJB)", "Python", "Node.js"]],
   [
     "Data & Analytics",
-    [
-      "Streamlit, PostgreSQL, ETL/OCR",
-      "Predictive AI and automated classification",
-    ],
+    ["Streamlit, PostgreSQL, ETL/OCR", "Predictive AI and automated classification"],
   ],
-  [
-    "DevOps & Automation",
-    ["Git, Gitea, Docker, Kubernetes", "Terraform, Ansible"],
-  ],
-  [
-    "Security & Blockchain",
-    ["Pentest, OWASP, log auditing", "Hyperledger / Ethereum"],
-  ],
-  [
-    "Applied AI",
-    [
-      "Analysis time prediction",
-      "Default-risk scoring",
-      "Anomaly detection",
-    ],
-  ],
-  [
-    "Modern Frontend",
-    ["React", "Angular", "PrimeFaces", "TypeScript", "Streamlit"],
-  ],
+  ["DevOps & Automation", ["Git, Gitea, Docker, Kubernetes", "Terraform, Ansible"]],
+  ["Security & Blockchain", ["Pentest, OWASP, log auditing", "Hyperledger / Ethereum"]],
+  ["Applied AI", ["Analysis time prediction", "Default-risk scoring", "Anomaly detection"]],
+  ["Modern Frontend", ["React", "Angular", "PrimeFaces", "TypeScript", "Streamlit"]],
 ];
 
 const STACKS: PillItem[] = [
-  [
-    "Backend",
-    ["Java EE", "Python (FastAPI, Flask, Streamlit)", "Node.js"],
-  ],
-  [
-    "Data & AI",
-    [
-      "PostgreSQL",
-      "MongoDB",
-      "Pandas",
-      "TensorFlow",
-      "Scikit-Learn",
-      "PyTorch",
-    ],
-  ],
-  [
-    "DevOps",
-    ["Docker", "Kubernetes", "Terraform", "CI/CD", "Ansible"],
-  ],
-  [
-    "Frontend / UI",
-    ["React", "Angular", "PrimeFaces", "TypeScript"],
-  ],
-  [
-    "Security & Blockchain",
-    ["OWASP", "Pentest", "API Hardening", "Hyperledger", "Ethereum"],
-  ],
+  ["Backend", ["Java EE", "Python (FastAPI, Flask, Streamlit)", "Node.js"]],
+  ["Data & AI", ["PostgreSQL", "MongoDB", "Pandas", "TensorFlow", "Scikit-Learn", "PyTorch"]],
+  ["DevOps", ["Docker", "Kubernetes", "Terraform", "CI/CD", "Ansible"]],
+  ["Frontend / UI", ["React", "Angular", "PrimeFaces", "TypeScript"]],
+  ["Security & Blockchain", ["OWASP", "Pentest", "API Hardening", "Hyperledger", "Ethereum"]],
 ];
-
 
 const CVPillList = memo<CVPillListProps>(({ items }) => {
   return (
@@ -151,11 +103,7 @@ const CVPillList = memo<CVPillListProps>(({ items }) => {
   );
 });
 
-const ExperienceSection: React.FC<ExperienceSectionProps> = ({
-  title,
-  meta,
-  contribs,
-}) => {
+const ExperienceSection: React.FC<ExperienceSectionProps> = ({ title, meta, contribs }) => {
   return (
     <section className="cv-card">
       <div className="cv-row">
@@ -166,7 +114,6 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
     </section>
   );
 };
-
 
 const CodeCVUser: React.FC = () => {
   const [tab, setTab] = useState<number>(0);
@@ -249,4 +196,3 @@ I bridge legacy Java EE platforms with modern AI-driven analytics, DevOps, and B
 };
 
 export default CodeCVUser;
-

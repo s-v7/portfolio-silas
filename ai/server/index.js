@@ -8,7 +8,7 @@ import { askOpenAI } from "../providers/openai.js";
 import { askAnthropic } from "../providers/anthropic.js";
 import { askNvidia } from "../providers/nvidia.js";
 
-import { buildCareerPrompt  } from "../services/PromptBuilder.js";
+import { buildCareerPrompt } from "../services/PromptBuilder.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,10 +40,7 @@ app.post("/api/chat", async (req, res) => {
       return res.status(400).json({ error: "message is required" });
     }
 
-    const finalMessage = 
-      mode === "career"
-        ? buildCareerPrompt(message)
-	: message;
+    const finalMessage = mode === "career" ? buildCareerPrompt(message) : message;
 
     let answer;
 

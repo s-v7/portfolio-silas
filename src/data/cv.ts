@@ -5,13 +5,11 @@ export const SKILLS = [
   },
   {
     group: "Backend",
-    items:
-      "Spring Boot · Java EE · Jakarta EE · NestJS · Node.js · FastAPI · Flask",
+    items: "Spring Boot · Java EE · Jakarta EE · NestJS · Node.js · FastAPI · Flask",
   },
   {
     group: "Frontend",
-    items:
-      "React · Angular · Flutter · JSF (PrimeFaces) · HTML5 · CSS3 · Bootstrap",
+    items: "React · Angular · Flutter · JSF (PrimeFaces) · HTML5 · CSS3 · Bootstrap",
   },
   {
     group: "Databases",
@@ -19,8 +17,7 @@ export const SKILLS = [
   },
   {
     group: "Architecture",
-    items:
-      "REST APIs · Microservices · SOA · SOAP/WSDL · System Integration · Clean Code",
+    items: "REST APIs · Microservices · SOA · SOAP/WSDL · System Integration · Clean Code",
   },
   {
     group: "Cloud & DevOps",
@@ -28,8 +25,7 @@ export const SKILLS = [
   },
   {
     group: "Generative AI",
-    items:
-      "OpenAI · Anthropic · NVIDIA NIM · RAG · LLM Engineering · LangGraph",
+    items: "OpenAI · Anthropic · NVIDIA NIM · RAG · LLM Engineering · LangGraph",
   },
   {
     group: "Data & ML",
