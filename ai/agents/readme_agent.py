@@ -14,6 +14,27 @@ from ai.core.contracts import (
 from ai.core.exceptions import AgentExecutionError
 
 
+def _strip_markdown_fence(content: str) -> str:
+    normalized = content.strip()
+
+    if not normalized.startswith("```"):
+        return normalized
+
+    lines = normalized.splitlines()
+
+    if lines and lines[0].strip().lower() in {
+        "```",
+        "```markdown",
+        "```md",
+    }:
+        lines = lines[1:]
+
+    if lines and lines[-1].strip() == "```":
+        lines = lines[:-1]
+
+    return "\n".join(lines).strip()
+
+
 @dataclass(frozen=True, slots=True)
 class ReadmeAgentInput:
     language: str = "pt-BR"
@@ -51,15 +72,21 @@ class ReadmeAgent(
             )
 
         request = ProviderRequest(
-            task=TaskType.SHORT_TEXT,
+            task=TaskType.LONG_MARKDOWN,
             messages=(
                 Message(
                     role="system",
                     content=(
-                        "You are a technical portfolio editor. "
-                        "Use only the verified evidence provided. "
-                        "Never invent technologies, results, dates "
-                        "or professional experience."
+                        "You are a strict technical portfolio editor. "
+                        "Use exclusively the verified evidence provided. "
+                        "Every factual claim must be directly supported "
+                        "by the evidence. Do not infer personality, "
+                        "motivation, seniority, job title, years of "
+                        "experience, results, metrics, contact details, "
+                        "links or technologies. Do not create "
+                        "placeholders. Omit sections for which there is "
+                        "no evidence. Return raw Markdown without "
+                        "Markdown code fences."
                     ),
                 ),
                 Message(
@@ -71,7 +98,12 @@ class ReadmeAgent(
                         f"Audience: {agent_input.audience}\n\n"
                         "Verified evidence:\n"
                         f"{prompt_context}\n\n"
-                        "Return Markdown only."
+                        "Do not add contact information, biography claims, "
+                        "generic enthusiasm statements or "
+                        "placeholder links.\n"
+                        "Do not wrap the response in triple "
+                        "backticks.\n"
+                        "Return only the final README Markdown."
                     ),
                 ),
             ),
@@ -82,7 +114,9 @@ class ReadmeAgent(
         )
 
         response = self._provider.generate(request)
-        content = response.content.strip()
+        content = _strip_markdown_fence(
+            response.content
+        )
 
         if not content:
             raise AgentExecutionError(
