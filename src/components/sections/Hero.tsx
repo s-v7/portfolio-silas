@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
+import { OperationalTicker } from "../ui/OperationalTicker";
 import "../../styles/components/Hero.css";
 
 const useParticles = (ref: React.RefObject<HTMLCanvasElement>, active: boolean) => {
@@ -179,27 +180,6 @@ const Terminal = () => {
   );
 };
 
-const TICKER_ITEMS = [
-  <>
-    <b>SIGEC v2</b> ARTs processed: <b>1,142,338</b>
-  </>,
-  <>
-    last block · <b>#0x3f7a91</b> · 12s ago
-  </>,
-  <>
-    FiscalBot · cron · <b>mon 06:00 BRT</b>
-  </>,
-  <>
-    Sentinel-2 tiles · <b>20 reservoirs · NDWI ok</b>
-  </>,
-  <>
-    systemd · <b>8/8 services up</b>
-  </>,
-  <>
-    Cloudflare Tunnel · <b>edge:gru</b> · <b>43ms</b>
-  </>,
-];
-
 export const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const { theme } = useTheme();
@@ -285,13 +265,7 @@ export const Hero = () => {
         <Portrait isAdmin={isAdmin} />
       </div>
 
-      <div className="ticker" aria-hidden="true">
-        <div className="ticker__track">
-          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
-            <span key={i}>{item}</span>
-          ))}
-        </div>
-      </div>
+      <OperationalTicker />
     </section>
   );
 };

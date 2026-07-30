@@ -1,17 +1,7 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/components/Navbar.css";
-
-const LINKS_ADMIN = [
-  { to: "/", label: "Home" },
-  { to: "/ai-career", label: "AI Career" },
-];
-
-const LINKS_REC = [
-  { to: "/", label: "Home" },
-  { to: "/ai-career", label: "AI Career" },
-];
 
 function IconAdmin() {
   return (
@@ -73,14 +63,13 @@ function SystemHeader() {
 export default function Navbar() {
   const { theme, toggle, accentH, setAccentH } = useTheme();
   const isRec = theme === "recruiter";
-  const links = isRec ? LINKS_REC : LINKS_ADMIN;
 
   return (
     <>
       <SystemHeader />
       <header className="nav">
         <div className="nav-inner container">
-          <a href="/" className="nav-brand" aria-label="home">
+          <Link to="/" className="nav-brand" aria-label="AI Career home">
             {isRec ? (
               <span className="nav-brand-rec">
                 Silas <em>Vasconcelos</em>
@@ -90,22 +79,7 @@ export default function Navbar() {
                 s<span>▪</span>v7
               </span>
             )}
-          </a>
-          <nav aria-label="Main navigation">
-            <ul className="nav-links">
-              {links.map(({ to, label }) => (
-                <li key={to}>
-                  <NavLink
-                    to={to}
-                    end={to === "/"}
-                    className={({ isActive }) => `nav-link${isActive ? " nav-link--active" : ""}`}
-                  >
-                    {label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          </Link>
           <div className="nav-right">
             <div className="nav-accent-wrap" title="Accent hue">
               <input

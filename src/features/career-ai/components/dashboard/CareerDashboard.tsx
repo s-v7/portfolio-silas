@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { OperationalTicker } from "../../../../components/ui/OperationalTicker";
 import { ProviderSelector } from "../ProviderSelector";
-import { RecruiterToolkit } from "../RecruiterToolkit";
 import { ChatWindow } from "../ChatWindow";
 import { CareerSidebar } from "../CareerSidebar";
 import type { Props } from "../../../../data/careerDashboard";
@@ -36,72 +36,28 @@ export function CareerDashboard(props: Readonly<Props>) {
 
   return (
     <main className="career-dashboard">
-      <header className="career-dashboard__header">
-        <div>
-          <p>AI Career Assistant</p>
-          <h2>Portfólio do Silas Vasconcelos Cruz (s-v7)</h2>
-        </div>
+      <OperationalTicker />
+      <p className="career-hero__eyebrow">AI-first professional portfolio</p>
 
-        <RecruiterToolkit />
-      </header>
-
-      <div className="career-mobile-toolbar">
-        <div>
-          <strong>AI Career</strong>
-          <span>Assistente profissional</span>
-        </div>
-
-        <button
-          type="button"
-          className="career-sidebar-toggle"
-          aria-expanded={sidebarOpen}
-          aria-controls="career-sidebar-drawer"
-          onClick={() => setSidebarOpen(true)}
-        >
-          <span aria-hidden="true">☰</span>
-          Base
-        </button>
-      </div>
-
-      <ProviderSelector
-        provider={props.provider}
-        onChange={props.onProviderChange}
-      />
-
-      <section className="career-dashboard__grid">
-        <div
-          className={`career-sidebar-shell ${
-            sidebarOpen ? "career-sidebar-shell--open" : ""
-          }`}
-        >
+      <section className="career-dashboard__workspace">
+        <div className={`career-sidebar-shell ${sidebarOpen ? "career-sidebar-shell--open" : ""}`}>
           <button
             type="button"
             className="career-sidebar-backdrop"
-            aria-label="Fechar base profissional"
+            aria-label="Close professional profile"
             onClick={() => setSidebarOpen(false)}
           />
 
-          <div
-            id="career-sidebar-drawer"
+          <aside
+            id="career-profile-drawer"
             className="career-sidebar-drawer"
             role="dialog"
             aria-modal={sidebarOpen ? "true" : undefined}
-            aria-label="Base profissional"
+            aria-label="Explore Silas's professional profile"
           >
-            <header className="career-sidebar-drawer__header">
-              <div>
-                <strong>Base profissional</strong>
-                <span>CV, experiência, projetos e ferramentas</span>
-              </div>
-
-              <button
-                type="button"
-                aria-label="Fechar"
-                onClick={() => setSidebarOpen(false)}
-              >
-                ×
-              </button>
-            </header>
+            <div className="career-drawer-provider">
+              <ProviderSelector provider={props.provider} onChange={props.onProviderChange} />
+            </div>
 
             <CareerSidebar
               loading={props.loading}
@@ -109,7 +65,7 @@ export function CareerDashboard(props: Readonly<Props>) {
               provider={props.provider}
               onProviderChange={props.onProviderChange}
             />
-          </div>
+          </aside>
         </div>
 
         <ChatWindow
@@ -118,9 +74,11 @@ export function CareerDashboard(props: Readonly<Props>) {
           input={props.input}
           loading={props.loading}
           onInputChange={props.onInputCHange}
+          onPrompt={handlePrompt}
           onSend={props.onSend}
           onClear={props.onClear}
           onFeedback={props.onFeedback}
+          onExploreProfile={() => setSidebarOpen(true)}
         />
       </section>
     </main>

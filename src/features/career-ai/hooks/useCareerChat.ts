@@ -1,27 +1,18 @@
 import { useState } from "react";
-import {
-  askCareerAssistant,
-  sendCareerFeedback,
-} from "../services/api";
-import type {
-  CareerMessage,
-  FeedbackPayload,
-  ProviderId,
-} from "../types";
+import { askCareerAssistant, sendCareerFeedback } from "../services/api";
+import type { CareerMessage, FeedbackPayload, ProviderId } from "../types";
 
 const createInitialMessage = (): CareerMessage => ({
   id: crypto.randomUUID(),
   role: "assistant",
   content:
-    "Olá! Sou o AI Career Assistant do Silas.\n\nPosso responder perguntas sobre trajetória, projetos, tecnologias, experiência profissional e formação.",
+    "Hello! I am Silas's AI Career Assistant.\n\nI can answer questions about his professional background, projects, technologies, enterprise modernization, applied AI, and education.",
   provider: "openai",
 });
 
 export function useCareerChat() {
   const [provider, setProvider] = useState<ProviderId>("openai");
-  const [messages, setMessages] = useState<CareerMessage[]>([
-    createInitialMessage(),
-  ]);
+  const [messages, setMessages] = useState<CareerMessage[]>([createInitialMessage()]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -57,8 +48,7 @@ export function useCareerChat() {
         },
       ]);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Erro desconhecido";
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
 
       setMessages((previous) => [
         ...previous,
@@ -74,18 +64,12 @@ export function useCareerChat() {
     }
   }
 
-  async function rateMessage(
-    messageId: string,
-    interactionId: string,
-    feedback: FeedbackPayload
-  ) {
+  async function rateMessage(messageId: string, interactionId: string, feedback: FeedbackPayload) {
     await sendCareerFeedback(interactionId, feedback);
 
     setMessages((previous) =>
       previous.map((message) =>
-        message.id === messageId
-          ? { ...message, feedback: feedback.rating }
-          : message
+        message.id === messageId ? { ...message, feedback: feedback.rating } : message
       )
     );
   }

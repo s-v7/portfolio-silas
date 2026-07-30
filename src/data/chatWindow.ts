@@ -1,8 +1,4 @@
-import type {
-  CareerMessage,
-  FeedbackPayload,
-  ProviderId,
-} from "@/features/career-ai/types";
+import type { CareerMessage, FeedbackPayload, ProviderId } from "@/features/career-ai/types";
 
 export type Props = {
   provider: ProviderId;
@@ -10,6 +6,8 @@ export type Props = {
   input: string;
   loading: boolean;
   onInputChange: (value: string) => void;
+  onPrompt: (prompt: string) => void;
+  onExploreProfile: () => void;
   onSend: () => void;
   onClear: () => void;
   onFeedback: (

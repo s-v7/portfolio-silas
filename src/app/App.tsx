@@ -1,11 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { ThemeProvider } from "../context/ThemeContext";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import ScrollToTop from "../components/layout/ScrollToTop";
 
-import Home from "../pages/Home";
 import Education from "../pages/Education";
 import Projects from "../pages/Projects";
 import ArtEngine from "../pages/ArtEngine";
@@ -30,13 +29,13 @@ export default function App() {
         <ScrollToTop />
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Chat />} />
           <Route path="/profile" element={<CVInit />} />
           <Route path="/education" element={<Education />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/art-engine" element={<ArtEngine />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/ai-career" element={<Chat />} />
+          <Route path="/chat" element={<Navigate to="/" replace />} />
+          <Route path="/ai-career" element={<Navigate to="/" replace />} />
           <Route path="/contact" element={<Contact />} />
           {import.meta.env.DEV && (
             <Route path="/admin/learning" element={<LearningDashboard />} />
