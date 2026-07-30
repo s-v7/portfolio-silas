@@ -127,3 +127,25 @@ def test_rejects_empty_provider_response() -> None:
             ReadmeAgentInput(),
             verified_context(),
         )
+
+
+def test_removes_markdown_code_fence() -> None:
+    provider = FakeProvider(
+        content=(
+            "```markdown\n"
+            "# Silas Vasconcelos Cruz\n\n"
+            "FastAPI project.\n"
+            "```"
+        )
+    )
+    agent = ReadmeAgent(provider)
+
+    result = agent.execute(
+        ReadmeAgentInput(),
+        verified_context(),
+    )
+
+    assert result.output.content == (
+        "# Silas Vasconcelos Cruz\n\n"
+        "FastAPI project."
+    )
