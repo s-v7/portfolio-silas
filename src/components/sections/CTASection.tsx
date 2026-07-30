@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/components/CTASection.css";
 
