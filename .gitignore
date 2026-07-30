@@ -62,8 +62,22 @@ estrutura_diretorios_servicosonline.svg
 check.txt
 .env
 
-# Python virtual environments
+# Python automation
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Portfolio AI generated artifacts
+ai/output/
+ai/logs/
 .venv/
 
-# Generated AI drafts
-ai/output/
+# Python build artifacts
+*.egg-info/
+build/
+dist/
+
+# AI-generated local drafts
+ai/output/drafts/
