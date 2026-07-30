@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useTheme } from "../../context/ThemeContext";
 import { OperationalTicker } from "../ui/OperationalTicker";
 import "../../styles/components/Hero.css";

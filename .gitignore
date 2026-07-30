@@ -64,3 +64,24 @@ check.txt
 
 # Generated Worker context
 dist_worker_context.js
+
+# Python automation
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Portfolio AI generated artifacts
+ai/output/
+ai/logs/
+.venv/
+
+# Python build artifacts
+*.egg-info/
+build/
+dist/
+
+# AI-generated local drafts
+ai/output/drafts/
+

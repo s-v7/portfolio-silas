@@ -1,0 +1,39 @@
+{
+  "language": "pt-BR",
+  "target_file": "README.md",
+  "metadata": {
+    "purpose": "github-profile-readme"
+  },
+  "evidences": [
+    {
+      "identifier": "fastapi-authentication",
+      "source": "git",
+      "content": "Implementou autenticação e endpoints de saúde utilizando FastAPI.",
+      "status": "verified",
+      "source_path": null,
+      "metadata": {
+        "category": "backend"
+      }
+    },
+    {
+      "identifier": "jakarta-migration",
+      "source": "git",
+      "content": "Realizou migração de uma aplicação corporativa para Java 17, Jakarta EE 10, PrimeFaces 15 e Payara 6.",
+      "status": "verified",
+      "source_path": null,
+      "metadata": {
+        "category": "modernization"
+      }
+    },
+    {
+      "identifier": "future-kubernetes",
+      "source": "roadmap",
+      "content": "Pretende utilizar Kubernetes futuramente.",
+      "status": "unverified",
+      "source_path": null,
+      "metadata": {
+        "category": "roadmap"
+      }
+    }
+  ]
+}
