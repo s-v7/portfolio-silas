@@ -195,3 +195,26 @@ def test_rejects_missing_result_access() -> None:
     assert report.succeeded is False
     assert report.failed_nodes == ("generate",)
     assert "is not available" in (report.records[0].error or "")
+
+
+def test_preserves_original_exception_in_failure_record() -> None:
+    graph = AgentGraph("exception-preservation")
+    original_error = RuntimeError("provider unavailable")
+
+    def fail(_context: object) -> None:
+        raise original_error
+
+    graph.add_node(
+        GraphNode(
+            name="provider",
+            handler=fail,
+        )
+    )
+
+    report = graph.execute(empty_context())
+
+    assert report.succeeded is False
+    assert report.records[0].exception is original_error
+    assert report.records[0].error == (
+        "RuntimeError: provider unavailable"
+    )

@@ -110,6 +110,7 @@ class AgentGraph:
                         status=NodeExecutionStatus.FAILED,
                         duration_ms=timer.duration_ms,
                         error=f"{type(error).__name__}: {error}",
+                        exception=error,
                     )
                 )
 

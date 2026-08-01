@@ -21,6 +21,7 @@ class NodeExecutionRecord:
     duration_ms: float = 0.0
     output: Any = None
     error: str | None = None
+    exception: Exception | None = None
 
 
 @dataclass(frozen=True, slots=True)
