@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ai.agents.base import Agent, AgentResult
+from ai.agents.metadata import AgentMetadata
 from ai.context.models import PortfolioContext
 from ai.core.contracts import (
     GenerationOptions,
@@ -21,7 +22,6 @@ def _strip_markdown_fence(content: str) -> str:
         return normalized
 
     lines = normalized.splitlines()
-
     if lines and lines[0].strip().lower() in {
         "```",
         "```markdown",
@@ -49,15 +49,25 @@ class ReadmeDraft:
     model: str
 
 
-class ReadmeAgent(
-    Agent[ReadmeAgentInput, ReadmeDraft]
-):
-    def __init__(
-        self,
-        provider: LLMProvider,
-    ) -> None:
+class ReadmeAgent(Agent[ReadmeAgentInput, ReadmeDraft]):
+    def __init__(self,provider: LLMProvider) -> None:
         self.name = "readme-agent"
         self._provider = provider
+
+    @property
+    def metadata(self) -> AgentMetadata:
+        return AgentMetadata(
+            name="readme-agent",
+            responsibility="Generate evidence-grounded README content.",
+            inputs=("ReadmeAgentInput", "PortfolioContext"),
+            outputs=("ReadmeDraft",),
+            capabilities=(
+                "markdown",
+                "generation",
+                "portfolio",
+                "github",
+            ),
+        )
 
     def execute(
         self,
@@ -114,14 +124,9 @@ class ReadmeAgent(
         )
 
         response = self._provider.generate(request)
-        content = _strip_markdown_fence(
-            response.content
-        )
-
+        content = _strip_markdown_fence(response.content)
         if not content:
-            raise AgentExecutionError(
-                "README provider returned empty content."
-            )
+            raise AgentExecutionError("README provider returned empty content.")
 
         return AgentResult(
             agent=self.name,
@@ -130,9 +135,5 @@ class ReadmeAgent(
                 provider=response.provider,
                 model=response.model,
             ),
-            metadata={
-                "evidence_count": len(
-                    context.verified_evidences
-                ),
-            },
+            metadata={"evidence_count": len(context.verified_evidences)},
         )
