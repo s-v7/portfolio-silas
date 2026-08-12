@@ -32,6 +32,10 @@ class AgentGraph:
         self._nodes[node.name] = node
         return self
 
+    @property
+    def node_names(self) -> tuple[str, ...]:
+        return tuple(self._nodes)
+
     def validate(self) -> None:
         for node in self._nodes.values():
             for dependency in node.dependencies:
