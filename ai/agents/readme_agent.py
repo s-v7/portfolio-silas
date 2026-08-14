@@ -50,7 +50,7 @@ class ReadmeDraft:
 
 
 class ReadmeAgent(Agent[ReadmeAgentInput, ReadmeDraft]):
-    def __init__(self,provider: LLMProvider) -> None:
+    def __init__(self, provider: LLMProvider) -> None:
         self.name = "readme-agent"
         self._provider = provider
 
@@ -77,9 +77,7 @@ class ReadmeAgent(Agent[ReadmeAgentInput, ReadmeDraft]):
         prompt_context = context.as_prompt_context()
 
         if not prompt_context.strip():
-            raise AgentExecutionError(
-                "README generation requires verified evidence."
-            )
+            raise AgentExecutionError("README generation requires verified evidence.")
 
         request = ProviderRequest(
             task=TaskType.LONG_MARKDOWN,
@@ -124,16 +122,15 @@ class ReadmeAgent(Agent[ReadmeAgentInput, ReadmeDraft]):
         )
 
         response = self._provider.generate(request)
-        content = _strip_markdown_fence(response.content)
-        if not content:
+        if content := _strip_markdown_fence(response.content):
+            return AgentResult(
+                agent=self.name,
+                output=ReadmeDraft(
+                    content=content,
+                    provider=response.provider,
+                    model=response.model,
+                ),
+                metadata={"evidence_count": len(context.verified_evidences)},
+            )
+        else:
             raise AgentExecutionError("README provider returned empty content.")
-
-        return AgentResult(
-            agent=self.name,
-            output=ReadmeDraft(
-                content=content,
-                provider=response.provider,
-                model=response.model,
-            ),
-            metadata={"evidence_count": len(context.verified_evidences)},
-        )
