@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -16,6 +17,7 @@ class WorkflowNodeSpec:
     agent: str
     dependencies: tuple[str, ...] = ()
     continue_on_error: bool = False
+    input_factory: Callable[[], Any] | None = None
 
 
 class WorkflowBuilder:
@@ -39,6 +41,7 @@ class WorkflowBuilder:
         agent: str,
         *,
         continue_on_error: bool = False,
+        input_factory: Callable[[], Any] | None = None,
     ) -> WorkflowBuilder:
         normalized_name = name.strip()
         normalized_agent = agent.strip()
@@ -50,9 +53,7 @@ class WorkflowBuilder:
             raise ValueError("Agent name cannot be empty.")
 
         if normalized_name in self._nodes:
-            raise ValueError(
-                f"Workflow node '{normalized_name}' is already defined."
-            )
+            raise ValueError(f"Workflow node '{normalized_name}' is already defined.")
 
         self._registry.get(normalized_agent)
 
@@ -60,6 +61,7 @@ class WorkflowBuilder:
             name=normalized_name,
             agent=normalized_agent,
             continue_on_error=continue_on_error,
+            input_factory=input_factory,
         )
 
         return self
@@ -70,27 +72,20 @@ class WorkflowBuilder:
         *dependencies: str,
     ) -> WorkflowBuilder:
         if node not in self._nodes:
-            raise KeyError(
-                f"Workflow node '{node}' is not defined."
-            )
+            raise KeyError(f"Workflow node '{node}' is not defined.")
 
         for dependency in dependencies:
             if dependency not in self._nodes:
-                raise KeyError(
-                    f"Workflow node '{dependency}' is not defined."
-                )
+                raise KeyError(f"Workflow node '{dependency}' is not defined.")
 
         current = self._nodes[node]
 
         self._nodes[node] = WorkflowNodeSpec(
             name=current.name,
             agent=current.agent,
-            dependencies=tuple(
-                dict.fromkeys(
-                    (*current.dependencies, *dependencies)
-                )
-            ),
+            dependencies=tuple(dict.fromkeys((*current.dependencies, *dependencies))),
             continue_on_error=current.continue_on_error,
+            input_factory=current.input_factory,
         )
 
         return self
@@ -105,20 +100,26 @@ class WorkflowBuilder:
                 graph_context: Any,
                 *,
                 current_agent: Agent[Any, Any] = agent,
+                current_input_factory: Callable[[], Any] | None = (spec.input_factory),
             ) -> Any:
-                portfolio_context = graph_context.context
+                portfolio_context = graph_context.portfolio
 
                 if not isinstance(
                     portfolio_context,
                     PortfolioContext,
                 ):
                     raise TypeError(
-                        "Workflow graph context must contain "
-                        "a PortfolioContext."
+                        "Workflow graph context must contain a PortfolioContext."
                     )
 
+                agent_input = (
+                    current_input_factory()
+                    if current_input_factory is not None
+                    else None
+                )
+
                 return current_agent.execute(
-                    None,
+                    agent_input,
                     portfolio_context,
                 )
 
