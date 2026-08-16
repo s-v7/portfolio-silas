@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections import defaultdict, deque
+from collections import defaultdict
 from typing import Any
 
 from ai.context.models import PortfolioContext
@@ -25,9 +25,7 @@ class AgentGraph:
 
     def add_node(self, node: GraphNode) -> AgentGraph:
         if node.name in self._nodes:
-            raise ValueError(
-                f"Graph node '{node.name}' is already registered."
-            )
+            raise ValueError(f"Graph node '{node.name}' is already registered.")
 
         self._nodes[node.name] = node
         return self
@@ -66,7 +64,7 @@ class AgentGraph:
         for node_name in self._topological_order():
             node = self._nodes[node_name]
 
-            failed_dependencies = tuple(
+            if failed_dependencies := tuple(
                 dependency
                 for dependency in node.dependencies
                 if statuses.get(dependency)
@@ -74,9 +72,7 @@ class AgentGraph:
                     NodeExecutionStatus.FAILED,
                     NodeExecutionStatus.SKIPPED,
                 }
-            )
-
-            if failed_dependencies:
+            ):
                 statuses[node_name] = NodeExecutionStatus.SKIPPED
                 records.append(
                     NodeExecutionRecord(
@@ -132,10 +128,15 @@ class AgentGraph:
             results=dict(execution_context.results),
         )
 
-    def _topological_order(self) -> tuple[str, ...]:
+    def get_node(self, name: str) -> GraphNode:
+        if name not in self._nodes:
+            raise KeyError(f"Graph node '{name}' is not registered.")
+
+        return self._nodes[name]
+
+    def execution_levels(self) -> tuple[tuple[str, ...], ...]:
         indegree = {
-            node_name: len(node.dependencies)
-            for node_name, node in self._nodes.items()
+            node_name: len(node.dependencies) for node_name, node in self._nodes.items()
         }
 
         dependents: dict[str, list[str]] = defaultdict(list)
@@ -144,28 +145,37 @@ class AgentGraph:
             for dependency in node.dependencies:
                 dependents[dependency].append(node_name)
 
-        queue = deque(
-            node_name
-            for node_name, degree in indegree.items()
-            if degree == 0
-        )
+        current_level = [
+            node_name for node_name, degree in indegree.items() if degree == 0
+        ]
 
-        ordered: list[str] = []
+        levels: list[tuple[str, ...]] = []
+        visited_count = 0
 
-        while queue:
-            node_name = queue.popleft()
-            ordered.append(node_name)
+        while current_level:
+            levels.append(tuple(current_level))
+            visited_count += len(current_level)
 
-            for dependent in dependents[node_name]:
-                indegree[dependent] -= 1
+            next_level: list[str] = []
 
-                if indegree[dependent] == 0:
-                    queue.append(dependent)
+            for node_name in current_level:
+                for dependent in dependents[node_name]:
+                    indegree[dependent] -= 1
 
-        if len(ordered) != len(self._nodes):
+                    if indegree[dependent] == 0:
+                        next_level.append(dependent)
+
+            current_level = next_level
+
+        if visited_count != len(self._nodes):
             raise ValueError("Agent graph contains a dependency cycle.")
 
-        return tuple(ordered)
+        return tuple(levels)
+
+    def _topological_order(self) -> tuple[str, ...]:
+        return tuple(
+            node_name for level in self.execution_levels() for node_name in level
+        )
 
     def _append_pending_as_skipped(
         self,

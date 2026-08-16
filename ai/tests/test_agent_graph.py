@@ -218,3 +218,108 @@ def test_preserves_original_exception_in_failure_record() -> None:
     assert report.records[0].error == (
         "RuntimeError: provider unavailable"
     )
+
+def test_execution_levels_groups_independent_root_nodes() -> None:
+    graph = AgentGraph("independent")
+
+    graph.add_node(GraphNode(name="a", handler=lambda context: "a"))
+    graph.add_node(GraphNode(name="b", handler=lambda context: "b"))
+
+    assert graph.execution_levels() == (("a", "b"),)
+
+def test_execution_levels_groups_diamond_dependencies() -> None:
+    graph = AgentGraph("diamond")
+
+    graph.add_node(GraphNode(name="collect", handler=lambda context: None))
+    graph.add_node(
+        GraphNode(
+            name="validate",
+            dependencies=("collect",),
+            handler=lambda context: None,
+        )
+    )
+
+    graph.add_node(
+        GraphNode(
+            name="enrich",
+            dependencies=("collect",),
+            handler=lambda context: None,
+        )
+    )
+
+    graph.add_node(
+        GraphNode(
+            name="generate",
+            dependencies=("validate", "enrich"),
+            handler=lambda context: None,
+        )
+    )
+
+    assert graph.execution_levels() == (
+        ("collect",),
+        ("validate", "enrich"),
+        ("generate",),
+    )
+
+def test_execution_levels_matches_linear_topological_order() -> None:
+    graph = AgentGraph("linear")
+
+    graph.add_node(GraphNode(name="collect", handler=lambda context: None))
+    graph.add_node(
+        GraphNode(
+            name="validate",
+            dependencies=("collect",),
+            handler=lambda context: None,
+        )
+    )
+
+    graph.add_node(
+        GraphNode(
+            name="generate",
+            dependencies=("validate",),
+            handler=lambda context: None,
+        )
+    )
+
+    assert graph.execution_levels() == (
+        ("collect",),
+        ("validate",),
+        ("generate",),
+    )
+
+def test_execution_levels_rejects_dependency_cycle() -> None:
+    graph = AgentGraph("cyclic-levels")
+
+    graph.add_node(
+        GraphNode(
+            name="first",
+            dependencies=("second",),
+            handler=lambda context: None,
+        )
+    )
+    graph.add_node(
+        GraphNode(
+            name="second",
+            dependencies=("first",),
+            handler=lambda context: None,
+        )
+    )
+
+    with pytest.raises(ValueError, match="dependency cycle"):
+        graph.execution_levels()
+
+
+def test_get_node_returns_registered_node() -> None:
+    graph = AgentGraph("lookup")
+    node = GraphNode(name="collect", handler=lambda context: None)
+
+    graph.add_node(node)
+
+    assert graph.get_node("collect") is node
+
+
+def test_get_node_raises_for_unknown_node() -> None:
+    graph = AgentGraph("lookup-missing")
+
+    with pytest.raises(KeyError, match="is not registered"):
+        graph.get_node("missing")
