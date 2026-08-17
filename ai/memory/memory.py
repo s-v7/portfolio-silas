@@ -1,0 +1,13 @@
+from __future__ import annotations
+
+from typing import Any, Protocol
+
+
+class Memory(Protocol):
+    def get(self, key: str) -> Any: ...
+
+    def set(self, key: str, value: Any) -> None: ...
+
+    def has(self, key: str) -> bool: ...
+
+    def delete(self, key: str) -> None: ...
