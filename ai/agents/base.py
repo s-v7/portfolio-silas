@@ -5,6 +5,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from typing import Any, Generic, TypeVar
 
+from ai.agents.metadata import AgentMetadata
 from ai.context.models import PortfolioContext
 from ai.core.contracts import LLMProvider
 
@@ -35,3 +36,14 @@ class Agent(ABC, Generic[InputT, OutputT]):
         context: PortfolioContext,
     ) -> AgentResult[OutputT]:
         raise NotImplementedError
+
+
+    @property
+    def metadata(self) -> AgentMetadata:
+        return AgentMetadata(
+            name=self.name,
+            responsibility=self.responsibility,
+            inputs=(self.__class__.__name__,),
+            outputs=("AgentResult",),
+            capabilities=(),
+        )
