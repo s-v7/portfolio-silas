@@ -1,44 +1,42 @@
-import sys
+from __future__ import annotations
+
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.append(str(ROOT / "ai" / "scripts"))
-sys.path.append(str(ROOT / "ai" / "core"))
+from ai.agents.readme_agent import ReadmeAgent, ReadmeAgentInput
+from ai.context.json_loader import load_portfolio_context
+from ai.providers.factory import ProviderFactory
+from ai.services.draft_writer import DraftWriter
+from ai.services.readme_generation_service import ReadmeGenerationService
 
-import json
-from llm_client import LLMClient
-from context_collector import ContextCollector
-from model_router import get_model
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+EVIDENCE_FILE = PROJECT_ROOT / "docs" / "evidences.json"  # ou o caminho correto do seu JSON de evidências
+OUTPUT_DIR = PROJECT_ROOT / "ai" / "output" / "drafts"
 
-OUTPUT_FILE = Path("docs/README.pt.md")
 
-def load_prompt(context: dict) -> str:
-    prompt_path = Path("ai/prompts/update_readme_pt.md")
-    base_prompt = prompt_path.read_text(encoding="utf-8")
-    return base_prompt.replace("{{CONTEXT}}", json.dumps(context, indent=2))
+def main() -> None:
+    print("[update_readme_pt] Carregando contexto do portfólio...")
+    context = load_portfolio_context(EVIDENCE_FILE)
+    provider = ProviderFactory.create()
 
-def main(output_file: Path = OUTPUT_FILE):
-    print("Gerando README em português com Atlas AI...")
+    service = ReadmeGenerationService(
+        readme_agent=ReadmeAgent(provider),
+        draft_writer=DraftWriter(OUTPUT_DIR),
+    )
 
-    collector = ContextCollector(repo_root=".")
-    context = collector.collect()
-    context["repo_structure"] = context["repo_structure"][:10]
-    context["recent_commits"] = context["recent_commits"][:3]
+    print("[update_readme_pt] Gerando README em português...")
+    result = service.generate(
+        context=context,
+        agent_input=ReadmeAgentInput(
+            language="pt-BR",
+            audience="recrutadores técnicos e gestores de Engenharia",
+            title="Silas Vasconcelos Cruz",
+        ),
+        relative_path="README.pt.md",
+    )
 
-    client = LLMClient()
-    prompt = load_prompt(context)
-    readme = client.generate(prompt, task="long_markdown")
-    print(f"[update_readme_pt] provider={client.provider} model={get_model('long_markdown', client.provider)}")
+    print(f"[update_readme_pt] Rascunho gravado em: {result.destination}")
+    print(f"[update_readme_pt] Provedor: {result.provider} | Modelo: {result.model}")
 
-    if not readme or not readme.strip():
-        raise RuntimeError("LLM returned empty README.")
-
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    output_file.write_text(readme.strip(), encoding="utf-8")
-
-    print("README em português gerado com sucesso!")
-    print("REVIEW:")
-    print(readme)
 
 if __name__ == "__main__":
     main()
