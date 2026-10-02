@@ -1,0 +1,200 @@
+{
+  "language": "pt-BR",
+  "target_file": "README.md",
+  "metadata": {
+    "purpose": "github-profile-readme",
+    "extracted_count": 19
+  },
+  "evidences": [
+    {
+      "identifier": "local-cal_financeiro_mobile-readme",
+      "source": "README",
+      "content": "[Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter); [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab); [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/cal_financeiro_mobile/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-life_os_app-readme",
+      "source": "README",
+      "content": "[Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter); [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab); [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/life_os_app/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-portfolio-silas-readme",
+      "source": "README",
+      "content": "Java** - Backend development and service-oriented architectures; Python** - Rapid development and automation scripts; APIs** - Building and integrating RESTful services",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/portfolio-silas/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-portfolio-silas-changelog",
+      "source": "CHANGELOG",
+      "content": "Planned: Full UI redesign (Legacy → Modern); Planned: Design system and visual identity update; Planned: Accessibility and performance improvements",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/portfolio-silas/CHANGELOG.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-ml-svc-lab-readme",
+      "source": "README",
+      "content": "Machine Learning clássico; LLMs via OpenAI, NVIDIA NIM e Anthropic; Busca vetorial e embeddings",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/ml-svc-lab/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-CalculadoraFinanceira-readme",
+      "source": "README",
+      "content": "Spring Boot 3.x / 4.x** (Spring Web, Spring Validation); JUnit 5 & Mockito** (Testes unitários e de integração); Maven** (Gerenciamento de dependências)",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/CalculadoraFinanceira/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-LLM-MCP-readme",
+      "source": "README",
+      "content": "Python moderno (3.12+)**; Comunicação entre processos (cliente ↔ servidor)**; Modelagem e persistência de dados**",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-LLM-MCP-changelog",
+      "source": "CHANGELOG",
+      "content": "Resource `cars://make/{make}` para consulta de veículos por fabricante; Testes dedicados para filtro por marca e marca inexistente; Resource `cars://model/{model}` para consulta de veículos por modelo",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/CHANGELOG.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-life-os-api-readme",
+      "source": "README",
+      "content": "Distributed tracing:** Follow requests across services and understand how they flow through your system.; Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.; Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/life-os-api/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-extension_discovery-readme",
+      "source": "README",
+      "content": "Do not read (or rely) the contents of this folder.; Do write to this folder.",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/life_os_app/.dart_tool/extension_discovery/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-ai-readme",
+      "source": "README",
+      "content": "Analyzing the repository context; Selecting task-specific models; Regenerating documentation",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/portfolio-silas/ai/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-integration-readme",
+      "source": "README",
+      "content": "NIM** (`integrate.api.nvidia.com/v1`) é um **serviço de inferência** na nuvem; CUDA/cuDNN** é a stack de **GPU para acelerar treino local** do TensorFlow.",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/ml-svc-lab/integration/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-financial-readme",
+      "source": "README",
+      "content": "payment intent; indempotência; Pix-like flows",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/ml-svc-lab/experiments/financial/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-frontend-readme",
+      "source": "README",
+      "content": "React (`^19.2.8`)**: Biblioteca para construção da interface.; TypeScript (`~6.0.2`)**: Superset Java/JS para tipagem estrita de DTOs e componentes.; Vite (`^8.2.0`)**: Build tool e servidor de desenvolvimento.",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/CalculadoraFinanceira/frontend/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-mcp_client-readme",
+      "source": "README",
+      "content": "Claude Desktop client configuration; OpenAI integration; Anthropic integration",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/mcp_client/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-examples-readme",
+      "source": "README",
+      "content": "cars — working SQLite car search assistant; finance — planned financial systems demo; usage instructions",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/examples/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-mcp_server-readme",
+      "source": "README",
+      "content": "SQLite MCP Server; PostgreSQL MCP Server; Filesystem MCP Server",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/mcp_server/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-finance-readme",
+      "source": "README",
+      "content": "`list_accounts`; `list_transactions`; `search_transactions`",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/examples/finance/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    },
+    {
+      "identifier": "local-cars-readme",
+      "source": "README",
+      "content": "fake vehicle data; client-server communication; MCP-like protocol",
+      "status": "verified",
+      "source_path": "/home/sv7/ecosystemSvc0x111/LLM-MCP/examples/cars/README.md",
+      "metadata": {
+        "category": "auto-extracted"
+      }
+    }
+  ]
+}
