@@ -1,10 +1,8 @@
-
 import json
 import shutil
 from datetime import datetime, timezone
 from llm_client import LLMClient
 from context_collector import ContextCollector
-
 
 def backup_readme():
     ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
