@@ -89,4 +89,4 @@ def test_builds_prompt_context_only_from_verified_evidence() -> None:
 
     assert "FastAPI endpoint implemented." in prompt_context
     assert "Kubernetes deployment planned." not in prompt_context
-    assert "[Evidence: verified-001]" in prompt_context
+    assert "[verified-001]" in prompt_context

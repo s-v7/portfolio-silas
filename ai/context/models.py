@@ -8,15 +8,15 @@ from ai.core.contracts import EvidenceStatus
 
 
 @dataclass(frozen=True, slots=True)
-Token-saving evidence record structure.
 class Evidence:
+    """Token-saving evidence record structure."""
+
     identifier: str
     source: str
     content: str
     status: EvidenceStatus = EvidenceStatus.UNVERIFIED
     source_path: Path | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
-
 
 @dataclass(frozen=True, slots=True)
 class PortfolioContext:

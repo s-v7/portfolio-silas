@@ -80,21 +80,47 @@ class LLMClient:
         return await self._generate_openai_async(prompt, model)
 
     async def _generate_openai_async(self, prompt: str, model: str) -> str:
+        base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+        endpoint = f"{base_url}/chat/completions"
+        
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
         payload = self._build_openai_payload(prompt, model)
 
-        async with httpx.AsyncClient(timeout=60.0) as client:
+        async with httpx.AsyncClient(timeout=60.0, http2=False) as client:
             response = await client.post(
-                "https://api.openai.com/v1/chat/completions",
+                endpoint,
                 headers=headers,
                 json=payload,
             )
 
         if response.status_code != 200:
             raise RuntimeError(f"LLM Async Error ({response.status_code}): {response.text}")
+
+        data = response.json()
+        return data["choices"][0]["message"].get("content", "").strip()
+
+    def _generate_openai_sync(self, prompt: str, model: str) -> str:
+        base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+        endpoint = f"{base_url}/chat/completions"
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = self._build_openai_payload(prompt, model)
+
+        with httpx.Client(timeout=60.0, http2=False) as client:
+            response = client.post(
+                endpoint,
+                headers=headers,
+                json=payload,
+            )
+
+        if response.status_code != 200:
+            raise RuntimeError(f"LLM Sync Error ({response.status_code}): {response.text}")
 
         data = response.json()
         return data["choices"][0]["message"].get("content", "").strip()
