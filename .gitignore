@@ -17,9 +17,9 @@ README.backup.*
 .DS_Store
 .env
 .env.local
-.env.development.local
+.env.development
 .env.test.local
-.env.production.local
+.env.production
 
 npm-debug.log*
 yarn-debug.log*
@@ -85,3 +85,6 @@ dist/
 # AI-generated local drafts
 ai/output/drafts/
 
+backup_llm_github.txt
+app_portfolio/
+docs_acom_arq/

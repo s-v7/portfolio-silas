@@ -8,12 +8,13 @@ from ai.core.exceptions import ConfigurationError
 from ai.providers.anthropic_provider import AnthropicProvider
 from ai.providers.nvidia_provider import NvidiaProvider
 from ai.providers.openai_provider import OpenAIProvider
+from ai.providers.proxy_provider import ProxyProvider
 
 ProviderBuilder = Callable[[], LLMProvider]
 
-
 class ProviderFactory:
     _builders: dict[str, ProviderBuilder] = {
+        "proxy": ProxyProvider,
         "openai": OpenAIProvider,
         "anthropic": AnthropicProvider,
         "nvidia": NvidiaProvider,
@@ -27,19 +28,17 @@ class ProviderFactory:
         configured_name = (
             name
             if name is not None
-            else os.getenv("LLM_PROVIDER", "openai")
+            else os.getenv("LLM_PROVIDER", "proxy")
         )
 
         if configured_name is None:
-            configured_name = "openai"
+            configured_name = "proxy"
 
         provider_name = configured_name.strip().lower()
-
         if not provider_name:
-            provider_name = "openai"
+            provider_name = "proxy"
 
         builder = cls._builders.get(provider_name)
-
         if builder is None:
             supported = ", ".join(sorted(cls._builders))
 

@@ -3,6 +3,13 @@ from __future__ import annotations
 from ai.core.exceptions import ConfigurationError
 
 MODEL_BY_TASK: dict[str, dict[str, str]] = {
+    "proxy": {
+         "short_text": "default",
+         "long_markdown": "default",
+         "analysis": "default",
+         "review": "default",
+         "translation": "default",
+    },
     "openai": {
         "short_text": "gpt-4o-mini",
         "long_markdown": "gpt-4o-mini",
@@ -41,7 +48,6 @@ def get_model(task: str, provider: str) -> str:
         )
 
     model = provider_map.get(task_name)
-
     if model is None:
         supported_tasks = ", ".join(sorted(provider_map))
         raise ConfigurationError(

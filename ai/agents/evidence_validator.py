@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from typing import Generic, TypeVar
 
 from ai.agents.base import Agent, AgentResult
+from ai.agents.metadata import AgentMetadata
 from ai.context.models import Evidence, PortfolioContext
 from ai.core.contracts import EvidenceStatus
 
 InputT = TypeVar("InputT")
-
 
 @dataclass(frozen=True)
 class EvidenceValidationReport:
@@ -24,6 +24,20 @@ class EvidenceValidatorAgent(
 ):
     name = "evidence-validator"
     responsibility = "Validate evidence before content generation."
+
+    @property
+    def metadata(self) -> AgentMetadata:
+        return AgentMetadata(
+            name="evidence-validator",
+            responsibility="Validate evidence before content generation.",
+            inputs=("PortfolioContext",),
+            outputs=("EvidenceValidationReport",),
+            capabilities=(
+                "evidence-validation",
+                "verification",
+                "portfolio",
+            ),
+        )
 
     def execute(
         self,

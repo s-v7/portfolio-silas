@@ -14,14 +14,9 @@ def _as_mapping(
     field_name: str,
 ) -> dict[str, Any]:
     if not isinstance(value, dict):
-        raise ConfigurationError(
-            f"Field '{field_name}' must be a JSON object."
-        )
+        raise ConfigurationError(f"Field '{field_name}' must be a JSON object.")
 
-    return {
-        str(key): item
-        for key, item in value.items()
-    }
+    return {str(key): item for key, item in value.items()}
 
 
 def _as_required_string(
@@ -29,9 +24,7 @@ def _as_required_string(
     field_name: str,
 ) -> str:
     if not isinstance(value, str) or not value.strip():
-        raise ConfigurationError(
-            f"Field '{field_name}' must be a non-empty string."
-        )
+        raise ConfigurationError(f"Field '{field_name}' must be a non-empty string.")
 
     return value.strip()
 
@@ -48,10 +41,7 @@ def _parse_status(
     try:
         return EvidenceStatus(status_name.lower())
     except ValueError as error:
-        supported = ", ".join(
-            status.value
-            for status in EvidenceStatus
-        )
+        supported = ", ".join(status.value for status in EvidenceStatus)
 
         raise ConfigurationError(
             f"Invalid evidence status '{status_name}' "
@@ -95,8 +85,7 @@ def _parse_evidence(
         source_path = Path(source_path_value)
     else:
         raise ConfigurationError(
-            f"Field 'source_path' for evidence "
-            f"'{identifier}' must be a string or null."
+            f"Field 'source_path' for evidence '{identifier}' must be a string or null."
         )
 
     metadata_value = data.get("metadata", {})
@@ -118,13 +107,9 @@ def load_portfolio_context(
     source: Path,
 ) -> PortfolioContext:
     try:
-        raw: object = json.loads(
-            source.read_text(encoding="utf-8")
-        )
+        raw: object = json.loads(source.read_text(encoding="utf-8"))
     except FileNotFoundError as error:
-        raise ConfigurationError(
-            f"Evidence file does not exist: {source}"
-        ) from error
+        raise ConfigurationError(f"Evidence file does not exist: {source}") from error
     except json.JSONDecodeError as error:
         raise ConfigurationError(
             f"Evidence file contains invalid JSON: {source}"
@@ -134,13 +119,10 @@ def load_portfolio_context(
     evidences_value = data.get("evidences")
 
     if not isinstance(evidences_value, list):
-        raise ConfigurationError(
-            "Field 'evidences' must be a JSON array."
-        )
+        raise ConfigurationError("Field 'evidences' must be a JSON array.")
 
     evidences = tuple(
-        _parse_evidence(value, index)
-        for index, value in enumerate(evidences_value)
+        _parse_evidence(value, index) for index, value in enumerate(evidences_value)
     )
 
     language_value = data.get("language", "pt-BR")
@@ -156,9 +138,7 @@ def load_portfolio_context(
     elif isinstance(target_file_value, str):
         target_file = Path(target_file_value)
     else:
-        raise ConfigurationError(
-            "Field 'target_file' must be a string or null."
-        )
+        raise ConfigurationError("Field 'target_file' must be a string or null.")
 
     metadata = _as_mapping(
         data.get("metadata", {}),
