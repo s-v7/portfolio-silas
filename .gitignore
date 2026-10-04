@@ -85,3 +85,6 @@ dist/
 # AI-generated local drafts
 ai/output/drafts/
 
+backup_llm_github.txt
+app_portfolio/
+docs_acom_arq/
