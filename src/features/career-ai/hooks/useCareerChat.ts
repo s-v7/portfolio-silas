@@ -30,12 +30,8 @@ function createInitialConversation() {
 export function useCareerChat() {
   const [initialConversation] = useState(createInitialConversation);
 
-  const [provider, setProvider] = useState<ProviderId>(
-    initialConversation.provider
-  );
-  const [messages, setMessages] = useState<CareerMessage[]>(
-    initialConversation.messages
-  );
+  const [provider, setProvider] = useState<ProviderId>(initialConversation.provider);
+  const [messages, setMessages] = useState<CareerMessage[]>(initialConversation.messages);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -82,8 +78,7 @@ export function useCareerChat() {
         },
       ]);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Erro desconhecido";
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
 
       setMessages((previous) => [
         ...previous,
@@ -99,18 +94,12 @@ export function useCareerChat() {
     }
   }
 
-  async function rateMessage(
-    messageId: string,
-    interactionId: string,
-    feedback: FeedbackPayload
-  ) {
+  async function rateMessage(messageId: string, interactionId: string, feedback: FeedbackPayload) {
     await sendCareerFeedback(interactionId, feedback);
 
     setMessages((previous) =>
       previous.map((message) =>
-        message.id === messageId
-          ? { ...message, feedback: feedback.rating }
-          : message
+        message.id === messageId ? { ...message, feedback: feedback.rating } : message
       )
     );
   }

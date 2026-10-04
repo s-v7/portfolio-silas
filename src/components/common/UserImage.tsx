@@ -1,4 +1,4 @@
-import userPhoto from "../logo.svg"; //user-photo.jpg";
+const userPhoto = "/logo.svg";
 
 const UserImage: React.FC = () => {
   return (
