@@ -7,14 +7,10 @@ import ScrollToTop from "../components/layout/ScrollToTop";
 
 import Chat from "../pages/Chat";
 
-const appMeta = import.meta as ImportMeta & { env?: { BASE_URL?: string } };
-const routerBase =
-  appMeta.env?.BASE_URL === "/" ? "/" : (appMeta.env?.BASE_URL ?? "/").replace(/\/$/, "");
-
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter basename={routerBase}>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <ScrollToTop />
         <Navbar />
         <Routes>
