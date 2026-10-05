@@ -16,10 +16,10 @@
     "@emailjs/browser": "^4.4.1",
     "@types/three": "^0.186.0",
     "cors": "^2.8.6",
-    "dotenv": "^18.0.4",
+    "dotenv": "^18.0.5",
     "express": "^5.2.1",
-    "framer-motion": "^13.4.4",
-    "lucide-react": "^1.48.0",
+    "framer-motion": "^14.0.0",
+    "lucide-react": "^1.52.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@types/node": "^26.6.3",
+    "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
@@ -40,9 +40,9 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.0",
     "gh-pages": "^6.3.0",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "prettier": "^3.9.9",
     "typescript": "^7.0.2",
-    "vite": "^8.3.1"
+    "vite": "^8.3.2"
   }
 }
