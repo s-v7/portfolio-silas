@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 import os
-import requests
 from typing import Any
-from ai.core.contracts import (
-   LLMProvider,
-   ProviderRequest,
-   ProviderResponse
-)
-from ai.core.exceptions import ConfigurationError, ProviderError
+
+import requests
+
+from ai.core.contracts import LLMProvider, ProviderRequest, ProviderResponse
+from ai.core.exceptions import ProviderError
 from ai.core.model_router import get_model
+
 
 class ProxyProvider(LLMProvider):
     """Provedor HTTP que delega as requisições de LLM para o portfólio-llm-proxy."""
