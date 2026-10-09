@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import suppress
 from typing import Any
 
 from ai.context.models import PortfolioContext
@@ -12,13 +13,19 @@ from ai.graph.execution import (
 )
 from ai.graph.graph import AgentGraph
 from ai.graph.node import GraphExecutionContext, GraphNode
+from ai.telemetry import NullTelemetry, Telemetry, TelemetryEvent
 
 __all__ = ["ParallelExecutor"]
 
 
 class ParallelExecutor:
-    def __init__(self, max_workers: int | None = None) -> None:
+    def __init__(
+        self,
+        max_workers: int | None = None,
+        telemetry: Telemetry | None = None,
+    ) -> None:
         self._max_workers = max_workers
+        self._telemetry: Telemetry = telemetry or NullTelemetry()
 
     def execute(
         self,
@@ -34,6 +41,12 @@ class ParallelExecutor:
             results={},
         )
 
+        self._emit(
+            "workflow.started",
+            graph=graph.name,
+            node_count=len(graph.node_names),
+        )
+
         records: list[NodeExecutionRecord] = []
         statuses: dict[str, NodeExecutionStatus] = {}
         halted = False
@@ -42,6 +55,11 @@ class ParallelExecutor:
             if halted:
                 for node_name in level:
                     statuses[node_name] = NodeExecutionStatus.SKIPPED
+                    self._emit(
+                        "node.skipped",
+                        graph=graph.name,
+                        node=node_name,
+                    )
                     records.append(
                         NodeExecutionRecord(
                             node=node_name,
@@ -63,11 +81,19 @@ class ParallelExecutor:
             records.extend(level_records)
             halted = halted or level_halted
 
-        return GraphExecutionReport(
+        report = GraphExecutionReport(
             graph=graph.name,
             records=tuple(records),
             results=dict(execution_context.results),
         )
+
+        self._emit(
+            "workflow.completed" if report.succeeded else "workflow.failed",
+            graph=graph.name,
+            failed_nodes=report.failed_nodes,
+        )
+
+        return report
 
     def _execute_level(
         self,
@@ -91,6 +117,11 @@ class ParallelExecutor:
 
             if failed_dependencies:
                 statuses[node_name] = NodeExecutionStatus.SKIPPED
+                self._emit(
+                    "node.skipped",
+                    graph=graph.name,
+                    node=node_name,
+                )
                 records.append(
                     NodeExecutionRecord(
                         node=node_name,
@@ -109,7 +140,12 @@ class ParallelExecutor:
 
         with ThreadPoolExecutor(max_workers=self._max_workers) as pool:
             future_to_node = {
-                pool.submit(self._run_node, node, execution_context): node
+                pool.submit(
+                    self._run_node,
+                    graph.name,
+                    node,
+                    execution_context,
+                ): node
                 for node in runnable
             }
 
@@ -127,17 +163,27 @@ class ParallelExecutor:
 
         return records, halted
 
-    @staticmethod
     def _run_node(
+        self,
+        graph_name: str,
         node: GraphNode,
         execution_context: GraphExecutionContext,
     ) -> NodeExecutionRecord:
         timer = NodeTimer()
 
+        self._emit("node.started", graph=graph_name, node=node.name)
+
         try:
             with timer:
                 output = node.handler(execution_context)
         except Exception as error:
+            self._emit(
+                "node.failed",
+                graph=graph_name,
+                node=node.name,
+                duration_ms=timer.duration_ms,
+                error=f"{type(error).__name__}: {error}",
+            )
             return NodeExecutionRecord(
                 node=node.name,
                 status=NodeExecutionStatus.FAILED,
@@ -146,9 +192,23 @@ class ParallelExecutor:
                 exception=error,
             )
 
+        self._emit(
+            "node.completed",
+            graph=graph_name,
+            node=node.name,
+            duration_ms=timer.duration_ms,
+        )
+
         return NodeExecutionRecord(
             node=node.name,
             status=NodeExecutionStatus.SUCCEEDED,
             duration_ms=timer.duration_ms,
             output=output,
         )
+
+    def _emit(self, name: str, **attributes: Any) -> None:
+        # Telemetry observes; a faulty sink must never affect execution.
+        with suppress(Exception):
+            self._telemetry.emit(
+                TelemetryEvent(name=name, attributes=attributes)
+            )
