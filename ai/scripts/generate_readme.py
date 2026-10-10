@@ -14,11 +14,13 @@ from ai.core.exceptions import (
     EvidenceValidationError,
     FileChangeValidationError,
 )
+from ai.executor.parallel_executor import ParallelExecutor
 from ai.providers.factory import ProviderFactory
 from ai.services.draft_writer import DraftWriter
 from ai.services.readme_generation_service import (
     ReadmeGenerationService,
 )
+from ai.telemetry import InMemoryTelemetry, TelemetryEvent
 
 DEFAULT_OUTPUT_ROOT = Path("ai/output/drafts")
 
@@ -75,8 +77,35 @@ def build_parser() -> argparse.ArgumentParser:
         default="Silas Vasconcelos Cruz",
         help="README title.",
     )
+    parser.add_argument(
+        "--trace",
+        action="store_true",
+        help="Print execution telemetry events after the run.",
+    )
 
     return parser
+
+
+def _format_event(event: TelemetryEvent) -> str:
+    parts = [f"[trace] {event.name}"]
+
+    node = event.attributes.get("node")
+    if node:
+        parts.append(f"node={node}")
+
+    duration = event.attributes.get("duration_ms")
+    if isinstance(duration, (int, float)):
+        parts.append(f"duration_ms={duration:.2f}")
+
+    return " ".join(parts)
+
+
+def _print_trace(telemetry: InMemoryTelemetry | None) -> None:
+    if telemetry is None:
+        return
+
+    for event in telemetry.events:
+        print(_format_event(event))
 
 
 def main(
@@ -84,6 +113,13 @@ def main(
 ) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    telemetry = InMemoryTelemetry() if args.trace else None
+    executor = (
+        ParallelExecutor(telemetry=telemetry)
+        if telemetry is not None
+        else None
+    )
 
     try:
         context = load_portfolio_context(
@@ -96,6 +132,7 @@ def main(
             draft_writer=DraftWriter(
                 DEFAULT_OUTPUT_ROOT
             ),
+            executor=executor,
         )
 
         result = service.generate(
@@ -117,6 +154,7 @@ def main(
             f"README generation failed: {error}",
             file=sys.stderr,
         )
+        _print_trace(telemetry)
         return 1
 
     print(f"Draft: {result.destination}")
@@ -133,6 +171,8 @@ def main(
 
     for warning in result.warnings:
         print(f"Warning: {warning}")
+
+    _print_trace(telemetry)
 
     return 0
 
