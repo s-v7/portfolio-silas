@@ -7,6 +7,7 @@ from typing import cast
 from ai.agents.evidence_validator import EvidenceValidatorAgent
 from ai.agents.readme_agent import ReadmeAgent, ReadmeAgentInput
 from ai.context.models import PortfolioContext
+from ai.executor.parallel_executor import ParallelExecutor
 from ai.graph import GraphExecutionReport, NodeExecutionStatus
 from ai.services.draft_writer import DraftWriter
 from ai.workflows.readme_generation_graph import (
@@ -34,11 +35,13 @@ class ReadmeGenerationService:
         evidence_validator: (
             EvidenceValidatorAgent[None] | None
         ) = None,
+        executor: ParallelExecutor | None = None,
     ) -> None:
         self._workflow = ReadmeGenerationGraph(
             readme_agent=readme_agent,
             draft_writer=draft_writer,
             evidence_validator=evidence_validator,
+            executor=executor,
         )
 
     def generate(
