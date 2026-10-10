@@ -13,6 +13,7 @@ from ai.core.exceptions import (
     ConfigurationError,
     EvidenceValidationError,
     FileChangeValidationError,
+    ProviderError,
 )
 from ai.executor.parallel_executor import ParallelExecutor
 from ai.providers.factory import ProviderFactory
@@ -149,6 +150,7 @@ def main(
         ConfigurationError,
         EvidenceValidationError,
         FileChangeValidationError,
+        ProviderError,
     ) as error:
         print(
             f"README generation failed: {error}",
