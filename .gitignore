@@ -88,3 +88,11 @@ ai/output/drafts/
 backup_llm_github.txt
 app_portfolio/
 docs_acom_arq/
+
+# Dados gerados pelo pipeline de evidências (conteúdo local, não versionar)
+ai/data/portfolio_evidence.json
+ai/data/dataset_evidence.jsonl
+ai/data/ecosystem_insights.json
+ai/data/dashboard.html
+ai/data/backups/
+ai/models/
