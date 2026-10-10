@@ -19,6 +19,7 @@ All notable technical changes to this project are documented here.
 - Minimal `Memory` contract (`ai/memory/`) with `InMemoryMemory` implementation: `get`/`set`/`has`/`delete`, no namespacing/TTL/persistence yet
 - `ReadmeGenerationGraph` and `ReadmeGenerationService` accept an optional `ParallelExecutor`; without one, execution stays sequential
 - `--trace` flag in `ai/scripts/generate_readme.py` prints telemetry events and per-node durations after the run
+- `WorkflowBuilder.from_plan()` creates one workflow node per `ExecutionPlan` step, so a Planner result can become an executable graph; dependencies and agent inputs are still defined by the caller
 
 ### Changed
 
