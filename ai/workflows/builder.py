@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Any
 
@@ -9,6 +9,7 @@ from ai.agents.registry import AgentRegistry
 from ai.context.models import PortfolioContext
 from ai.graph.graph import AgentGraph
 from ai.graph.node import GraphNode
+from ai.planner.plan import ExecutionPlan
 
 
 @dataclass(frozen=True, slots=True)
@@ -34,6 +35,30 @@ class WorkflowBuilder:
         self._name = normalized_name
         self._registry = registry
         self._nodes: dict[str, WorkflowNodeSpec] = {}
+
+    @classmethod
+    def from_plan(
+        cls,
+        plan: ExecutionPlan,
+        registry: AgentRegistry,
+        *,
+        name: str | None = None,
+        input_factories: Mapping[str, Callable[[], Any]] | None = None,
+    ) -> WorkflowBuilder:
+        if not plan.steps:
+            raise ValueError("Execution plan has no steps.")
+
+        factories = input_factories or {}
+        builder = cls(name or plan.objective, registry)
+
+        for step in plan.steps:
+            builder.add(
+                step.agent,
+                step.agent,
+                input_factory=factories.get(step.agent),
+            )
+
+        return builder
 
     def add(
         self,
