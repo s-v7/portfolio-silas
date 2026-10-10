@@ -42,10 +42,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--provider",
-        choices=("openai", "anthropic", "nvidia"),
+        choices=("proxy", "openai", "anthropic", "nvidia"),
         default=None,
         help=(
-            "LLM provider. Defaults to LLM_PROVIDER or openai."
+            "LLM provider. Defaults to LLM_PROVIDER or proxy."
         ),
     )
     parser.add_argument(
