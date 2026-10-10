@@ -10,11 +10,15 @@ All notable technical changes to this project are documented here.
 
 ### Added
 
+- `Telemetry` contract in `ai/telemetry/` (`TelemetryEvent`, `Telemetry` protocol) with thread-safe `InMemoryTelemetry` and no-op `NullTelemetry` sinks
+- `ParallelExecutor` accepts an optional `telemetry` sink and emits `workflow.started/completed/failed` and `node.started/completed/failed/skipped` events; a failing sink never affects execution
 - `PlannerAgent` in `ai/planner/`: discovers agents by capability via `AgentRegistry` and produces typed `ExecutionPlan` objects (does not execute agents itself)
 - `AgentGraph.execution_levels()` and `AgentGraph.get_node()` in `ai/graph/graph.py`, grouping the topological order into waves of mutually-independent nodes
 - `ParallelExecutor` in `ai/executor/`: executes `AgentGraph` instances level-by-level, running independent nodes concurrently via `ThreadPoolExecutor`; drop-in compatible with `AgentGraph.execute()`'s report format
 - `WorkflowBuilder.add(..., input_factory=...)`: allows a workflow node to supply a typed `agent_input` (e.g. `ReadmeAgentInput`) instead of always passing `None`
 - Minimal `Memory` contract (`ai/memory/`) with `InMemoryMemory` implementation: `get`/`set`/`has`/`delete`, no namespacing/TTL/persistence yet
+- `ReadmeGenerationGraph` and `ReadmeGenerationService` accept an optional `ParallelExecutor`; without one, execution stays sequential
+- `--trace` flag in `ai/scripts/generate_readme.py` prints telemetry events and per-node durations after the run
 
 ### Changed
 
@@ -23,6 +27,7 @@ All notable technical changes to this project are documented here.
 ### Fixed
 
 - `WorkflowBuilder.build()` read `graph_context.context`, an attribute that does not exist on `GraphExecutionContext` (correct field is `.portfolio`); this caused any executed workflow to fail with `AttributeError` before reaching an agent
+- `ai/scripts/generate_readme.py` now reports `ProviderError` as a clean message with exit code 1 instead of a raw traceback
 
 ---
 
