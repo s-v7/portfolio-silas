@@ -16,6 +16,7 @@ from ai.agents.readme_agent import (
 )
 from ai.context.models import PortfolioContext
 from ai.core.exceptions import EvidenceValidationError
+from ai.executor.parallel_executor import ParallelExecutor
 from ai.graph import (
     AgentGraph,
     GraphExecutionContext,
@@ -48,12 +49,14 @@ class ReadmeGenerationGraph:
         readme_agent: ReadmeAgent,
         draft_writer: DraftWriter,
         evidence_validator: EvidenceValidatorAgent[None] | None = None,
+        executor: ParallelExecutor | None = None,
     ) -> None:
         self._readme_agent = readme_agent
         self._draft_writer = draft_writer
         self._evidence_validator = (
             evidence_validator or EvidenceValidatorAgent[None]()
         )
+        self._executor = executor
         self._graph = self._build_graph()
 
     def execute(
@@ -62,12 +65,17 @@ class ReadmeGenerationGraph:
         agent_input: ReadmeAgentInput,
         relative_path: str = "README.pt.md",
     ) -> GraphExecutionReport:
+        inputs = {
+            README_INPUT_KEY: agent_input,
+            RELATIVE_PATH_KEY: relative_path,
+        }
+
+        if self._executor is not None:
+            return self._executor.execute(self._graph, context, inputs)
+
         return self._graph.execute(
             portfolio=context,
-            inputs={
-                README_INPUT_KEY: agent_input,
-                RELATIVE_PATH_KEY: relative_path,
-            },
+            inputs=inputs,
         )
 
     def _build_graph(self) -> AgentGraph:
