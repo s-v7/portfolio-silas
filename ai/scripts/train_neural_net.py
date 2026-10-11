@@ -152,7 +152,7 @@ def train() -> None:
     y_tensor = torch.tensor(y, dtype=torch.long)
 
     dataset = TextDataset(X_tensor, y_tensor)
-    dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=4, shuffle=True, drop_last=True)
 
     print("[3/5] Inicializando Rede Neural MLP Expandida...")
     input_dim = X_tfidf.shape[1]

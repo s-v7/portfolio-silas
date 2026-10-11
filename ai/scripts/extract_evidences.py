@@ -142,7 +142,7 @@ def run_extraction(target_dirs: list[str]) -> None:
         all_evidences.extend(evs)
         print(f"{proj.name:<35} | {len(evs)} evidência(s) capturada(s)")
 
-    print(f"\n[3/3] Atualizando dataset e histórico acumulativo...")
+    print("\n[3/3] Atualizando dataset e histórico acumulativo...")
     
     # 1. Salva foto atual do portfólio
     EVIDENCE_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -165,10 +165,10 @@ def run_extraction(target_dirs: list[str]) -> None:
     # Grava dataset unificado
     with DATASET_JSONL_PATH.open("w", encoding="utf-8") as f:
         for record in existing_records.values():
-            f.write(json.json_dumps(record, ensure_ascii=False) + "\n") if hasattr(json, "json_dumps") else f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
     print("\n" + "=" * 60)
-    print(f"  EXTRAÇÃO CONCLUÍDA COM SUCESSO!")
+    print("  EXTRAÇÃO CONCLUÍDA COM SUCESSO!")
     print(f"  Evidências da sessão: {len(all_evidences)}")
     print(f"  Total no dataset (.jsonl): {len(existing_records)}")
     print(f"  Arquivo acumulativo: {DATASET_JSONL_PATH}")
