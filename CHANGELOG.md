@@ -20,6 +20,7 @@ All notable technical changes to this project are documented here.
 - `ReadmeGenerationGraph` and `ReadmeGenerationService` accept an optional `ParallelExecutor`; without one, execution stays sequential
 - `--trace` flag in `ai/scripts/generate_readme.py` prints telemetry events and per-node durations after the run
 - `WorkflowBuilder.from_plan()` creates one workflow node per `ExecutionPlan` step, so a Planner result can become an executable graph; dependencies and agent inputs are still defined by the caller
+- `PlannerAgent` accepts an optional `Memory` and reuses a stored plan for a repeated request; the cache key includes the registered agents, so registry changes invalidate it (`cache_hit` is reported in the result metadata)
 
 ### Changed
 
