@@ -12,6 +12,8 @@ import torch.optim as optim
 from sklearn.feature_extraction.text import TfidfVectorizer
 from torch.utils.data import DataLoader, Dataset
 
+from ai.scripts.evidence_labeling import heuristic_labeling
+
 DATASET_PATH = Path("ai/data/dataset_evidence.jsonl")
 MODEL_DIR = Path("ai/models")
 MODEL_PATH = MODEL_DIR / "ecosystem_classifier.pt"
@@ -36,46 +38,6 @@ def clean_text(text: str) -> str:
     text = re.sub(r"https?://\S+", "", text)
     text = re.sub(r"[^\w\s\-\.]", " ", text)
     return text.lower().strip()
-
-
-def heuristic_labeling(identifier: str, content: str, source_path: str = "") -> str:
-    """Taxonomia ajustada para priorizar nomes de repositórios/projetos e contexto exato."""
-    ident = identifier.lower()
-    text = f"{identifier} {content} {source_path}".lower()
-
-    # Overrides explícitos para o repositório central do portfólio
-    if "portfolio-silas" in ident or "portfolio-silas" in text:
-        return "ai-mcp-llm"
-
-    # AI, LLMs e MCP
-    if any(k in text for k in ["mcp", "llm", "agent", "neural", "art-analysis", "model-spinning", "creapi-ai", "phantom-search", "machine-learning"]):
-        return "ai-mcp-llm"
-
-    # Java & Forense Corporativa (Ancoragem forte em Java / Jakarta / GlassFish)
-    if any(k in text for k in ["iped", "glassfish", "payara", "netbeans", "sistemacrea", "ru-creapi", "jakarta", "java"]):
-        return "backend-java-enterprise"
-
-    # Frontend JS/TS / Web
-    if any(k in text for k in ["react", "nextjs", "typescript", "rufrontend", "portfolio-silas", "frontend", "vue", "node"]):
-        return "frontend-node-ts"
-
-    # C, Shell & Baixo Nível
-    if any(k in text for k in ["ponteiros", "sleuthkit", "patch", "refactor_sigec", "shell", ".sh", ".c"]):
-        return "systems-c-shell"
-
-    # Infra, DBs, Venvs e Dumps
-    if any(k in text for k in ["db", "dump", "venv", "schema", "migration", "postgres", "mysql"]):
-        return "infra-db-tools"
-
-    # Ferramentas Financeiras
-    if any(k in text for k in ["finance", "financeira", "calculadora", "cal_"]):
-        return "finance-tools"
-
-    # Backend Python
-    if any(k in text for k in ["fastapi", "flask", "django", "crea-fastapi", "trojan", "lotto", "python"]):
-        return "backend-python"
-
-    return "general-dev"
 
 
 class TextDataset(Dataset):
