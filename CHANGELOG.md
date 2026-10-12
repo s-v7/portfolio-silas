@@ -23,6 +23,7 @@ All notable technical changes to this project are documented here.
 - `PlannerAgent` accepts an optional `Memory` and reuses a stored plan for a repeated request; the cache key includes the registered agents, so registry changes invalidate it (`cache_hit` is reported in the result metadata)
 - `ai/scripts/plan_workflow.py` shows the agents the planner selects for an objective and capabilities, without calling any provider
 - `--run` in `ai/scripts/plan_workflow.py` executes the plan through `WorkflowBuilder.from_plan` and `ParallelExecutor` and prints the generated README
+- `WorkflowBuilder` nodes accept an optional `output_check` (also via `from_plan(output_checks=...)`) that can reject an agent result; the plan CLI uses it so `--run` stops at the evidence validator before calling any provider
 
 ### Changed
 
