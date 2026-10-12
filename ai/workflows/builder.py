@@ -19,6 +19,7 @@ class WorkflowNodeSpec:
     dependencies: tuple[str, ...] = ()
     continue_on_error: bool = False
     input_factory: Callable[[], Any] | None = None
+    output_check: Callable[[Any], None] | None = None
 
 
 class WorkflowBuilder:
@@ -44,11 +45,13 @@ class WorkflowBuilder:
         *,
         name: str | None = None,
         input_factories: Mapping[str, Callable[[], Any]] | None = None,
+        output_checks: Mapping[str, Callable[[Any], None]] | None = None,
     ) -> WorkflowBuilder:
         if not plan.steps:
             raise ValueError("Execution plan has no steps.")
 
         factories = input_factories or {}
+        checks = output_checks or {}
         builder = cls(name or plan.objective, registry)
 
         for step in plan.steps:
@@ -56,6 +59,7 @@ class WorkflowBuilder:
                 step.agent,
                 step.agent,
                 input_factory=factories.get(step.agent),
+                output_check=checks.get(step.agent),
             )
 
         return builder
@@ -67,6 +71,7 @@ class WorkflowBuilder:
         *,
         continue_on_error: bool = False,
         input_factory: Callable[[], Any] | None = None,
+        output_check: Callable[[Any], None] | None = None,
     ) -> WorkflowBuilder:
         normalized_name = name.strip()
         normalized_agent = agent.strip()
@@ -87,6 +92,7 @@ class WorkflowBuilder:
             agent=normalized_agent,
             continue_on_error=continue_on_error,
             input_factory=input_factory,
+            output_check=output_check,
         )
 
         return self
@@ -111,6 +117,7 @@ class WorkflowBuilder:
             dependencies=tuple(dict.fromkeys((*current.dependencies, *dependencies))),
             continue_on_error=current.continue_on_error,
             input_factory=current.input_factory,
+            output_check=current.output_check,
         )
 
         return self
@@ -125,7 +132,8 @@ class WorkflowBuilder:
                 graph_context: Any,
                 *,
                 current_agent: Agent[Any, Any] = agent,
-                current_input_factory: Callable[[], Any] | None = (spec.input_factory),
+                current_input_factory: Callable[[], Any] | None = spec.input_factory,
+                current_output_check: Callable[[Any], None] | None = spec.output_check,
             ) -> Any:
                 portfolio_context = graph_context.portfolio
 
@@ -143,10 +151,15 @@ class WorkflowBuilder:
                     else None
                 )
 
-                return current_agent.execute(
+                result = current_agent.execute(
                     agent_input,
                     portfolio_context,
                 )
+
+                if current_output_check is not None:
+                    current_output_check(result)
+
+                return result
 
             graph.add_node(
                 GraphNode(
