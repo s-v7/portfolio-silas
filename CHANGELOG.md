@@ -34,6 +34,7 @@ All notable technical changes to this project are documented here.
 - `WorkflowBuilder.build()` read `graph_context.context`, an attribute that does not exist on `GraphExecutionContext` (correct field is `.portfolio`); this caused any executed workflow to fail with `AttributeError` before reaching an agent
 - `ai/scripts/generate_readme.py` now reports `ProviderError` as a clean message with exit code 1 instead of a raw traceback
 - `--provider` in `ai/scripts/generate_readme.py` now accepts `proxy` (the factory's real default) and the help text no longer claims `openai` is the default
+- Evidence labeling (`ai/scripts/evidence_labeling.py`, previously inline in `train_neural_net.py`) matches `java`, `node`, `db`, `vue`, `.c` and `.sh` as whole tokens, so `javascript`, `.css` and `feedback` no longer land in the wrong category
 
 ---
 
