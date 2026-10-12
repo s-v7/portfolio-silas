@@ -5,7 +5,11 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from ai.agents.evidence_validator import EvidenceValidatorAgent
+from ai.agents.base import AgentResult
+from ai.agents.evidence_validator import (
+    EvidenceValidationReport,
+    EvidenceValidatorAgent,
+)
 from ai.agents.readme_agent import ReadmeAgent, ReadmeAgentInput
 from ai.agents.registry import AgentRegistry
 from ai.context.json_loader import load_portfolio_context
@@ -15,7 +19,11 @@ from ai.core.contracts import (
     ProviderRequest,
     ProviderResponse,
 )
-from ai.core.exceptions import ConfigurationError, ProviderError
+from ai.core.exceptions import (
+    ConfigurationError,
+    EvidenceValidationError,
+    ProviderError,
+)
 from ai.executor.parallel_executor import ParallelExecutor
 from ai.graph import NodeExecutionStatus
 from ai.planner.plan import ExecutionPlan
@@ -88,6 +96,15 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def require_verified_evidence(
+    result: AgentResult[EvidenceValidationReport],
+) -> None:
+    if not result.output.valid:
+        raise EvidenceValidationError(
+            "No verified evidence is available for README generation."
+        )
+
+
 def run_plan(
     plan: ExecutionPlan,
     registry: AgentRegistry,
@@ -99,6 +116,7 @@ def run_plan(
         input_factories={
             README_AGENT: lambda: ReadmeAgentInput(language=context.language)
         },
+        output_checks={VALIDATOR_AGENT: require_verified_evidence},
     )
 
     agents = {step.agent for step in plan.steps}
@@ -165,7 +183,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     print(f"Objective: {plan.objective}")
-
     print("Agents:")
 
     for step in plan.steps:

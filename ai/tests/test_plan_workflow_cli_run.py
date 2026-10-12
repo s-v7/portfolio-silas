@@ -148,3 +148,43 @@ def test_run_without_verified_evidence_fails_cleanly(
 
     assert exit_code == 1
     assert "verified evidence" in capsys.readouterr().err
+
+
+class CountingProvider(FakeProvider):
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def generate(
+        self,
+        request: ProviderRequest,
+    ) -> ProviderResponse:
+        self.calls += 1
+        return super().generate(request)
+
+
+def test_run_stops_at_validator_without_calling_provider(
+    tmp_path: Path,
+    monkeypatch: MonkeyPatch,
+    capsys: CaptureFixture[str],
+) -> None:
+    provider = CountingProvider()
+    use_provider(monkeypatch, provider)
+
+    exit_code = plan_workflow.main(
+        [
+            "--objective",
+            "Generate README",
+            "--capability",
+            "portfolio",
+            "--run",
+            "--evidence-file",
+            str(evidence_file(tmp_path, status="unverified")),
+        ]
+    )
+
+    error = capsys.readouterr().err
+
+    assert exit_code == 1
+    assert "evidence-validator" in error
+    assert "No verified evidence" in error
+    assert provider.calls == 0
