@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import argparse
 import sys
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
+from functools import partial
 from pathlib import Path
+from typing import Any
 
+from ai.agents.about_agent import AboutAgent, AboutAgentInput
 from ai.agents.base import AgentResult
 from ai.agents.evidence_validator import (
     EvidenceValidationReport,
@@ -29,10 +32,11 @@ from ai.graph import NodeExecutionStatus
 from ai.planner.plan import ExecutionPlan
 from ai.planner.planner import PlannerAgent, PlannerInput
 from ai.providers.factory import ProviderFactory
+from ai.workflows.about_checks import make_about_check
 from ai.workflows.builder import WorkflowBuilder
 
 README_AGENT = "readme-agent"
-VALIDATOR_AGENT = "evidence-validator"
+ABOUT_AGENT = "about-agent"
 
 
 class PlanOnlyProvider(LLMProvider):
@@ -55,10 +59,36 @@ def create_provider(provider_name: str | None) -> LLMProvider:
 
 
 def build_registry(provider: LLMProvider | None = None) -> AgentRegistry:
+    selected = provider or PlanOnlyProvider()
+
     registry = AgentRegistry()
-    registry.register(ReadmeAgent(provider or PlanOnlyProvider()))
+    registry.register(ReadmeAgent(selected))
     registry.register(EvidenceValidatorAgent[None]())
+    registry.register(AboutAgent(selected))
     return registry
+
+
+def require_verified_evidence(
+    result: AgentResult[EvidenceValidationReport],
+) -> None:
+    if not result.output.valid:
+        raise EvidenceValidationError(
+            "No verified evidence is available for README generation."
+        )
+
+
+# Domain tables: what each agent receives, and which check a capability implies.
+INPUT_FACTORIES: dict[str, Callable[[PortfolioContext], Any]] = {
+    README_AGENT: lambda context: ReadmeAgentInput(language=context.language),
+    ABOUT_AGENT: lambda context: AboutAgentInput(language=context.language),
+}
+
+CHECK_FACTORIES: dict[
+    str, Callable[[PortfolioContext], Callable[[Any], None]]
+] = {
+    "verification": lambda context: require_verified_evidence,
+    "about": make_about_check,
+}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -79,7 +109,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--run",
         action="store_true",
-        help="Execute the plan and print the generated README.",
+        help="Execute the plan and print what the agents generate.",
     )
     parser.add_argument(
         "--evidence-file",
@@ -96,13 +126,20 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def require_verified_evidence(
-    result: AgentResult[EvidenceValidationReport],
-) -> None:
-    if not result.output.valid:
-        raise EvidenceValidationError(
-            "No verified evidence is available for README generation."
-        )
+def output_checks(
+    plan: ExecutionPlan,
+    context: PortfolioContext,
+) -> dict[str, Callable[[Any], None]]:
+    checks: dict[str, Callable[[Any], None]] = {}
+
+    for step in plan.steps:
+        for capability in step.capabilities:
+            factory = CHECK_FACTORIES.get(capability)
+
+            if factory is not None:
+                checks[step.agent] = factory(context)
+
+    return checks
 
 
 def run_plan(
@@ -110,20 +147,26 @@ def run_plan(
     registry: AgentRegistry,
     context: PortfolioContext,
 ) -> int:
+    agents = {step.agent for step in plan.steps}
+
     builder = WorkflowBuilder.from_plan(
         plan,
         registry,
         input_factories={
-            README_AGENT: lambda: ReadmeAgentInput(language=context.language)
+            name: partial(factory, context)
+            for name, factory in INPUT_FACTORIES.items()
+            if name in agents
         },
-        output_checks={VALIDATOR_AGENT: require_verified_evidence},
+        output_checks=output_checks(plan, context),
     )
 
-    agents = {step.agent for step in plan.steps}
+    verifiers = [s.agent for s in plan.steps if "verification" in s.capabilities]
+    generators = [s.agent for s in plan.steps if "generation" in s.capabilities]
 
-    # Domain knowledge: the README is written only after validation.
-    if README_AGENT in agents and VALIDATOR_AGENT in agents:
-        builder.depends_on(README_AGENT, VALIDATOR_AGENT)
+    # Domain rule: nothing is generated before the evidence is verified.
+    if verifiers:
+        for generator in generators:
+            builder.depends_on(generator, *verifiers)
 
     report = ParallelExecutor().execute(builder.build(), context)
 
@@ -139,9 +182,15 @@ def run_plan(
         )
         return 1
 
-    if README_AGENT in report.results:
+    generated = [name for name in generators if name in report.results]
+
+    for name in generated:
         print()
-        print(report.results[README_AGENT].output.content)
+
+        if len(generated) > 1:
+            print(f"[{name}]")
+
+        print(report.results[name].output.content)
 
     return 0
 

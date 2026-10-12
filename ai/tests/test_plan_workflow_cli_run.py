@@ -81,7 +81,7 @@ def test_run_executes_plan_and_prints_readme(
             "--objective",
             "Generate README",
             "--capability",
-            "portfolio",
+            "github",
             "--run",
             "--evidence-file",
             str(evidence_file(tmp_path)),
@@ -91,7 +91,7 @@ def test_run_executes_plan_and_prints_readme(
     output = capsys.readouterr().out
 
     assert exit_code == 0
-    assert "evidence-validator" in output
+    assert "readme-agent" in output
     assert "# Generated README" in output
 
 
