@@ -166,8 +166,10 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     print(f"Objective: {plan.objective}")
 
-    for index, step in enumerate(plan.steps, start=1):
-        print(f"{index}. {step.agent} [{', '.join(step.capabilities)}]")
+    print("Agents:")
+
+    for step in plan.steps:
+        print(f"- {step.agent} [{', '.join(step.capabilities)}]")
 
     if args.run:
         return run_plan(plan, registry, context)

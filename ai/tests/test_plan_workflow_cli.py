@@ -71,3 +71,14 @@ def test_fails_for_empty_objective(
 
     assert exit_code == 1
     assert "cannot be empty" in capsys.readouterr().err
+
+
+def test_agent_list_does_not_imply_execution_order(
+    capsys: CaptureFixture[str],
+) -> None:
+    plan_workflow.main(["--objective", "Inspect"])
+
+    lines = capsys.readouterr().out.splitlines()
+
+    assert any(line.startswith("- readme-agent") for line in lines)
+    assert not any(line.startswith("1.") for line in lines)
