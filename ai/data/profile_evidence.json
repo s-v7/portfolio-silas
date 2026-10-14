@@ -5,7 +5,7 @@
       "identifier": "sigec-v2",
       "source": "profile",
       "status": "verified",
-      "content": "SIGEC v2 is a fiscal intelligence engine that indexed 1.1M+ ARTs on a SHA-256 blockchain."
+      "content": "Silas authored SIGEC v2, a fiscal intelligence engine that indexed 1.1M+ ARTs on a SHA-256 blockchain, and led its modernization in parallel."
     },
     {
       "identifier": "sigec-hydrology",
@@ -29,13 +29,13 @@
       "identifier": "fiscalbot",
       "source": "profile",
       "status": "verified",
-      "content": "FiscalBot is an operational Telegram bot that sends automated alerts and runs a mass ART pipeline."
+      "content": "Silas authored FiscalBot, an operational Telegram bot that sends automated alerts and runs a mass ART pipeline."
     },
     {
       "identifier": "sistemacrea",
       "source": "profile",
       "status": "verified",
-      "content": "SistemaCrea is an ERP modernization on Jakarta EE: a Maven multi-module EAR, e-MEC integration covering 4,328 IES, JSF with PrimeFaces 13 and Payara 6."
+      "content": "Silas authored SistemaCrea, an ERP modernization on Jakarta EE: a Maven multi-module EAR, e-MEC integration covering 4,328 IES, JSF with PrimeFaces 13 and Payara 6."
     },
     {
       "identifier": "crea-pi-role",

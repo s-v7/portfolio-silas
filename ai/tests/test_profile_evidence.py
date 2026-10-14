@@ -33,3 +33,11 @@ def test_crea_pi_role_is_described_as_ended() -> None:
     role = next(item for item in context.evidences if item.identifier == "crea-pi-role")
 
     assert "ended" in role.content
+
+
+def test_sigec_states_authorship_and_leadership() -> None:
+    context = load_portfolio_context(PROFILE)
+    sigec = next(item for item in context.evidences if item.identifier == "sigec-v2")
+
+    assert "authored" in sigec.content
+    assert "led" in sigec.content
