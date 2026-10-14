@@ -14,17 +14,16 @@ VALID = (
     "He modernized SistemaCrea. The platform covers 224 municipalities."
 )
 
+FACTS = "SIGEC v2 indexed 1.1M ARTs on a blockchain and covers 224 municipalities."
 
-def context() -> PortfolioContext:
+
+def context_with(content: str) -> PortfolioContext:
     return PortfolioContext(
         evidences=(
             Evidence(
-                identifier="sigec",
+                identifier="profile",
                 source="profile",
-                content=(
-                    "SIGEC v2 indexed 1.1M ARTs on a blockchain "
-                    "and covers 224 municipalities."
-                ),
+                content=content,
                 status=EvidenceStatus.VERIFIED,
             ),
             Evidence(
@@ -37,13 +36,17 @@ def context() -> PortfolioContext:
     )
 
 
-def run_check(text: str) -> None:
+def context() -> PortfolioContext:
+    return context_with(f"Silas authored SIGEC v2. {FACTS}")
+
+
+def run_check(text: str, ctx: PortfolioContext | None = None) -> None:
     result = AgentResult(
         agent="about-agent",
         output=AboutDraft(content=text, provider="fake", model="fake-model"),
     )
 
-    make_about_check(context())(result)
+    make_about_check(ctx or context())(result)
 
 
 def test_accepts_a_grounded_two_paragraph_text() -> None:
@@ -120,26 +123,40 @@ def test_rejects_ownership_claim_without_evidence() -> None:
 
 
 def test_accepts_ownership_claim_when_evidence_states_it() -> None:
-    supported = PortfolioContext(
-        evidences=(
-            Evidence(
-                identifier="role",
-                source="profile",
-                content=(
-                    "Led the SistemaCrea modernization. SIGEC v2 indexed "
-                    "1.1M ARTs on a blockchain and covers 224 municipalities."
-                ),
-                status=EvidenceStatus.VERIFIED,
-            ),
-        )
+    supported = context_with(
+        f"Silas authored SIGEC v2 and led its modernization. "
+        f"{FACTS}"
     )
     text = VALID.replace(
         "He modernized SistemaCrea.",
         "He led the SistemaCrea modernization.",
     )
-    result = AgentResult(
-        agent="about-agent",
-        output=AboutDraft(content=text, provider="fake", model="fake-model"),
+
+    run_check(text, supported)
+
+
+def test_rejects_authorship_claim_without_evidence() -> None:
+    bare = context_with(FACTS)
+
+    with pytest.raises(
+        AgentExecutionError,
+        match="unsupported authorship claim: built",
+    ):
+        run_check(VALID, bare)
+
+
+def test_authorship_synonym_is_accepted_when_evidence_states_one() -> None:
+    run_check(VALID.replace("Silas built SIGEC v2.", "Silas developed SIGEC v2."))
+
+
+def test_contributed_is_rejected_when_evidence_states_authorship() -> None:
+    text = VALID.replace(
+        "He modernized SistemaCrea.",
+        "He contributed to SistemaCrea.",
     )
 
-    make_about_check(supported)(result)
+    with pytest.raises(
+        AgentExecutionError,
+        match="unsupported ownership claim: contributed",
+    ):
+        run_check(text)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 
 from ai.agents.about_agent import AboutDraft
 from ai.agents.base import AgentResult
@@ -21,6 +21,7 @@ FORBIDDEN_PHRASES = (
     "years of experience",
 )
 
+# Roles that must be stated with the same word in the evidence to be claimed.
 OWNERSHIP_CLAIMS = (
     "led",
     "leads",
@@ -31,6 +32,17 @@ OWNERSHIP_CLAIMS = (
     "directed",
     "managed",
     "owned",
+    "contributed",
+)
+
+# Interchangeable verbs: one of them in the evidence supports the whole family.
+AUTHORSHIP_VERBS = (
+    "authored",
+    "built",
+    "developed",
+    "created",
+    "designed",
+    "engineered",
 )
 
 EXPECTED_PARAGRAPHS = 2
@@ -44,6 +56,12 @@ _MARKDOWN_STRUCTURE = re.compile(
     r"^\s*(#{1,6}\s|[-*+]\s|\d+\.\s|```)",
     re.MULTILINE,
 )
+
+
+def _mentions(text: str, words: Iterable[str]) -> bool:
+    return any(
+        re.search(rf"\b{re.escape(word)}\b", text, re.IGNORECASE) for word in words
+    )
 
 
 def find_violations(text: str, evidence_text: str) -> list[str]:
@@ -64,16 +82,17 @@ def find_violations(text: str, evidence_text: str) -> list[str]:
         )
 
     for phrase in FORBIDDEN_PHRASES:
-        if re.search(rf"\b{re.escape(phrase)}\b", stripped, re.IGNORECASE):
+        if _mentions(stripped, (phrase,)):
             violations.append(f"forbidden phrase: {phrase}")
 
     for claim in OWNERSHIP_CLAIMS:
-        pattern = rf"\b{claim}\b"
-        in_text = re.search(pattern, stripped, re.IGNORECASE)
-        in_evidence = re.search(pattern, evidence_text, re.IGNORECASE)
-
-        if in_text and not in_evidence:
+        if _mentions(stripped, (claim,)) and not _mentions(evidence_text, (claim,)):
             violations.append(f"unsupported ownership claim: {claim}")
+
+    if not _mentions(evidence_text, AUTHORSHIP_VERBS):
+        for verb in AUTHORSHIP_VERBS:
+            if _mentions(stripped, (verb,)):
+                violations.append(f"unsupported authorship claim: {verb}")
 
     if _MARKDOWN_STRUCTURE.search(stripped):
         violations.append("lists, headers and code blocks are not allowed")
@@ -97,8 +116,6 @@ def make_about_check(
         violations = find_violations(result.output.content, evidence_text)
 
         if violations:
-            raise AgentExecutionError(
-                "About check failed: " + "; ".join(violations)
-            )
+            raise AgentExecutionError("About check failed: " + "; ".join(violations))
 
     return check
