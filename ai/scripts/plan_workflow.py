@@ -25,6 +25,7 @@ from ai.core.contracts import (
 from ai.core.exceptions import (
     ConfigurationError,
     EvidenceValidationError,
+    FileChangeValidationError,
     ProviderError,
 )
 from ai.executor.parallel_executor import ParallelExecutor
@@ -32,11 +33,13 @@ from ai.graph import NodeExecutionStatus
 from ai.planner.plan import ExecutionPlan
 from ai.planner.planner import PlannerAgent, PlannerInput
 from ai.providers.factory import ProviderFactory
+from ai.services.draft_writer import DraftWriter
 from ai.workflows.about_checks import make_about_check
 from ai.workflows.builder import WorkflowBuilder
 
 README_AGENT = "readme-agent"
 ABOUT_AGENT = "about-agent"
+DEFAULT_OUTPUT_ROOT = Path("ai/output/drafts")
 
 
 class PlanOnlyProvider(LLMProvider):
@@ -123,6 +126,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="LLM provider for --run. Defaults to LLM_PROVIDER or proxy.",
     )
+    parser.add_argument(
+        "--output",
+        default=None,
+        help="Relative path inside ai/output/drafts for the generated text.",
+    )
     return parser
 
 
@@ -146,6 +154,7 @@ def run_plan(
     plan: ExecutionPlan,
     registry: AgentRegistry,
     context: PortfolioContext,
+    output: str | None = None,
 ) -> int:
     agents = {step.agent for step in plan.steps}
 
@@ -192,6 +201,20 @@ def run_plan(
 
         print(report.results[name].output.content)
 
+    if output is not None and generated:
+        content = report.results[generated[0]].output.content
+
+        try:
+            destination = DraftWriter(DEFAULT_OUTPUT_ROOT).write(
+                relative_path=output,
+                content=content,
+            )
+        except FileChangeValidationError as error:
+            print(f"Could not write draft: {error}", file=sys.stderr)
+            return 1
+
+        print(f"Draft: {destination}")
+
     return 0
 
 
@@ -200,6 +223,10 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.run and args.evidence_file is None:
         print("--run requires --evidence-file.", file=sys.stderr)
+        return 1
+
+    if args.output is not None and not args.run:
+        print("--output requires --run.", file=sys.stderr)
         return 1
 
     try:
@@ -231,6 +258,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         return 1
 
+    generators = [s for s in plan.steps if "generation" in s.capabilities]
+
+    if args.output is not None and len(generators) != 1:
+        print(
+            "--output needs a plan with exactly one generating agent.",
+            file=sys.stderr,
+        )
+        return 1
+
     print(f"Objective: {plan.objective}")
     print("Agents:")
 
@@ -238,7 +274,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"- {step.agent} [{', '.join(step.capabilities)}]")
 
     if args.run:
-        return run_plan(plan, registry, context)
+        return run_plan(plan, registry, context, args.output)
 
     return 0
 
