@@ -21,6 +21,18 @@ FORBIDDEN_PHRASES = (
     "years of experience",
 )
 
+OWNERSHIP_CLAIMS = (
+    "led",
+    "leads",
+    "spearheaded",
+    "architected",
+    "pioneered",
+    "headed",
+    "directed",
+    "managed",
+    "owned",
+)
+
 EXPECTED_PARAGRAPHS = 2
 MIN_SENTENCES = 4
 MAX_SENTENCES = 6
@@ -54,6 +66,14 @@ def find_violations(text: str, evidence_text: str) -> list[str]:
     for phrase in FORBIDDEN_PHRASES:
         if re.search(rf"\b{re.escape(phrase)}\b", stripped, re.IGNORECASE):
             violations.append(f"forbidden phrase: {phrase}")
+
+    for claim in OWNERSHIP_CLAIMS:
+        pattern = rf"\b{claim}\b"
+        in_text = re.search(pattern, stripped, re.IGNORECASE)
+        in_evidence = re.search(pattern, evidence_text, re.IGNORECASE)
+
+        if in_text and not in_evidence:
+            violations.append(f"unsupported ownership claim: {claim}")
 
     if _MARKDOWN_STRUCTURE.search(stripped):
         violations.append("lists, headers and code blocks are not allowed")

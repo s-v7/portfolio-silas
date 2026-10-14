@@ -104,3 +104,42 @@ def test_reports_every_violation_at_once() -> None:
     assert "forbidden phrase: passionate" in message
     assert "numbers not in evidence: 9" in message
     assert "lists, headers" in message
+
+
+def test_rejects_ownership_claim_without_evidence() -> None:
+    text = VALID.replace(
+        "He modernized SistemaCrea.",
+        "He led the SistemaCrea modernization.",
+    )
+
+    with pytest.raises(
+        AgentExecutionError,
+        match="unsupported ownership claim: led",
+    ):
+        run_check(text)
+
+
+def test_accepts_ownership_claim_when_evidence_states_it() -> None:
+    supported = PortfolioContext(
+        evidences=(
+            Evidence(
+                identifier="role",
+                source="profile",
+                content=(
+                    "Led the SistemaCrea modernization. SIGEC v2 indexed "
+                    "1.1M ARTs on a blockchain and covers 224 municipalities."
+                ),
+                status=EvidenceStatus.VERIFIED,
+            ),
+        )
+    )
+    text = VALID.replace(
+        "He modernized SistemaCrea.",
+        "He led the SistemaCrea modernization.",
+    )
+    result = AgentResult(
+        agent="about-agent",
+        output=AboutDraft(content=text, provider="fake", model="fake-model"),
+    )
+
+    make_about_check(supported)(result)
