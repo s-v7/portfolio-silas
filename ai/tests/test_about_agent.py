@@ -138,3 +138,15 @@ def test_requires_verified_evidence_without_calling_provider() -> None:
 def test_rejects_empty_provider_content() -> None:
     with pytest.raises(AgentExecutionError, match="empty content"):
         AboutAgent(FakeProvider("   ")).execute(AboutAgentInput(), context())
+
+
+def test_prompt_forbids_unsupported_claims_and_asks_for_the_role() -> None:
+    provider = FakeProvider()
+
+    AboutAgent(provider).execute(AboutAgentInput(), context())
+
+    assert provider.last_request is not None
+    prompt = provider.last_request.messages[-1].content
+
+    assert "leadership or ownership" in prompt
+    assert "role or employer" in prompt

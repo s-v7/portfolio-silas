@@ -95,6 +95,12 @@ class AboutAgent(Agent[AboutAgentInput, AboutDraft]):
                         "the evidence.\n\n"
                         "Verified evidence:\n"
                         f"{prompt_context}\n\n"
+                        "Rules: do not claim leadership or ownership (led, "
+                        "architected, managed) unless the evidence uses those "
+                        "words. Name technologies exactly as the evidence does; "
+                        "do not group them into categories. If the evidence "
+                        "mentions a role or employer, mention it, including that "
+                        "it ended when the evidence says so.\n"
                         "Return only the two paragraphs."
                     ),
                 ),
