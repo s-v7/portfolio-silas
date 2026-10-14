@@ -41,3 +41,11 @@ def test_sigec_states_authorship_and_leadership() -> None:
 
     assert "authored" in sigec.content
     assert "led" in sigec.content
+
+
+def test_sigec_modernization_states_what_it_ran_alongside() -> None:
+    context = load_portfolio_context(PROFILE)
+    sigec = next(item for item in context.evidences if item.identifier == "sigec-v2")
+
+    assert "in parallel with" in sigec.content
+    assert "external APIs" in sigec.content
