@@ -150,3 +150,15 @@ def test_prompt_forbids_unsupported_claims_and_asks_for_the_role() -> None:
 
     assert "leadership or ownership" in prompt
     assert "role or employer" in prompt
+
+
+def test_prompt_asks_for_three_sentences_per_paragraph() -> None:
+    provider = FakeProvider()
+
+    AboutAgent(provider).execute(AboutAgentInput(), context())
+
+    assert provider.last_request is not None
+    prompt = provider.last_request.messages[-1].content
+
+    assert "exactly 3" in prompt
+    assert "6 in total" in prompt

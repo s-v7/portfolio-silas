@@ -87,8 +87,10 @@ class AboutAgent(Agent[AboutAgentInput, AboutDraft]):
                     content=(
                         f"Write an About section about {agent_input.name} "
                         f"in {agent_input.language}.\n"
-                        "Format: exactly 2 paragraphs of prose, 4 to 6 "
-                        "sentences in total, no lists, no headers.\n"
+                        "Format: exactly 2 paragraphs of prose, with exactly 3 "
+                        "sentences in each (6 in total), no lists, no headers. "
+                        "Merge related facts into one sentence instead of "
+                        "adding sentences.\n"
                         "Tone: direct technical prose that states what was "
                         "built and what it does.\n"
                         "Prefer concrete numbers and project names found in "
