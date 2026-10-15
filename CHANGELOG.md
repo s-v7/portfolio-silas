@@ -24,10 +24,15 @@ All notable technical changes to this project are documented here.
 - `ai/scripts/plan_workflow.py` shows the agents the planner selects for an objective and capabilities, without calling any provider
 - `--run` in `ai/scripts/plan_workflow.py` executes the plan through `WorkflowBuilder.from_plan` and `ParallelExecutor` and prints the generated README
 - `WorkflowBuilder` nodes accept an optional `output_check` (also via `from_plan(output_checks=...)`) that can reject an agent result; the plan CLI uses it so `--run` stops at the evidence validator before calling any provider
+- `AboutAgent` (`ai/agents/about_agent.py`) generates an evidence-grounded About section with the `about` capability and the cheaper `short_text` task
+- Grounding and style checks for the About section (`ai/workflows/about_checks.py`): paragraph and sentence count, forbidden phrases, numbers that must exist in verified evidence, and role claims (leadership, authorship) that must be stated by the evidence
+- Hand-written profile evidence in `ai/data/profile_evidence.json`, including the end of the CREA-PI role and the author's role in each project
+- `--output` in `ai/scripts/plan_workflow.py` writes the generated text to `ai/output/drafts`, only for plans with a single generating agent and only when the checks pass
 
 ### Changed
 
 - `AgentGraph._topological_order()` now derives from `execution_levels()` instead of duplicating Kahn's algorithm, eliminating redundant cycle-detection logic
+- `ai/scripts/plan_workflow.py` derives execution order and output checks from agent capabilities (`verification` before `generation`; `verification` and `about` map to checks) instead of hardcoded agent names, so the README and About flows share one path
 
 ### Fixed
 
