@@ -9,6 +9,7 @@ from typing import Any
 
 from ai.agents.about_agent import AboutAgent, AboutAgentInput
 from ai.agents.base import AgentResult
+from ai.agents.bio_agent import BioAgent, BioAgentInput
 from ai.agents.evidence_validator import (
     EvidenceValidationReport,
     EvidenceValidatorAgent,
@@ -35,10 +36,12 @@ from ai.planner.planner import PlannerAgent, PlannerInput
 from ai.providers.factory import ProviderFactory
 from ai.services.draft_writer import DraftWriter
 from ai.workflows.about_checks import make_about_check
+from ai.workflows.bio_checks import make_bio_check
 from ai.workflows.builder import WorkflowBuilder
 
 README_AGENT = "readme-agent"
 ABOUT_AGENT = "about-agent"
+BIO_AGENT = "bio-agent"
 DEFAULT_OUTPUT_ROOT = Path("ai/output/drafts")
 
 
@@ -68,6 +71,7 @@ def build_registry(provider: LLMProvider | None = None) -> AgentRegistry:
     registry.register(ReadmeAgent(selected))
     registry.register(EvidenceValidatorAgent[None]())
     registry.register(AboutAgent(selected))
+    registry.register(BioAgent(selected))
     return registry
 
 
@@ -84,6 +88,7 @@ def require_verified_evidence(
 INPUT_FACTORIES: dict[str, Callable[[PortfolioContext], Any]] = {
     README_AGENT: lambda context: ReadmeAgentInput(language=context.language),
     ABOUT_AGENT: lambda context: AboutAgentInput(language=context.language),
+    BIO_AGENT: lambda cxt: BioAgentInput(language=cxt.language),
 }
 
 CHECK_FACTORIES: dict[
@@ -91,6 +96,7 @@ CHECK_FACTORIES: dict[
 ] = {
     "verification": lambda context: require_verified_evidence,
     "about": make_about_check,
+    "bio": make_bio_check,
 }
 
 

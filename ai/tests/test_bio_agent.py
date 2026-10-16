@@ -119,3 +119,7 @@ def test_requires_verified_evidence_without_calling_provider() -> None:
 def test_rejects_empty_provider_content() -> None:
     with pytest.raises(AgentExecutionError, match="empty content"):
         BioAgent(FakeProvider("  ")).execute(BioAgentInput(), context())
+
+
+def test_bio_is_not_part_of_the_portfolio_bundle() -> None:
+    assert "portfolio" not in BioAgent(FakeProvider()).metadata.capabilities

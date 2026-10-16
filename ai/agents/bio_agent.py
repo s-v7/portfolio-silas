@@ -44,7 +44,7 @@ class BioAgent(Agent[BioAgentInput, BioDraft]):
             responsibility=self.responsibility,
             inputs=("BioAgentInput", "PortfolioContext"),
             outputs=("BioDraft",),
-            capabilities=("generation", "portfolio", "bio"),
+            capabilities=("generation", "bio"),
         )
 
     def execute(
