@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from ai.agents.base import Agent, AgentResult
@@ -14,6 +15,17 @@ from ai.core.contracts import (
     TaskType,
 )
 from ai.core.exceptions import AgentExecutionError
+
+_SENT_END = re.compile(r"(?<=[.!?])\s+")
+
+
+def _one_sentence_per_line(txt: str) -> str:
+    lns: list[str] = []
+
+    for ln in txt.splitlines():
+        lns.extend(snt for snt in _SENT_END.split(ln.strip()) if snt)
+
+    return "\n".join(lns)
 
 
 @dataclass(frozen=True, slots=True)
@@ -98,7 +110,7 @@ class BioAgent(Agent[BioAgentInput, BioDraft]):
         )
 
         response = self._provider.generate(request)
-        content = _strip_markdown_fence(response.content)
+        content = _one_sentence_per_line(_strip_markdown_fence(response.content))
 
         if not content:
             raise AgentExecutionError("Bio provider returned empty content.")

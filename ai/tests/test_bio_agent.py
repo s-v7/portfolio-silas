@@ -135,3 +135,29 @@ def test_prompt_asks_for_three_separate_lines() -> None:
 
     assert "exactly 3 lines" in msg
     assert "line breaks" in msg
+
+
+def test_puts_each_sentence_on_its_own_line() -> None:
+    prv = FakeProvider("First fact about 1.1M ARTs. Second fact. Third fact.")
+
+    rst = BioAgent(prv).execute(BioAgentInput(), context())
+
+    assert rst.output.content == (
+        "First fact about 1.1M ARTs.\nSecond fact.\nThird fact."
+    )
+
+
+def test_keeps_lines_that_are_already_separated() -> None:
+    prv = FakeProvider("First fact.\nSecond fact.")
+
+    rst = BioAgent(prv).execute(BioAgentInput(), context())
+
+    assert rst.output.content == "First fact.\nSecond fact."
+
+
+def test_does_not_split_decimal_numbers() -> None:
+    prv = FakeProvider("Indexed 1.1M ARTs on v2.0 of the engine.")
+
+    rst = BioAgent(prv).execute(BioAgentInput(), context())
+
+    assert rst.output.content == "Indexed 1.1M ARTs on v2.0 of the engine."
