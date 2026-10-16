@@ -123,3 +123,15 @@ def test_rejects_empty_provider_content() -> None:
 
 def test_bio_is_not_part_of_the_portfolio_bundle() -> None:
     assert "portfolio" not in BioAgent(FakeProvider()).metadata.capabilities
+
+
+def test_prompt_asks_for_three_separate_lines() -> None:
+    prv = FakeProvider()
+
+    BioAgent(prv).execute(BioAgentInput(), context())
+
+    assert prv.last_request is not None
+    msg = prv.last_request.messages[-1].content
+
+    assert "exactly 3 lines" in msg
+    assert "line breaks" in msg
