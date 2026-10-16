@@ -28,6 +28,9 @@ All notable technical changes to this project are documented here.
 - Grounding and style checks for the About section (`ai/workflows/about_checks.py`): paragraph and sentence count, forbidden phrases, numbers that must exist in verified evidence, and role claims (leadership, authorship) that must be stated by the evidence
 - Hand-written profile evidence in `ai/data/profile_evidence.json`, including the end of the CREA-PI role and the author's role in each project
 - `--output` in `ai/scripts/plan_workflow.py` writes the generated text to `ai/output/drafts`, only for plans with a single generating agent and only when the checks pass
+- `BioAgent` (`ai/agents/bio_agent.py`) generates a short plain-text professional bio with the `bio` capability; it is not part of the `portfolio` bundle, so `--capability portfolio` keeps generating only the README and the About section
+- Bio checks (`ai/workflows/bio_checks.py`): 2-3 lines, no Markdown, forbidden phrases, at least one number, every number present in verified evidence, and the same ownership and authorship rules as the About section; the agent puts one sentence per line in code because the model ignored the instruction
+- `--capability bio` runs the bio flow through `ai/scripts/plan_workflow.py`
 
 ### Changed
 
