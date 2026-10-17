@@ -31,6 +31,10 @@ All notable technical changes to this project are documented here.
 - `BioAgent` (`ai/agents/bio_agent.py`) generates a short plain-text professional bio with the `bio` capability; it is not part of the `portfolio` bundle, so `--capability portfolio` keeps generating only the README and the About section
 - Bio checks (`ai/workflows/bio_checks.py`): 2-3 lines, no Markdown, forbidden phrases, at least one number, every number present in verified evidence, and the same ownership and authorship rules as the About section; the agent puts one sentence per line in code because the model ignored the instruction
 - `--capability bio` runs the bio flow through `ai/scripts/plan_workflow.py`
+- `ai/scripts/import_evidences.py` imports the extractor dataset as unverified evidence (the extractor's own status is ignored; `source` falls back to `type`) and promotes chosen identifiers to verified; output goes to `ai/output/evidence`, which git ignores
+- `--evidence-file` in `ai/scripts/plan_workflow.py` can be repeated to merge sources; a duplicate evidence identifier fails before any provider call
+- About checks reject other verb forms of role claims (`contributing`) and impact claims (`enhance`, `efficiency`, `improve`) unless the evidence uses them; About and bio checks now print the rejected text with the reason
+- Mermaid diagrams of the framework flow and the portfolio execution graph in `ai/docs`
 
 ### Changed
 
