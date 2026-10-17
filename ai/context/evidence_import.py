@@ -38,9 +38,15 @@ def read_jsonl(src: Path) -> tuple[list[dict[str, Any]], int]:
 
         # Older extractor runs wrote `source`; newer ones write `type`.
         label = rec.get("source") or rec.get("type")
-        needed = (rec.get("identifier"), label, rec.get("content"))
 
-        if not all(isinstance(val, str) and val.strip() for val in needed):
+        if not (
+            isinstance(rec.get("identifier"), str)
+            and isinstance(label, str)
+            and isinstance(rec.get("content"), str)
+            and rec["identifier"].strip()
+            and label.strip()
+            and rec["content"].strip()
+        ):
             skipped += 1
             continue
 
