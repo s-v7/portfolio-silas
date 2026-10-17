@@ -10,8 +10,6 @@ from llm_client import LLMClient
 from context_collector import ContextCollector
 from model_router import get_model
 
-
-
 OUTPUT_FILE = Path("docs/bio.txt")
 
 def load_prompt(context: dict) -> str:
