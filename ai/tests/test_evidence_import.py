@@ -126,3 +126,20 @@ def test_only_promoted_evidence_reaches_the_prompt(tmp_path: Path) -> None:
 
     assert "Kept fact." in prompt
     assert "Left out." not in prompt
+
+
+def test_uses_type_when_the_record_has_no_source(tmp_path: Path) -> None:
+    item = {"identifier": "a", "type": "local_readme", "content": "Fact."}
+
+    evds, skipped = read_jsonl(write_jsonl(tmp_path / "in.jsonl", [item]))
+
+    assert skipped == 0
+    assert evds[0]["source"] == "local_readme"
+
+
+def test_prefers_source_over_type(tmp_path: Path) -> None:
+    item = rec("a", type="local_readme")
+
+    evds, _ = read_jsonl(write_jsonl(tmp_path / "in.jsonl", [item]))
+
+    assert evds[0]["source"] == "README"

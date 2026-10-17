@@ -8,8 +8,6 @@ from typing import Any
 from ai.core.contracts import EvidenceStatus
 from ai.core.exceptions import ConfigurationError
 
-REQUIRED_FIELDS = ("identifier", "source", "content")
-
 
 def read_jsonl(src: Path) -> tuple[list[dict[str, Any]], int]:
     """Read extractor records as unverified evidence; return them and a skip count.
@@ -34,10 +32,15 @@ def read_jsonl(src: Path) -> tuple[list[dict[str, Any]], int]:
         except json.JSONDecodeError as err:
             raise ConfigurationError(f"Invalid JSON on line {num} of {src}.") from err
 
-        if not isinstance(rec, dict) or not all(
-            isinstance(rec.get(key), str) and rec[key].strip()
-            for key in REQUIRED_FIELDS
-        ):
+        if not isinstance(rec, dict):
+            skipped += 1
+            continue
+
+        # Older extractor runs wrote `source`; newer ones write `type`.
+        label = rec.get("source") or rec.get("type")
+        needed = (rec.get("identifier"), label, rec.get("content"))
+
+        if not all(isinstance(val, str) and val.strip() for val in needed):
             skipped += 1
             continue
 
@@ -49,7 +52,7 @@ def read_jsonl(src: Path) -> tuple[list[dict[str, Any]], int]:
 
         evd: dict[str, Any] = {
             "identifier": rec["identifier"].strip(),
-            "source": rec["source"].strip(),
+            "source": label.strip(),
             "content": rec["content"].strip(),
             "status": EvidenceStatus.UNVERIFIED.value,
             "metadata": evd_meta,
