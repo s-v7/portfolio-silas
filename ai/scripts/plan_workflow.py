@@ -17,6 +17,7 @@ from ai.agents.evidence_validator import (
 from ai.agents.readme_agent import ReadmeAgent, ReadmeAgentInput
 from ai.agents.registry import AgentRegistry
 from ai.context.json_loader import load_portfolio_context
+from ai.context.merge import merge_contexts
 from ai.context.models import PortfolioContext
 from ai.core.contracts import (
     LLMProvider,
@@ -122,9 +123,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--evidence-file",
+        action="append",
         type=Path,
         default=None,
-        help="JSON evidence file (required with --run).",
+        help="JSON evidence file (required with --run; repeat to merge).",
     )
     parser.add_argument(
         "--provider",
@@ -237,7 +239,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     try:
         if args.run:
-            context = load_portfolio_context(args.evidence_file)
+            context = merge_contexts(
+                [load_portfolio_context(pth) for pth in args.evidence_file]
+            )
             registry = build_registry(create_provider(args.provider))
         else:
             context = PortfolioContext(evidences=())
