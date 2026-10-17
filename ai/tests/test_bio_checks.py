@@ -80,3 +80,13 @@ def test_rejects_ownership_claim_without_evidence() -> None:
 def test_rejects_authorship_claim_without_evidence() -> None:
     with pytest.raises(AgentExecutionError, match="authorship claim: built"):
         run_check(VALID, cxt_with("A fiscal engine indexed 1.1M ARTs."))
+
+
+def test_the_error_shows_the_rejected_text() -> None:
+    with pytest.raises(AgentExecutionError) as err:
+        run_check(VALID.replace("1.1M", "9M"))
+
+    msg = str(err.value)
+
+    assert "--- rejected text ---" in msg
+    assert "indexed 9M ARTs" in msg

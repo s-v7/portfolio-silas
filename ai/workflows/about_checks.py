@@ -35,10 +35,6 @@ OWNERSHIP_CLAIMS = (
     "contributed",
     "contributes",
     "contributing",
-    "leading",
-    "manages",
-    "managing",
-    "owns",
 )
 
 # Outcome claims: the stem must appear in the evidence to be used.
@@ -140,6 +136,11 @@ def make_about_check(
         violations = find_violations(result.output.content, evidence_text)
 
         if violations:
-            raise AgentExecutionError("About check failed: " + "; ".join(violations))
+            raise AgentExecutionError(
+                "About check failed: "
+                + "; ".join(violations)
+                + "\n--- rejected text ---\n"
+                + result.output.content
+            )
 
     return check

@@ -187,3 +187,22 @@ def test_accepts_an_impact_word_the_evidence_uses() -> None:
     txt = VALID.replace("He modernized SistemaCrea.", "He improved SistemaCrea.")
 
     run_check(txt, cxt)
+
+
+def test_a_system_that_manages_something_is_not_a_role_claim() -> None:
+    txt = VALID.replace(
+        "The platform covers 224 municipalities.",
+        "The platform manages 224 municipalities.",
+    )
+
+    run_check(txt)
+
+
+def test_the_error_shows_the_rejected_text() -> None:
+    with pytest.raises(AgentExecutionError) as err:
+        run_check(VALID.replace("1.1M", "5M"))
+
+    msg = str(err.value)
+
+    assert "--- rejected text ---" in msg
+    assert "It indexed 5M ARTs" in msg

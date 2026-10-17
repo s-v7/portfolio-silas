@@ -71,6 +71,11 @@ def make_bio_check(
         vios = find_violations(rst.output.content, evd_txt)
 
         if vios:
-            raise AgentExecutionError("Bio check failed: " + "; ".join(vios))
+            raise AgentExecutionError(
+                "Bio check failed: "
+                + "; ".join(vios)
+                + "\n--- rejected text ---\n"
+                + rst.output.content
+            )
 
     return check
