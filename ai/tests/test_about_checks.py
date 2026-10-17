@@ -160,3 +160,30 @@ def test_contributed_is_rejected_when_evidence_states_authorship() -> None:
         match="unsupported ownership claim: contributed",
     ):
         run_check(text)
+
+
+def test_rejects_other_verb_forms_of_an_ownership_claim() -> None:
+    txt = VALID.replace(
+        "He modernized SistemaCrea.",
+        "He is contributing to SistemaCrea.",
+    )
+
+    with pytest.raises(AgentExecutionError, match="ownership claim: contributing"):
+        run_check(txt)
+
+
+def test_rejects_an_impact_claim_missing_from_the_evidence() -> None:
+    txt = VALID.replace(
+        "He modernized SistemaCrea.",
+        "He enhanced operational efficiency.",
+    )
+
+    with pytest.raises(AgentExecutionError, match="impact claim: enhanc"):
+        run_check(txt)
+
+
+def test_accepts_an_impact_word_the_evidence_uses() -> None:
+    cxt = context_with(f"Silas authored SIGEC v2 and improved its routing. {FACTS}")
+    txt = VALID.replace("He modernized SistemaCrea.", "He improved SistemaCrea.")
+
+    run_check(txt, cxt)

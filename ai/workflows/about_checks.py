@@ -33,6 +33,22 @@ OWNERSHIP_CLAIMS = (
     "managed",
     "owned",
     "contributed",
+    "contributes",
+    "contributing",
+    "leading",
+    "manages",
+    "managing",
+    "owns",
+)
+
+# Outcome claims: the stem must appear in the evidence to be used.
+IMPACT_STEMS = (
+    "efficien",
+    "enhanc",
+    "improv",
+    "streamlin",
+    "optimiz",
+    "boost",
 )
 
 # Interchangeable verbs: one of them in the evidence supports the whole family.
@@ -93,6 +109,14 @@ def find_violations(text: str, evidence_text: str) -> list[str]:
         for verb in AUTHORSHIP_VERBS:
             if _mentions(stripped, (verb,)):
                 violations.append(f"unsupported authorship claim: {verb}")
+
+    for stem in IMPACT_STEMS:
+        pat = rf"\b{stem}\w*"
+        in_txt = re.search(pat, stripped, re.IGNORECASE)
+        in_evd = re.search(pat, evidence_text, re.IGNORECASE)
+
+        if in_txt and not in_evd:
+            violations.append(f"unsupported impact claim: {stem}")
 
     if _MARKDOWN_STRUCTURE.search(stripped):
         violations.append("lists, headers and code blocks are not allowed")
