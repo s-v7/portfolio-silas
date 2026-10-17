@@ -1,0 +1,17 @@
+%% --capability portfolio. The bio-agent runs alone with --capability bio.
+flowchart LR
+    subgraph L0[Level 0]
+        val[evidence-validator]
+        vchk{{Evidence check}}
+        val --> vchk
+    end
+    subgraph L1[Level 1 in parallel]
+        rd[readme-agent]
+        ab[about-agent]
+        achk{{About checks}}
+        ab --> achk
+    end
+    val --> rd
+    val --> ab
+    rd --> rep[GraphExecutionReport]
+    achk --> rep
