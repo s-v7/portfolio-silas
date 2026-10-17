@@ -10,14 +10,14 @@ class AgentRegistry:
     def __init__(self) -> None:
         self._agents: dict[str, Agent[Any, Any]] = {}
 
-    def register(self,agent: Agent[Any, Any]) -> None:
+    def register(self, agent: Agent[Any, Any]) -> None:
         metadata = agent.metadata
 
         if metadata.name in self._agents:
             raise ValueError(f"Agent '{metadata.name}' is already registered.")
         self._agents[metadata.name] = agent
 
-    def get(self,name: str) -> Agent[Any, Any]:
+    def get(self, name: str) -> Agent[Any, Any]:
         try:
             return self._agents[name]
         except KeyError as exc:
@@ -26,11 +26,9 @@ class AgentRegistry:
     def list(self) -> tuple[AgentMetadata, ...]:
         return tuple(agent.metadata for agent in self._agents.values())
 
-    def find_by_capability(self,capability: str) -> tuple[AgentMetadata, ...]:
+    def find_by_capability(self, capability: str) -> tuple[AgentMetadata, ...]:
         return tuple(
-            metadata
-            for metadata in self.list()
-            if capability in metadata.capabilities
+            metadata for metadata in self.list() if capability in metadata.capabilities
         )
 
     def __len__(self) -> int:
