@@ -35,6 +35,7 @@ All notable technical changes to this project are documented here.
 - `--evidence-file` in `ai/scripts/plan_workflow.py` can be repeated to merge sources; a duplicate evidence identifier fails before any provider call
 - About checks reject other verb forms of role claims (`contributing`) and impact claims (`enhance`, `efficiency`, `improve`) unless the evidence uses them; About and bio checks now print the rejected text with the reason
 - Mermaid diagrams of the framework flow and the portfolio execution graph in `ai/docs`
+- `ai/scripts/measure_flows.py` runs the About and bio flows N times (capped at 20 per flow, one provider call per run) and reports how many passed and why the rest were rejected
 
 ### Changed
 
