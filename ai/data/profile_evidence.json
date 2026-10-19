@@ -38,6 +38,12 @@
       "content": "Silas authored SistemaCrea, an ERP modernization on Jakarta EE: a Maven multi-module EAR, e-MEC integration covering 4,328 IES, JSF with PrimeFaces 13 and Payara 6."
     },
     {
+      "identifier": "agent-framework",
+      "source": "profile",
+      "status": "verified",
+      "content": "Silas authored an agent framework in Python (agent registry, planner, workflow builder, parallel executor, telemetry) that generates evidence-grounded README, About and bio texts and rejects any output that fails its checks."
+    },
+    {
       "identifier": "crea-pi-role",
       "source": "profile",
       "status": "verified",

@@ -49,3 +49,12 @@ def test_sigec_modernization_states_what_it_ran_alongside() -> None:
 
     assert "in parallel with" in sigec.content
     assert "external APIs" in sigec.content
+
+
+def test_agent_framework_is_stated_as_authored_work() -> None:
+    cxt = load_portfolio_context(PROFILE)
+    evd = next(item for item in cxt.evidences if item.identifier == "agent-framework")
+
+    assert "authored" in evd.content
+    assert "agent framework" in evd.content
+    assert evd in cxt.verified_evidences
