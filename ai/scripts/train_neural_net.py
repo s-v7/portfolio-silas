@@ -71,7 +71,9 @@ class EcosystemMLP(nn.Module):
 
 def load_data() -> tuple[list[str], list[int], dict[str, int]]:
     if not DATASET_PATH.exists():
-        raise FileNotFoundError(f"Dataset não encontrado em '{DATASET_PATH}'. Execute a extração primeiro.")
+        raise FileNotFoundError(
+            f"Dataset não encontrado em '{DATASET_PATH}'. Execute a extração primeiro."
+        )
 
     unique_items: dict[str, dict[str, Any]] = {}
     with DATASET_PATH.open("r", encoding="utf-8") as f:
@@ -100,6 +102,7 @@ def load_data() -> tuple[list[str], list[int], dict[str, int]]:
     y = [label_to_idx[lbl] for lbl in labels_raw]
 
     return texts, y, label_to_idx
+
 
 def train() -> None:
     print("[1/5] Carregando dataset e aplicando taxonomia expandida...")
@@ -147,7 +150,10 @@ def train() -> None:
         acc = (correct / total) * 100
         avg_loss = total_loss / total
         if epoch % 10 == 0 or epoch == epochs:
-            print(f"      Época {epoch:02d}/{epochs} | Perda: {avg_loss:.4f} | Acurácia: {acc:.1f}%")
+            print(
+                f"Época {epoch:02d}/{epochs} "
+                f"| Perda: {avg_loss:.4f} | Acurácia: {acc:.1f}%"
+            )
 
     print("[5/5] Salvando modelo e vocabulário...")
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
