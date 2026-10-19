@@ -151,7 +151,7 @@ def train() -> None:
         avg_loss = total_loss / total
         if epoch % 10 == 0 or epoch == epochs:
             print(
-                f"Época {epoch:02d}/{epochs} "
+                f"      Época {epoch:02d}/{epochs} "
                 f"| Perda: {avg_loss:.4f} | Acurácia: {acc:.1f}%"
             )
 
