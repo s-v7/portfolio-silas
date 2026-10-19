@@ -36,6 +36,7 @@ All notable technical changes to this project are documented here.
 - About checks reject other verb forms of role claims (`contributing`) and impact claims (`enhance`, `efficiency`, `improve`) unless the evidence uses them; About and bio checks now print the rejected text with the reason
 - Mermaid diagrams of the framework flow and the portfolio execution graph in `ai/docs`
 - `ai/scripts/measure_flows.py` runs the About and bio flows N times (capped at 20 per flow, one provider call per run) and reports how many passed and why the rest were rejected
+- `ai/scripts/import_github.py` imports an owner's public GitHub repositories (through the `gh` CLI) as unverified evidence; forks and repositories with neither description nor topics are skipped, and promotion reuses `import_evidences promote`
 
 ### Changed
 
