@@ -12,6 +12,12 @@ import torch.optim as optim
 from sklearn.feature_extraction.text import TfidfVectorizer
 from torch.utils.data import DataLoader, Dataset
 
+from ai.scripts.evidence_dataset import (
+    TRAINABLE_KINDS,
+    majority_baseline,
+    record_kind,
+    stratified_split,
+)
 from ai.scripts.evidence_labeling import heuristic_labeling
 
 DATASET_PATH = Path("ai/data/dataset_evidence.jsonl")
@@ -89,6 +95,9 @@ def load_data() -> tuple[list[str], list[int], dict[str, int]]:
     labels_raw: list[str] = []
 
     for identifier, item in unique_items.items():
+        if record_kind(identifier) not in TRAINABLE_KINDS:
+            continue
+
         content_clean = clean_text(item.get("content", ""))
         path_str = item.get("source_path", "")
 
@@ -105,24 +114,33 @@ def load_data() -> tuple[list[str], list[int], dict[str, int]]:
 
 
 def train() -> None:
-    print("[1/5] Carregando dataset e aplicando taxonomia expandida...")
+    print("[1/5] Carregando README e CHANGELOG (resumos de pasta ficam de fora)...")
     texts, y, label_to_idx = load_data()
-    print(f"      Total de exemplos carregados: {len(texts)}")
+    trn_idx, tst_idx = stratified_split(y)
+    batch_size = 4
 
-    print("[2/5] Vetorizando contexto textual com TF-IDF...")
+    if len(trn_idx) < 2 * batch_size:
+        raise ValueError("Dataset pequeno demais para treinar.")
+
+    print(f"      Exemplos: {len(texts)} ({len(trn_idx)} treino, {len(tst_idx)} teste)")
+
+    print("[2/5] Vetorizando com TF-IDF (ajustado só no treino)...")
     vectorizer = TfidfVectorizer(max_features=500, ngram_range=(1, 2))
-    X_tfidf = vectorizer.fit_transform(texts).toarray()
+    x_trn = vectorizer.fit_transform([texts[idx] for idx in trn_idx]).toarray()
+    x_tst = vectorizer.transform([texts[idx] for idx in tst_idx]).toarray()
+    y_trn = [y[idx] for idx in trn_idx]
+    y_tst = [y[idx] for idx in tst_idx]
 
-    X_tensor = torch.tensor(X_tfidf, dtype=torch.float32)
-    y_tensor = torch.tensor(y, dtype=torch.long)
-
-    dataset = TextDataset(X_tensor, y_tensor)
-    dataloader = DataLoader(dataset, batch_size=4, shuffle=True, drop_last=True)
+    dataset = TextDataset(
+        torch.tensor(x_trn, dtype=torch.float32),
+        torch.tensor(y_trn, dtype=torch.long),
+    )
+    dataloader = DataLoader(
+        dataset, batch_size=batch_size, shuffle=True, drop_last=True
+    )
 
     print("[3/5] Inicializando Rede Neural MLP Expandida...")
-    input_dim = X_tfidf.shape[1]
-    num_classes = len(CATEGORIES)
-    model = EcosystemMLP(input_dim=input_dim, num_classes=num_classes)
+    model = EcosystemMLP(input_dim=x_trn.shape[1], num_classes=len(CATEGORIES))
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(model.parameters(), lr=0.008, weight_decay=0.01)
@@ -152,10 +170,21 @@ def train() -> None:
         if epoch % 10 == 0 or epoch == epochs:
             print(
                 f"      Época {epoch:02d}/{epochs} "
-                f"| Perda: {avg_loss:.4f} | Acurácia: {acc:.1f}%"
+                f"| Perda: {avg_loss:.4f} | Acurácia (treino): {acc:.1f}%"
             )
 
-    print("[5/5] Salvando modelo e vocabulário...")
+    print("[5/5] Avaliando em dados separados e salvando...")
+    model.eval()
+    tst_acc: float | None = None
+
+    if y_tst:
+        with torch.no_grad():
+            preds = model(torch.tensor(x_tst, dtype=torch.float32)).argmax(dim=1)
+
+        tst_acc = (preds == torch.tensor(y_tst)).float().mean().item()
+
+    base = majority_baseline(y_trn, y_tst)
+
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     torch.save(model.state_dict(), MODEL_PATH)
 
@@ -165,7 +194,23 @@ def train() -> None:
     with CATEGORIES_PATH.open("w", encoding="utf-8") as f:
         json.dump(label_to_idx, f, indent=2)
 
-    print("\n[Sucesso] Treinamento com taxonomia de 83 projetos concluído!")
+    metrics = {
+        "trained_on": list(TRAINABLE_KINDS),
+        "train_examples": len(trn_idx),
+        "test_examples": len(tst_idx),
+        "test_accuracy": tst_acc,
+        "majority_baseline": base,
+        "label_source": "heuristic_labeling",
+    }
+    (MODEL_DIR / "metrics.json").write_text(
+        json.dumps(metrics, indent=2), encoding="utf-8"
+    )
+
+    if tst_acc is not None and base is not None:
+        print(f"\n      Acurácia em dados separados: {tst_acc * 100:.1f}%")
+        print(f"      Linha de base (classe mais comum): {base * 100:.1f}%")
+
+    print("\n[Sucesso] Treinamento concluído.")
 
 
 if __name__ == "__main__":
