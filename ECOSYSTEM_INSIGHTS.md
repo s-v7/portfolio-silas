@@ -1,19 +1,29 @@
 # Relatório da Rede Neural - Análise do Ecossistema
 
-**Total de Projetos e Evidências Mapeadas:** 150
+**Evidências analisadas (README e CHANGELOG):** 87
+
+63 resumos de pasta ficaram de fora: eles listam só extensões e nomes de arquivo.
 
 ## Distribuição por Categoria de Software
 
-| Categoria | Qtd. Projetos | Proporção (%) |
+As categorias são heurísticas (regras sobre o texto), não uma classificação verificada.
+
+| Categoria | Qtd. Evidências | Proporção (%) |
 | :--- | :---: | :---: |
-| `ai-mcp-llm` | 40 | 26.67% |
-| `backend-python` | 2 | 1.33% |
-| `backend-java-enterprise` | 36 | 24.00% |
-| `frontend-node-ts` | 14 | 9.33% |
-| `systems-c-shell` | 26 | 17.33% |
-| `infra-db-tools` | 5 | 3.33% |
-| `finance-tools` | 4 | 2.67% |
-| `general-dev` | 23 | 15.33% |
+| `ai-mcp-llm` | 31 | 35.63% |
+| `backend-python` | 1 | 1.15% |
+| `backend-java-enterprise` | 17 | 19.54% |
+| `frontend-node-ts` | 16 | 18.39% |
+| `systems-c-shell` | 5 | 5.75% |
+| `infra-db-tools` | 2 | 2.30% |
+| `finance-tools` | 2 | 2.30% |
+| `general-dev` | 13 | 14.94% |
+
+## Avaliação
+
+- **Acurácia em dados separados:** 61.1% (18 exemplos de teste)
+- **Linha de base (sempre a classe mais comum):** 38.9%
+- Os rótulos vêm de uma regra, então a acurácia mede o quanto a rede imita a regra, não a verdade sobre os projetos.
 
 ## Arquitetura da Rede Neural (PyTorch MLP)
 - **Entrada:** Vetorização TF-IDF (Unigramas e Bigramas, 500 features).
