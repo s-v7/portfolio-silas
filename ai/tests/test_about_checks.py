@@ -66,10 +66,10 @@ def test_rejects_too_few_sentences() -> None:
 def test_rejects_too_many_sentences() -> None:
     text = (
         "Fact one. Fact two. Fact three. Fact four.\n\n"
-        "Fact five. Fact six. Fact seven."
+        "Fact five. Fact six. Fact seven. Fact eight."
     )
 
-    with pytest.raises(AgentExecutionError, match="sentences, found 7"):
+    with pytest.raises(AgentExecutionError, match="sentences, found 8"):
         run_check(text)
 
 
@@ -206,3 +206,13 @@ def test_the_error_shows_the_rejected_text() -> None:
 
     assert "--- rejected text ---" in msg
     assert "It indexed 5M ARTs" in msg
+
+
+def test_accepts_seven_sentences_in_two_paragraphs() -> None:
+    txt = (
+        "Silas built SIGEC v2. It indexed 1.1M ARTs on a blockchain. "
+        "He modernized SistemaCrea. The platform covers 224 municipalities.\n\n"
+        "He wrote a bot. It sends alerts. It runs on a schedule."
+    )
+
+    run_check(txt)

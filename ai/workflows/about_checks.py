@@ -59,7 +59,7 @@ AUTHORSHIP_VERBS = (
 
 EXPECTED_PARAGRAPHS = 2
 MIN_SENTENCES = 4
-MAX_SENTENCES = 6
+MAX_SENTENCES = 7
 
 _NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
 _PARAGRAPH_BREAK = re.compile(r"\n\s*\n")
