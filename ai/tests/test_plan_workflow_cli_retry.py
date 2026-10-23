@@ -91,6 +91,8 @@ def test_a_rejected_text_is_retried_with_the_reason(
         "Your previous answer was rejected: About check failed: "
         "expected 4-7 sentences, found 8"
     ) in prv.prompts[1]
+    assert "--- rejected text ---" not in prv.prompts[1]
+    assert "Eighth fact" not in prv.prompts[1]
     assert "Silas builds fiscal intelligence systems." in capsys.readouterr().out
 
 
@@ -110,3 +112,10 @@ def test_it_gives_up_after_the_retry_limit(
 
 def test_only_the_about_and_bio_flows_are_retried() -> None:
     assert set(plan_workflow.RETRY_INPUTS) == {"about-agent", "bio-agent"}
+
+
+def test_check_reason_drops_the_rejected_text() -> None:
+    msg = "About check failed: found 8\n--- rejected text ---\nlong text"
+
+    assert plan_workflow.check_reason(msg) == "About check failed: found 8"
+    assert plan_workflow.check_reason("plain reason") == "plain reason"

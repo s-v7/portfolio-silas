@@ -104,10 +104,16 @@ CHECK_FACTORIES: dict[
 
 MAX_RETRIES = 2
 
+
+def check_reason(msg: str) -> str:
+    """Keep only the check's reason: echoing the rejected text invites a copy."""
+    return msg.split("\n--- rejected text ---")[0]
+
+
 # On a rejected text, the agent runs again with the check's reason as feedback.
 RETRY_INPUTS: dict[str, Callable[[Any, str], Any]] = {
-    ABOUT_AGENT: lambda inp, fdb: replace(inp, feedback=fdb),
-    BIO_AGENT: lambda inp, fdb: replace(inp, feedback=fdb),
+    ABOUT_AGENT: lambda inp, fdb: replace(inp, feedback=check_reason(fdb)),
+    BIO_AGENT: lambda inp, fdb: replace(inp, feedback=check_reason(fdb)),
 }
 
 
