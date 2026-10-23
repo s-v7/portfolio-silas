@@ -163,3 +163,24 @@ def test_prompt_asks_for_seven_sentences_in_two_paragraphs() -> None:
     assert "4 sentences in the first" in prompt
     assert "7 in total" in prompt
     assert "exactly as they appear" in prompt
+
+
+def test_feedback_is_added_to_the_prompt() -> None:
+    prv = FakeProvider()
+
+    AboutAgent(prv).execute(AboutAgentInput(feedback="found 8 sentences"), context())
+
+    assert prv.last_request is not None
+    msg = prv.last_request.messages[-1].content
+
+    assert "Your previous answer was rejected: found 8 sentences" in msg
+    assert msg.index("rejected") > msg.index("Verified evidence")
+
+
+def test_no_feedback_means_no_rejection_note() -> None:
+    prv = FakeProvider()
+
+    AboutAgent(prv).execute(AboutAgentInput(), context())
+
+    assert prv.last_request is not None
+    assert "rejected" not in prv.last_request.messages[-1].content

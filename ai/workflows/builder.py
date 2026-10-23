@@ -7,6 +7,7 @@ from typing import Any
 from ai.agents.base import Agent
 from ai.agents.registry import AgentRegistry
 from ai.context.models import PortfolioContext
+from ai.core.exceptions import AgentExecutionError
 from ai.graph.graph import AgentGraph
 from ai.graph.node import GraphNode
 from ai.planner.plan import ExecutionPlan
@@ -20,6 +21,8 @@ class WorkflowNodeSpec:
     continue_on_error: bool = False
     input_factory: Callable[[], Any] | None = None
     output_check: Callable[[Any], None] | None = None
+    retry_input: Callable[[Any, str], Any] | None = None
+    retries: int = 0
 
 
 class WorkflowBuilder:
@@ -46,12 +49,15 @@ class WorkflowBuilder:
         name: str | None = None,
         input_factories: Mapping[str, Callable[[], Any]] | None = None,
         output_checks: Mapping[str, Callable[[Any], None]] | None = None,
+        retry_inputs: Mapping[str, Callable[[Any, str], Any]] | None = None,
+        retries: int = 0,
     ) -> WorkflowBuilder:
         if not plan.steps:
             raise ValueError("Execution plan has no steps.")
 
         factories = input_factories or {}
         checks = output_checks or {}
+        rtrs = retry_inputs or {}
         builder = cls(name or plan.objective, registry)
 
         for step in plan.steps:
@@ -60,6 +66,8 @@ class WorkflowBuilder:
                 step.agent,
                 input_factory=factories.get(step.agent),
                 output_check=checks.get(step.agent),
+                retry_input=rtrs.get(step.agent),
+                retries=retries,
             )
 
         return builder
@@ -72,6 +80,8 @@ class WorkflowBuilder:
         continue_on_error: bool = False,
         input_factory: Callable[[], Any] | None = None,
         output_check: Callable[[Any], None] | None = None,
+        retry_input: Callable[[Any, str], Any] | None = None,
+        retries: int = 0,
     ) -> WorkflowBuilder:
         normalized_name = name.strip()
         normalized_agent = agent.strip()
@@ -81,6 +91,9 @@ class WorkflowBuilder:
 
         if not normalized_agent:
             raise ValueError("Agent name cannot be empty.")
+
+        if retries < 0:
+            raise ValueError("Workflow node retries cannot be negative.")
 
         if normalized_name in self._nodes:
             raise ValueError(f"Workflow node '{normalized_name}' is already defined.")
@@ -93,6 +106,8 @@ class WorkflowBuilder:
             continue_on_error=continue_on_error,
             input_factory=input_factory,
             output_check=output_check,
+            retry_input=retry_input,
+            retries=retries,
         )
 
         return self
@@ -118,6 +133,8 @@ class WorkflowBuilder:
             continue_on_error=current.continue_on_error,
             input_factory=current.input_factory,
             output_check=current.output_check,
+            retry_input=current.retry_input,
+            retries=current.retries,
         )
 
         return self
@@ -134,6 +151,9 @@ class WorkflowBuilder:
                 current_agent: Agent[Any, Any] = agent,
                 current_input_factory: Callable[[], Any] | None = spec.input_factory,
                 current_output_check: Callable[[Any], None] | None = spec.output_check,
+                current_retry_input: Callable[[Any, str], Any]
+                | None = spec.retry_input,
+                current_retries: int = spec.retries,
             ) -> Any:
                 portfolio_context = graph_context.portfolio
 
@@ -150,16 +170,28 @@ class WorkflowBuilder:
                     if current_input_factory is not None
                     else None
                 )
+                att = 0
 
-                result = current_agent.execute(
-                    agent_input,
-                    portfolio_context,
-                )
+                while True:
+                    result = current_agent.execute(
+                        agent_input,
+                        portfolio_context,
+                    )
 
-                if current_output_check is not None:
-                    current_output_check(result)
+                    if current_output_check is None:
+                        return result
 
-                return result
+                    try:
+                        current_output_check(result)
+                    except AgentExecutionError as err:
+                        if current_retry_input is None or att >= current_retries:
+                            raise
+
+                        att += 1
+                        agent_input = current_retry_input(agent_input, str(err))
+                        continue
+
+                    return result
 
             graph.add_node(
                 GraphNode(

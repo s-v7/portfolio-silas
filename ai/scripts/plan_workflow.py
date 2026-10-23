@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import sys
 from collections.abc import Callable, Sequence
+from dataclasses import replace
 from functools import partial
 from pathlib import Path
 from typing import Any
@@ -101,6 +102,15 @@ CHECK_FACTORIES: dict[
 }
 
 
+MAX_RETRIES = 2
+
+# On a rejected text, the agent runs again with the check's reason as feedback.
+RETRY_INPUTS: dict[str, Callable[[Any, str], Any]] = {
+    ABOUT_AGENT: lambda inp, fdb: replace(inp, feedback=fdb),
+    BIO_AGENT: lambda inp, fdb: replace(inp, feedback=fdb),
+}
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Show (and optionally run) the planner's execution plan."
@@ -175,6 +185,8 @@ def run_plan(
             if name in agents
         },
         output_checks=output_checks(plan, context),
+        retry_inputs=RETRY_INPUTS,
+        retries=MAX_RETRIES,
     )
 
     verifiers = [s.agent for s in plan.steps if "verification" in s.capabilities]

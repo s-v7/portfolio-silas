@@ -161,3 +161,23 @@ def test_does_not_split_decimal_numbers() -> None:
     rst = BioAgent(prv).execute(BioAgentInput(), context())
 
     assert rst.output.content == "Indexed 1.1M ARTs on v2.0 of the engine."
+
+
+def test_feedback_is_added_to_the_prompt() -> None:
+    prv = FakeProvider()
+
+    BioAgent(prv).execute(BioAgentInput(feedback="expected 2-3 lines"), context())
+
+    assert prv.last_request is not None
+    msg = prv.last_request.messages[-1].content
+
+    assert "Your previous answer was rejected: expected 2-3 lines" in msg
+
+
+def test_no_feedback_means_no_rejection_note() -> None:
+    prv = FakeProvider()
+
+    BioAgent(prv).execute(BioAgentInput(), context())
+
+    assert prv.last_request is not None
+    assert "rejected" not in prv.last_request.messages[-1].content

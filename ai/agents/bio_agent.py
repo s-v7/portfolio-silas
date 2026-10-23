@@ -32,6 +32,7 @@ def _one_sentence_per_line(txt: str) -> str:
 class BioAgentInput:
     language: str = "en"
     name: str = "Silas Vasconcelos Cruz"
+    feedback: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,6 +70,14 @@ class BioAgent(Agent[BioAgentInput, BioDraft]):
         if not prompt_context.strip():
             raise AgentExecutionError("Bio generation requires verified evidence.")
 
+        fdb = agent_input.feedback
+        note = (
+            f"Your previous answer was rejected: {fdb}\n"
+            "Rewrite it fixing every problem listed, keeping the same format.\n\n"
+            if fdb
+            else ""
+        )
+
         request = ProviderRequest(
             task=TaskType.SHORT_TEXT,
             messages=(
@@ -99,6 +108,7 @@ class BioAgent(Agent[BioAgentInput, BioDraft]):
                         "evidence. State facts, not adjectives.\n\n"
                         "Verified evidence:\n"
                         f"{prompt_context}\n\n"
+                        f"{note}"
                         "Return only the bio."
                     ),
                 ),

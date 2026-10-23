@@ -20,6 +20,7 @@ from ai.core.exceptions import AgentExecutionError
 class AboutAgentInput:
     language: str = "en"
     name: str = "Silas Vasconcelos Cruz"
+    feedback: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,6 +63,14 @@ class AboutAgent(Agent[AboutAgentInput, AboutDraft]):
         if not prompt_context.strip():
             raise AgentExecutionError("About generation requires verified evidence.")
 
+        fdb = agent_input.feedback
+        note = (
+            f"Your previous answer was rejected: {fdb}\n"
+            "Rewrite it fixing every problem listed, keeping the same format.\n\n"
+            if fdb
+            else ""
+        )
+
         request = ProviderRequest(
             task=TaskType.SHORT_TEXT,
             messages=(
@@ -98,6 +107,7 @@ class AboutAgent(Agent[AboutAgentInput, AboutDraft]):
                         "the evidence.\n\n"
                         "Verified evidence:\n"
                         f"{prompt_context}\n\n"
+                        f"{note}"
                         "Rules: do not claim leadership or ownership (led, "
                         "architected, managed) unless the evidence uses those "
                         "words. Name technologies exactly as the evidence does; "
