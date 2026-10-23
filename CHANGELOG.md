@@ -37,6 +37,8 @@ All notable technical changes to this project are documented here.
 - Mermaid diagrams of the framework flow and the portfolio execution graph in `ai/docs`
 - `ai/scripts/measure_flows.py` runs the About and bio flows N times (capped at 20 per flow, one provider call per run) and reports how many passed and why the rest were rejected
 - `ai/scripts/import_github.py` imports an owner's public GitHub repositories (through the `gh` CLI) as unverified evidence; forks and repositories with neither description nor topics are skipped, and promotion reuses `import_evidences promote`
+- `ai/scripts/import_git.py` computes verified evidence from local git history (the author's commits, matched by e-mail): one evidence per repository, or with `--aggregate` a single evidence with totals and main languages that names no repository; commits are identified by hash so a clone counts once, and generated folders are ignored when counting languages
+- The About section allows seven sentences (4 + 3) and its prompt asks for numbers written exactly as in the evidence
 
 ### Changed
 
