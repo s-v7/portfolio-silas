@@ -38,6 +38,7 @@ All notable technical changes to this project are documented here.
 - `ai/scripts/measure_flows.py` runs the About and bio flows N times (capped at 20 per flow, one provider call per run) and reports how many passed and why the rest were rejected
 - `ai/scripts/import_github.py` imports an owner's public GitHub repositories (through the `gh` CLI) as unverified evidence; forks and repositories with neither description nor topics are skipped, and promotion reuses `import_evidences promote`
 - `ai/scripts/import_git.py` computes verified evidence from local git history (the author's commits, matched by e-mail): one evidence per repository, or with `--aggregate` a single evidence with totals and main languages that names no repository; commits are identified by hash so a clone counts once, and generated folders are ignored when counting languages
+- Evidence can mark facts the About text must state (`must_mention` in its metadata): the prompt lists them and the About check rejects a text that omits one; the aggregate git activity uses it for its commit total
 - The About check accepts up to seven sentences (the prompt asks for six, so a seventh still passes) and the prompt asks for numbers written exactly as in the evidence
 - `WorkflowBuilder` nodes accept `retry_input` and `retries`: when an output check rejects a result, the agent runs again with the check's reason as feedback; the plan CLI retries the About and bio flows up to twice and sends only the reason, because echoing the rejected text made the model copy it
 
