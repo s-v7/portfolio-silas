@@ -70,3 +70,12 @@ def test_prompt_forbids_greetings_titles_and_copied_labels() -> None:
 
     assert "Do not start with a greeting" in prv.prompt
     assert "never copy labels" in prv.prompt
+
+
+def test_prompt_fixes_the_section_order() -> None:
+    prv = RecordingProvider()
+
+    ReadmeAgent(prv).execute(ReadmeAgentInput(), cxt())
+
+    assert "## Projects, ## Experience, ## Skills" in prv.prompt
+    assert "## Location, ## Activity" in prv.prompt
