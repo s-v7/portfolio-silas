@@ -61,3 +61,12 @@ def test_no_feedback_means_no_rejection_note() -> None:
     ReadmeAgent(prv).execute(ReadmeAgentInput(), cxt())
 
     assert "rejected" not in prv.prompt
+
+
+def test_prompt_forbids_greetings_titles_and_copied_labels() -> None:
+    prv = RecordingProvider()
+
+    ReadmeAgent(prv).execute(ReadmeAgentInput(), cxt())
+
+    assert "Do not start with a greeting" in prv.prompt
+    assert "never copy labels" in prv.prompt

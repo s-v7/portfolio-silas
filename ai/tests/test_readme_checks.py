@@ -129,3 +129,44 @@ def test_reports_every_violation_at_once() -> None:
     assert "placeholder text: TODO/TBD" in msg
     assert "link not in evidence" in msg
     assert "numbers not in evidence: 99" in msg
+
+
+LONG = (
+    "Silas implemented the billing service for municipalities in Piaui with "
+    "automated alerts and weekly reports for every active contract in the region."
+)
+
+
+def test_rejects_a_text_that_copies_an_evidence() -> None:
+    with pytest.raises(AgentExecutionError, match="copies evidence profile: 100%"):
+        run_check(LONG, cxt_with(LONG))
+
+
+def test_a_short_quote_is_not_a_copy() -> None:
+    txt = (
+        "# Silas\n\nHe worked on the billing service for municipalities in Piaui "
+        "with automated alerts, and also maintains a dozen internal tools used by "
+        "many people across several teams every single day of the week."
+    )
+
+    run_check(txt, cxt_with(LONG))
+
+
+def test_dynamic_is_allowed_in_a_readme() -> None:
+    run_check(GOOD + "\n\nA dynamic list of projects.")
+
+
+def test_rejects_a_generic_greeting() -> None:
+    with pytest.raises(AgentExecutionError, match="generic greeting: welcome to my"):
+        run_check("Welcome to my profile!\n\n" + GOOD)
+
+
+def test_rejects_a_job_title_the_evidence_does_not_state() -> None:
+    with pytest.raises(
+        AgentExecutionError, match="unsupported self-description: I am a developer"
+    ):
+        run_check(GOOD + "\n\nI am a developer.")
+
+
+def test_accepts_a_self_description_the_evidence_states() -> None:
+    run_check(GOOD + "\n\nI am a developer.", cxt_with("Silas is a developer. " + EVD))

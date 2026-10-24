@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping
 
 from ai.agents.base import AgentResult
 from ai.agents.readme_agent import ReadmeDraft
@@ -14,6 +14,10 @@ from ai.workflows.about_checks import (
     OWNERSHIP_CLAIMS,
 )
 
+# Ordinary technical words in a README, unlike in a personal bio.
+TECHNICAL_WORDS = frozenset({"dynamic", "dedicated"})
+README_FORBIDDEN = tuple(phr for phr in FORBIDDEN_PHRASES if phr not in TECHNICAL_WORDS)
+
 PLACEHOLDERS = (
     "example.com",
     "your-username",
@@ -23,12 +27,18 @@ PLACEHOLDERS = (
     "](#)",
 )
 
+GREETINGS = ("welcome to my", "hi there", "hey there")
+
+SHINGLE = 8
+COPY_LIMIT = 0.3
+
 _NUM = re.compile(r"\d+(?:[.,]\d+)*")
 _LIST_MARK = re.compile(r"^\s*\d+[.)]\s+", re.MULTILINE)
 _URL = re.compile(r"https?://[^\s)>\]\"']+")
 _EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
 _TODO = re.compile(r"\b(?:TODO|TBD)\b")
 _FENCE = re.compile(r"^\s*```", re.MULTILINE)
+_SELF = re.compile(r"\bI am an? ([a-z][\w-]*)")
 
 
 def _has(txt: str, words: Iterable[str]) -> bool:
@@ -37,7 +47,35 @@ def _has(txt: str, words: Iterable[str]) -> bool:
     )
 
 
-def find_violations(txt: str, evd_txt: str) -> list[str]:
+def _shingles(txt: str) -> set[tuple[str, ...]]:
+    wds = re.findall(r"\w+", txt.lower())
+
+    return {tuple(wds[idx : idx + SHINGLE]) for idx in range(len(wds) - SHINGLE + 1)}
+
+
+def copied_from(doc: str, srcs: Mapping[str, str]) -> tuple[str, float] | None:
+    """The evidence that supplies the largest share of the text, above the limit."""
+    mine = _shingles(doc)
+
+    if not mine:
+        return None
+
+    best: tuple[str, float] | None = None
+
+    for idf, txt in srcs.items():
+        rto = len(mine & _shingles(txt)) / len(mine)
+
+        if rto > COPY_LIMIT and (best is None or rto > best[1]):
+            best = (idf, rto)
+
+    return best
+
+
+def find_violations(
+    txt: str,
+    evd_txt: str,
+    srcs: Mapping[str, str] | None = None,
+) -> list[str]:
     doc = txt.strip()
 
     if not doc:
@@ -45,7 +83,7 @@ def find_violations(txt: str, evd_txt: str) -> list[str]:
 
     vios: list[str] = []
 
-    for phrase in FORBIDDEN_PHRASES:
+    for phrase in README_FORBIDDEN:
         if _has(doc, (phrase,)):
             vios.append(f"forbidden phrase: {phrase}")
 
@@ -65,6 +103,19 @@ def find_violations(txt: str, evd_txt: str) -> list[str]:
 
         if in_doc and not in_evd:
             vios.append(f"unsupported impact claim: {stem}")
+
+    cpy = copied_from(doc, srcs or {})
+
+    if cpy is not None:
+        vios.append(f"copies evidence {cpy[0]}: {cpy[1]:.0%} of the text")
+
+    for grt in GREETINGS:
+        if _has(doc, (grt,)):
+            vios.append(f"generic greeting: {grt}")
+
+    for rol in sorted(set(_SELF.findall(doc))):
+        if not _has(evd_txt, (rol,)):
+            vios.append(f"unsupported self-description: I am a {rol}")
 
     if _FENCE.search(doc):
         vios.append("code fences are not allowed")
@@ -99,9 +150,10 @@ def make_readme_check(
     cxt: PortfolioContext,
 ) -> Callable[[AgentResult[ReadmeDraft]], None]:
     evd_txt = "\n".join(evd.content for evd in cxt.verified_evidences)
+    srcs = {evd.identifier: evd.content for evd in cxt.verified_evidences}
 
     def check(rst: AgentResult[ReadmeDraft]) -> None:
-        vios = find_violations(rst.output.content, evd_txt)
+        vios = find_violations(rst.output.content, evd_txt, srcs)
 
         if vios:
             raise AgentExecutionError(
