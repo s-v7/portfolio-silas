@@ -29,6 +29,9 @@ PLACEHOLDERS = (
 
 GREETINGS = ("welcome to my", "hi there", "hey there")
 
+SELF_ASSESSMENT = ("proficient", "expert", "skilled", "experienced", "advanced")
+EXTRA_IMPACT = ("quality", "robust", "reliab", "scalab", "seamless")
+
 SHINGLE = 8
 COPY_LIMIT = 0.3
 
@@ -96,13 +99,17 @@ def find_violations(
             if _has(doc, (verb,)):
                 vios.append(f"unsupported authorship claim: {verb}")
 
-    for stem in IMPACT_STEMS:
+    for stem in (*IMPACT_STEMS, *EXTRA_IMPACT):
         pat = rf"\b{stem}\w*"
         in_doc = re.search(pat, doc, re.IGNORECASE)
         in_evd = re.search(pat, evd_txt, re.IGNORECASE)
 
         if in_doc and not in_evd:
             vios.append(f"unsupported impact claim: {stem}")
+
+    for wrd in SELF_ASSESSMENT:
+        if _has(doc, (wrd,)) and not _has(evd_txt, (wrd,)):
+            vios.append(f"unsupported self-assessment: {wrd}")
 
     cpy = copied_from(doc, srcs or {})
 

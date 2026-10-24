@@ -170,3 +170,19 @@ def test_rejects_a_job_title_the_evidence_does_not_state() -> None:
 
 def test_accepts_a_self_description_the_evidence_states() -> None:
     run_check(GOOD + "\n\nI am a developer.", cxt_with("Silas is a developer. " + EVD))
+
+
+def test_rejects_a_self_assessment_the_evidence_does_not_state() -> None:
+    with pytest.raises(AgentExecutionError, match="self-assessment: proficient"):
+        run_check(GOOD + "\n\nProficient in Python.")
+
+
+def test_accepts_a_self_assessment_the_evidence_states() -> None:
+    run_check(
+        GOOD + "\n\nProficient in Python.", cxt_with("Proficient in Python. " + EVD)
+    )
+
+
+def test_rejects_a_quality_claim_without_evidence() -> None:
+    with pytest.raises(AgentExecutionError, match="impact claim: quality"):
+        run_check(GOOD + "\n\nIt ensures output quality.")

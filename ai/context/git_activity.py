@@ -162,7 +162,8 @@ def activity_evidence(act: Activity) -> dict[str, Any]:
     reps = "repository" if act.repos == 1 else "repositories"
     cmt = "commit" if act.commits == 1 else "commits"
     txt = (
-        f"The author made {act.commits:,} {cmt} across {act.repos} {reps}, "
+        f"In local git history, the author made {act.commits:,} {cmt} "
+        f"across {act.repos} {reps}, "
         f"from {act.first} to {act.last}."
     )
 
