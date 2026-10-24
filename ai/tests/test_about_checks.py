@@ -216,3 +216,39 @@ def test_accepts_seven_sentences_in_two_paragraphs() -> None:
     )
 
     run_check(txt)
+
+
+def cxt_must(
+    fct: str,
+    status: EvidenceStatus = EvidenceStatus.VERIFIED,
+) -> PortfolioContext:
+    return PortfolioContext(
+        evidences=(
+            Evidence(
+                identifier="profile",
+                source="profile",
+                content=f"Silas authored SIGEC v2. {FACTS}",
+                status=EvidenceStatus.VERIFIED,
+            ),
+            Evidence(
+                identifier="activity",
+                source="git",
+                content="Git activity: 1,577 commits by the author.",
+                status=status,
+                metadata={"must_mention": [fct]},
+            ),
+        )
+    )
+
+
+def test_rejects_a_text_that_omits_a_required_fact() -> None:
+    with pytest.raises(AgentExecutionError, match="missing required fact: 1,577"):
+        run_check(VALID, cxt_must("1,577"))
+
+
+def test_accepts_a_text_that_states_the_required_fact() -> None:
+    run_check(VALID + " It has 1,577 commits.", cxt_must("1,577"))
+
+
+def test_an_unverified_requirement_is_not_enforced() -> None:
+    run_check(VALID, cxt_must("1,577", EvidenceStatus.UNVERIFIED))

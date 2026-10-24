@@ -184,3 +184,35 @@ def test_no_feedback_means_no_rejection_note() -> None:
 
     assert prv.last_request is not None
     assert "rejected" not in prv.last_request.messages[-1].content
+
+
+def test_prompt_lists_the_facts_marked_as_mandatory() -> None:
+    prv = FakeProvider()
+    cxt = PortfolioContext(
+        evidences=(
+            Evidence(
+                identifier="act",
+                source="git",
+                content="Git activity: 1,577 commits.",
+                status=EvidenceStatus.VERIFIED,
+                metadata={"must_mention": ["1,577"]},
+            ),
+        )
+    )
+
+    AboutAgent(prv).execute(AboutAgentInput(), cxt)
+
+    assert prv.last_request is not None
+    assert (
+        "Mention these facts exactly as written: 1,577."
+        in prv.last_request.messages[-1].content
+    )
+
+
+def test_prompt_has_no_mandatory_facts_by_default() -> None:
+    prv = FakeProvider()
+
+    AboutAgent(prv).execute(AboutAgentInput(), context())
+
+    assert prv.last_request is not None
+    assert "Mention these facts" not in prv.last_request.messages[-1].content

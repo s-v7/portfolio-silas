@@ -138,3 +138,7 @@ def test_evidence_file_loads_as_verified(tmp_path: Path) -> None:
     cxt = load_portfolio_context(dst)
 
     assert [evd.identifier for evd in cxt.verified_evidences] == ["git-activity"]
+
+
+def test_evidence_marks_the_commit_total_as_mandatory() -> None:
+    assert activity_evidence(activity())["metadata"]["must_mention"] == ["1,642"]

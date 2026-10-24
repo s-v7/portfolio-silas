@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from ai.agents.base import Agent, AgentResult
 from ai.agents.metadata import AgentMetadata
 from ai.agents.readme_agent import _strip_markdown_fence
+from ai.context.facts import required_facts
 from ai.context.models import PortfolioContext
 from ai.core.contracts import (
     GenerationOptions,
@@ -63,6 +64,12 @@ class AboutAgent(Agent[AboutAgentInput, AboutDraft]):
         if not prompt_context.strip():
             raise AgentExecutionError("About generation requires verified evidence.")
 
+        facts = required_facts(context)
+        must = (
+            "Mention these facts exactly as written: " + "; ".join(facts) + ".\n\n"
+            if facts
+            else ""
+        )
         fdb = agent_input.feedback
         note = (
             f"Your previous answer was rejected: {fdb}\n"
@@ -108,6 +115,7 @@ class AboutAgent(Agent[AboutAgentInput, AboutDraft]):
                         "Verified evidence:\n"
                         f"{prompt_context}\n\n"
                         f"{note}"
+                        f"{must}"
                         "Rules: do not claim leadership or ownership (led, "
                         "architected, managed) unless the evidence uses those "
                         "words. Name technologies exactly as the evidence does; "

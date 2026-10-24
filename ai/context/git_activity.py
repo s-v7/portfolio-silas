@@ -179,5 +179,6 @@ def activity_evidence(act: Activity) -> dict[str, Any]:
             "techs": list(act.languages),
             "commits": act.commits,
             "repositories": act.repos,
+            "must_mention": [f"{act.commits:,}"],
         },
     }

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 
 from ai.agents.about_agent import AboutDraft
 from ai.agents.base import AgentResult
+from ai.context.facts import required_facts
 from ai.context.models import PortfolioContext
 from ai.core.exceptions import AgentExecutionError
 
@@ -76,7 +77,11 @@ def _mentions(text: str, words: Iterable[str]) -> bool:
     )
 
 
-def find_violations(text: str, evidence_text: str) -> list[str]:
+def find_violations(
+    text: str,
+    evidence_text: str,
+    required: Sequence[str] = (),
+) -> list[str]:
     stripped = text.strip()
     violations: list[str] = []
 
@@ -114,6 +119,10 @@ def find_violations(text: str, evidence_text: str) -> list[str]:
         if in_txt and not in_evd:
             violations.append(f"unsupported impact claim: {stem}")
 
+    for fact in required:
+        if fact not in stripped:
+            violations.append(f"missing required fact: {fact}")
+
     if _MARKDOWN_STRUCTURE.search(stripped):
         violations.append("lists, headers and code blocks are not allowed")
 
@@ -133,7 +142,10 @@ def make_about_check(
     )
 
     def check(result: AgentResult[AboutDraft]) -> None:
-        violations = find_violations(result.output.content, evidence_text)
+        required = required_facts(context)
+        violations = find_violations(
+            result.output.content, evidence_text, required
+        )
 
         if violations:
             raise AgentExecutionError(
