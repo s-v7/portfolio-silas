@@ -40,6 +40,7 @@ class ReadmeAgentInput:
     language: str = "pt-BR"
     audience: str = "technical recruiters"
     title: str = "Silas Vasconcelos Cruz"
+    feedback: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -79,6 +80,14 @@ class ReadmeAgent(Agent[ReadmeAgentInput, ReadmeDraft]):
         if not prompt_context.strip():
             raise AgentExecutionError("README generation requires verified evidence.")
 
+        fdb = agent_input.feedback
+        note = (
+            f"Your previous answer was rejected: {fdb}\n"
+            "Rewrite it fixing every problem listed, keeping the same format.\n\n"
+            if fdb
+            else ""
+        )
+
         request = ProviderRequest(
             task=TaskType.LONG_MARKDOWN,
             messages=(
@@ -106,6 +115,7 @@ class ReadmeAgent(Agent[ReadmeAgentInput, ReadmeDraft]):
                         f"Audience: {agent_input.audience}\n\n"
                         "Verified evidence:\n"
                         f"{prompt_context}\n\n"
+                        f"{note}"
                         "Do not add contact information, biography claims, "
                         "generic enthusiasm statements or "
                         "placeholder links.\n"

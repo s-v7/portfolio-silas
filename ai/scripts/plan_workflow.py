@@ -40,6 +40,7 @@ from ai.services.draft_writer import DraftWriter
 from ai.workflows.about_checks import make_about_check
 from ai.workflows.bio_checks import make_bio_check
 from ai.workflows.builder import WorkflowBuilder
+from ai.workflows.readme_checks import make_readme_check
 
 README_AGENT = "readme-agent"
 ABOUT_AGENT = "about-agent"
@@ -99,6 +100,7 @@ CHECK_FACTORIES: dict[
     "verification": lambda context: require_verified_evidence,
     "about": make_about_check,
     "bio": make_bio_check,
+    "github": make_readme_check,
 }
 
 
@@ -114,6 +116,7 @@ def check_reason(msg: str) -> str:
 RETRY_INPUTS: dict[str, Callable[[Any, str], Any]] = {
     ABOUT_AGENT: lambda inp, fdb: replace(inp, feedback=check_reason(fdb)),
     BIO_AGENT: lambda inp, fdb: replace(inp, feedback=check_reason(fdb)),
+    README_AGENT: lambda inp, fdb: replace(inp, feedback=check_reason(fdb)),
 }
 
 

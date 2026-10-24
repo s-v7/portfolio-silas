@@ -69,8 +69,13 @@ def run(tmp_path: Path, monkeypatch: MonkeyPatch, prv: SequenceProvider) -> int:
 
     return plan_workflow.main(
         [
-            "--objective", "Write about me", "--capability", "about", "--run",
-            "--evidence-file", str(evd_file(tmp_path)),
+            "--objective",
+            "Write about me",
+            "--capability",
+            "about",
+            "--run",
+            "--evidence-file",
+            str(evd_file(tmp_path)),
         ]
     )
 
@@ -110,8 +115,12 @@ def test_it_gives_up_after_the_retry_limit(
     assert "found 8" in capsys.readouterr().err
 
 
-def test_only_the_about_and_bio_flows_are_retried() -> None:
-    assert set(plan_workflow.RETRY_INPUTS) == {"about-agent", "bio-agent"}
+def test_only_the_text_flows_are_retried() -> None:
+    assert set(plan_workflow.RETRY_INPUTS) == {
+        "about-agent",
+        "bio-agent",
+        "readme-agent",
+    }
 
 
 def test_check_reason_drops_the_rejected_text() -> None:
