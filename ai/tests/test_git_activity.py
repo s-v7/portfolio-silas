@@ -120,7 +120,7 @@ def test_evidence_text_has_a_thousands_separator_and_no_names() -> None:
     assert evd["identifier"] == "git-activity"
     assert evd["status"] == "verified"
     assert evd["content"] == (
-        "Git activity across 42 repositories: 1,642 commits by the author, "
+        "The author made 1,642 commits across 42 repositories, "
         "from 2022-04 to 2026-10. Main languages: Python, TypeScript."
     )
 
@@ -128,7 +128,7 @@ def test_evidence_text_has_a_thousands_separator_and_no_names() -> None:
 def test_singular_wording() -> None:
     evd = activity_evidence(activity(commits=1, repos=1))
 
-    assert "across 1 repository: 1 commit by the author" in evd["content"]
+    assert "The author made 1 commit across 1 repository" in evd["content"]
 
 
 def test_evidence_file_loads_as_verified(tmp_path: Path) -> None:

@@ -162,8 +162,8 @@ def activity_evidence(act: Activity) -> dict[str, Any]:
     reps = "repository" if act.repos == 1 else "repositories"
     cmt = "commit" if act.commits == 1 else "commits"
     txt = (
-        f"Git activity across {act.repos} {reps}: {act.commits:,} {cmt} "
-        f"by the author, from {act.first} to {act.last}."
+        f"The author made {act.commits:,} {cmt} across {act.repos} {reps}, "
+        f"from {act.first} to {act.last}."
     )
 
     if act.languages:
