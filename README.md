@@ -47,7 +47,7 @@ Access the online portfolio: **[https://s-v7.github.io/portfolio-silas](https://
 
 This project is licensed under the MIT License. Feel free to contribute and share!
 
-# React + Vite
+### React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
