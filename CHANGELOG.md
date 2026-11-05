@@ -42,6 +42,7 @@ All notable technical changes to this project are documented here.
 - The About check accepts up to seven sentences (the prompt asks for six, so a seventh still passes) and the prompt asks for numbers written exactly as in the evidence
 - `WorkflowBuilder` nodes accept `retry_input` and `retries`: when an output check rejects a result, the agent runs again with the check's reason as feedback; the plan CLI retries the About and bio flows up to twice and sends only the reason, because echoing the rejected text made the model copy it
 - README checks (`ai/workflows/readme_checks.py`) for `--capability github`: numbers, links and e-mails must exist in the evidence; role, authorship, impact and self-assessment claims need the evidence to use the same word; greetings, job titles, placeholders and code fences are rejected; a text that takes more than 30% of its content from one evidence is rejected as a copy. The README flow retries like the About and bio flows
+- `ai/scripts/publish_profile.py` puts the generated profile text between `ai-generated` markers in a profile repository README (inserting after an anchor the first time, replacing only the block afterwards); it runs no git command, so nothing is committed or pushed
 
 ### Changed
 
