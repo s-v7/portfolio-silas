@@ -1,22 +1,20 @@
-# Atlas AI
+# SV7 AI
 
-Atlas AI is an autonomous LLM-based system that maintains this portfolio by:
+SV7 AI is the Python agent framework behind this portfolio. An objective goes through a planner, a workflow and a parallel executor, and each text it generates (profile README, About section, bio) is checked in code against verified evidence before it is accepted.
 
-- Analyzing the repository context
-- Selecting task-specific models
-- Regenerating documentation
-- Preserving full audit history
+- Evidence comes from a hand-written profile, the extractor, GitHub and local git history; imported evidence stays unverified until it is promoted
+- Output checks reject invented numbers, links, roles and impact claims, and a rejected text is retried with the reason
+- Telemetry events and durations are printed by `generate_readme.py --trace`
 
 Execution:
 
-- GitHub Actions (weekly)
-- systemd timer (local fallback)
+- On demand from the command line (`ai/scripts/plan_workflow.py`, `ai/scripts/generate_readme.py`)
 
 ---
 
 ## Providers
 
-Atlas AI supports two LLM providers. The active provider is selected via `LLM_PROVIDER`.
+SV7 AI can use several LLM providers; the active one is selected with `LLM_PROVIDER` or `--provider`. The tables below cover OpenAI and Anthropic.
 
 ### OpenAI (default)
 
