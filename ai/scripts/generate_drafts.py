@@ -14,7 +14,7 @@ import update_readme_en
 import update_readme_pt
 
 print("=" * 60)
-print("Atlas AI — generating drafts to docs/draft/")
+print("SV7 AI — generating drafts to docs/draft/")
 print("=" * 60)
 
 tasks = [

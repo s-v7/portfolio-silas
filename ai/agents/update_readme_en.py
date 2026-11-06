@@ -18,7 +18,7 @@ def load_prompt(context: dict) -> str:
     return base_prompt.replace("{{CONTEXT}}", json.dumps(context, indent=2))
 
 def main(output_file: Path = OUTPUT_FILE):
-    print("Generating English README with Atlas AI...")
+    print("Generating English README with SV7 AI...")
 
     collector = ContextCollector(repo_root=".")
     context = collector.collect()
