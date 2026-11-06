@@ -12,7 +12,7 @@ Silas is a Technology & Information Security Advisor at CREA-PI based in Teresin
 
 - **FiscalBot**: Developed an operational Telegram bot that processes mass ART data and runs scheduled tasks every Monday at 06:00 BRT.
 
-- **Atlas AI**: Built an autonomous system that maintains project documentation using a dual-provider architecture (OpenAI + Claude), capable of routing tasks intelligently based on requirement types.
+- **SV7 AI**: Python agent framework (agent registry, planner, workflow builder, parallel executor, telemetry) that generates evidence-grounded README, About and bio texts and rejects any output that fails its checks.
 
 ## Stack
 

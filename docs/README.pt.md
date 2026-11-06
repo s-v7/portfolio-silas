@@ -37,4 +37,4 @@ Você pode acessar meus perfis nas redes sociais:
 - [LinkedIn](https://linkedin.com/in/s-v7)
 - **FiscalBot**: Bot Telegram operacional com cron toda segunda às 06:00 BRT, processando ARTs em massa e enviando alertas automáticos para fiscais nos 224 municípios do Piauí.
 
-- **Atlas AI**: Sistema autônomo LLM que mantém este portfólio atualizado — dual-provider OpenAI/Anthropic, roteamento de modelos por tipo de tarefa, execução semanal via GitHub Actions.
+- **SV7 AI**: Framework de agentes em Python (registro de agentes, planejador, construtor de workflows, executor paralelo, telemetria) que gera textos de README, Sobre e bio fundamentados em evidências e rejeita qualquer saída que falhe nas checagens.
