@@ -47,6 +47,7 @@ All notable technical changes to this project are documented here.
 ### Changed
 
 - `AgentGraph._topological_order()` now derives from `execution_levels()` instead of duplicating Kahn's algorithm, eliminating redundant cycle-detection logic
+- The AI system is named SV7 AI instead of Atlas AI in the READMEs, the legacy prompts and the script messages (the `infra/` templates and the Cloudflare worker keep the old name); the empty `atlas-ai.yml` workflow was removed and the docs no longer claim autonomous or scheduled maintenance
 - `ai/scripts/plan_workflow.py` derives execution order and output checks from agent capabilities (`verification` before `generation`; `verification` and `about` map to checks) instead of hardcoded agent names, so the README and About flows share one path
 
 ### Fixed
