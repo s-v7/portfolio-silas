@@ -50,7 +50,7 @@ extend-exclude = [
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 explicit_package_bases = true
 packages = ["ai"]
