@@ -45,7 +45,9 @@ Access the online portfolio: **[https://s-v7.github.io/portfolio-silas](https://
 
 ### License
 
-This project is licensed under the MIT License. Feel free to contribute and share!
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
+
+Copyright (c) 2026 Silas Vasconcelos Cruz.
 
 # React + Vite
 
