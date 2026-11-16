@@ -1,0 +1,63 @@
+name: Regenerate About and bio
+
+# Runs when the hand-written profile changes (or by hand) and proposes the new
+# texts as a pull request. It never pushes to main and never merges.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ai/data/profile_evidence.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: regenerate-docs
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: pip install -e ".[anthropic]"
+
+      - name: Regenerate
+        id: regen
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set +e
+          python -m ai.scripts.regenerate_docs --provider openai
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          # 0 = unchanged, 10 = changed; anything else is a failure
+          if [ "$code" -ne 0 ] && [ "$code" -ne 10 ]; then exit "$code"; fi
+
+      - name: Propose the new texts
+        if: steps.regen.outputs.code == '10'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B regenerate-docs
+          git add docs/about.md docs/bio.txt
+          git commit -m "docs: regenerate the About and bio from the profile evidence"
+          git push --force origin regenerate-docs
+          if [ -z "$(gh pr list --head regenerate-docs --state open --json number --jq '.[0].number')" ]; then
+            gh pr create --base main --head regenerate-docs \
+              --title "Regenerate About and bio" \
+              --body "Generated from ai/data/profile_evidence.json. Both texts passed the output checks. Review the diff before merging."
+          fi
