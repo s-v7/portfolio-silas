@@ -36,7 +36,6 @@ Uses the Anthropic Messages API via the official SDK (`anthropic==0.86.0`).
 | `long_markdown` | claude-opus-4-5   |
 | `analysis`      | claude-sonnet-4-5 |
 
-If `ANTHROPIC_API_KEY` is not set, the system automatically falls back to OpenAI.
 
 ---
 
@@ -44,11 +43,9 @@ If `ANTHROPIC_API_KEY` is not set, the system automatically falls back to OpenAI
 
 | Variable | Used by | Description |
 | --- | --- | --- |
-| `LLM_PROVIDER` | all | `proxy`, `openai`, `anthropic` or `nvidia` (the CLIs also take `--provider`). Default: `proxy` in the framework, `openai` in the legacy `llm_client.py` |
+| `LLM_PROVIDER` | all | `proxy`, `openai`, `anthropic` or `nvidia` (the CLIs also take `--provider`). Default: `proxy` |
 | `OPENAI_API_KEY` or `LLM_API_KEY` | `openai` | OpenAI API key |
-| `ANTHROPIC_API_KEY` | `anthropic` | Anthropic API key; the legacy client falls back to OpenAI when it is absent |
+| `ANTHROPIC_API_KEY` | `anthropic` | Anthropic API key |
 | `NVIDIA_API_KEY` | `nvidia` | NVIDIA API key |
 | `PORTFOLIO_PROXY_URL` | `proxy` | Proxy base URL (default `http://localhost:8080/v1`) |
 | `PORTFOLIO_PROXY_API_KEY` or `LLM_API_KEY` | `proxy` | Proxy API key |
-| `LLM_MAX_TOKENS` | legacy client | Max tokens per response (default `2000`) |
-| `OPENAI_BASE_URL` | legacy client | OpenAI-compatible base URL (default `https://api.openai.com/v1`) |
