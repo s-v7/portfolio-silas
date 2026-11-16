@@ -41,10 +41,6 @@ line-length = 88
 target-version = "py311"
 extend-exclude = [
     "ai/scripts",
-    "ai/agents/update_about.py",
-    "ai/agents/update_bio.py",
-    "ai/agents/update_readme_en.py",
-    "ai/agents/update_readme_pt.py",
 ]
 
 [tool.ruff.lint]
@@ -57,5 +53,4 @@ explicit_package_bases = true
 packages = ["ai"]
 exclude = [
     "^ai/scripts/",
-    "^ai/agents/update_.*\\.py$",
 ]
