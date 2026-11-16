@@ -40,7 +40,11 @@ addopts = [
 line-length = 88
 target-version = "py311"
 extend-exclude = [
-    "ai/scripts",
+    "ai/scripts/evaluate_insights.py",
+    "ai/scripts/export_dag_png.py",
+    "ai/scripts/export_worker_context.py",
+    "ai/scripts/generate_dashboard.py",
+    "ai/scripts/train_neural_net.py",
 ]
 
 [tool.ruff.lint]
@@ -52,5 +56,5 @@ strict = true
 explicit_package_bases = true
 packages = ["ai"]
 exclude = [
-    "^ai/scripts/",
+    "^ai/scripts/(evaluate_insights|export_dag_png|export_worker_context|generate_dashboard|train_neural_net)\\.py$",
 ]
