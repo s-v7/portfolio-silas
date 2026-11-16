@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import Literal, cast
+from typing import Literal
 
 from anthropic import Anthropic
 from anthropic.types import MessageParam, TextBlock
@@ -55,14 +55,12 @@ class AnthropicProvider(LLMProvider):
                     "assistant message roles."
                 )
 
-            role = cast(AnthropicRole, message.role)
-
-            conversation.append(
-                {
-                    "role": role,
-                    "content": message.content,
-                }
-            )
+            if message.role == "user":
+                conversation.append({"role": "user", "content": message.content})
+            else:
+                conversation.append(
+                    {"role": "assistant", "content": message.content}
+                )
 
         if not conversation:
             raise ProviderError(
