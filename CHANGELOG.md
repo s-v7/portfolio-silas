@@ -43,11 +43,14 @@ All notable technical changes to this project are documented here.
 - `WorkflowBuilder` nodes accept `retry_input` and `retries`: when an output check rejects a result, the agent runs again with the check's reason as feedback; the plan CLI retries the About and bio flows up to twice and sends only the reason, because echoing the rejected text made the model copy it
 - README checks (`ai/workflows/readme_checks.py`) for `--capability github`: numbers, links and e-mails must exist in the evidence; role, authorship, impact and self-assessment claims need the evidence to use the same word; greetings, job titles, placeholders and code fences are rejected; a text that takes more than 30% of its content from one evidence is rejected as a copy. The README flow retries like the About and bio flows
 - `ai/scripts/publish_profile.py` puts the generated profile text between `ai-generated` markers in a profile repository README (inserting after an anchor the first time, replacing only the block afterwards); it runs no git command, so nothing is committed or pushed
+- `ai/scripts/regenerate_docs.py` regenerates the About and bio texts through the same checked flows and writes `docs/` only when both pass and a text changed (exit code 0 unchanged, 10 changed, 1 failed)
+- GitHub workflows: `ci.yml` runs ruff, mypy and pytest on every push, and `regenerate-docs.yml` runs when `ai/data/profile_evidence.json` changes and opens a pull request with the regenerated texts; it never pushes to `main` or merges
 
 ### Changed
 
 - `AgentGraph._topological_order()` now derives from `execution_levels()` instead of duplicating Kahn's algorithm, eliminating redundant cycle-detection logic
-- The AI system is named SV7 AI instead of Atlas AI in the READMEs, the legacy prompts and the script messages (the `infra/` templates and the Cloudflare worker keep the old name); the empty `atlas-ai.yml` workflow was removed and the docs no longer claim autonomous or scheduled maintenance
+- The AI system is named SV7 AI instead of Atlas AI. The legacy pipeline (`llm_client`, the `update_*` agents, the draft generator and their prompts), its `infra/` templates, the Cloudflare edge worker, the checklist and the empty `atlas-ai.yml` workflow were removed, and the docs no longer claim autonomous or scheduled maintenance
+- The root `README.md` describes the site and SV7 AI instead of the Vite template; mypy targets Python 3.12, and the Anthropic provider builds its messages per role so strict mypy accepts them
 - `ai/scripts/plan_workflow.py` derives execution order and output checks from agent capabilities (`verification` before `generation`; `verification` and `about` map to checks) instead of hardcoded agent names, so the README and About flows share one path
 
 ### Fixed
