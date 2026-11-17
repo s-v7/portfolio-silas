@@ -18,7 +18,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sub = prs.add_subparsers(dest="command", required=True)
 
-    imp = sub.add_parser("import", help="Convert the extractor dataset (all unverified).")
+    imp = sub.add_parser(
+        "import", help="Convert the extractor dataset (all unverified)."
+    )
+
     imp.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     imp.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     imp.add_argument("--language", default="en")
