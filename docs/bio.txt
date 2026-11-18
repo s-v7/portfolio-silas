@@ -1,3 +1,3 @@
 Silas Vasconcelos Cruz authored SIGEC v2, a fiscal intelligence engine that indexed over 1.1 million ARTs on a SHA-256 blockchain.
-He also developed FiscalBot, an operational Telegram bot for automated alerts and mass ART processing.
+He also developed SistemaCrea, an ERP modernization covering 4,328 IES.
 Based in Teresina, Piauí, Brazil, he specializes in legacy modernization, geospatial AI, and blockchain traceability.
