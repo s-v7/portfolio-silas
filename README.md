@@ -58,5 +58,6 @@ Automation: the `regenerate-docs` workflow runs when `ai/data/profile_evidence.j
 - The classifier in `ai/scripts/train_neural_net.py` is a study: its labels come from keyword rules, and it scored 61% against a 39% baseline on 18 held-out examples (see `ECOSYSTEM_INSIGHTS.md`).
 
 ## License
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
-MIT, see [LICENSE](LICENSE). Copyright (c) 2026 Silas Vasconcelos Cruz.
+Copyright (c) 2026 Silas Vasconcelos Cruz.

@@ -1,0 +1,11 @@
+flowchart TD
+    obj[Objective and capabilities] --> plr[PlannerAgent]
+    reg[(AgentRegistry)] --> plr
+    plr <--> mem[(Memory plan cache)]
+    plr --> plan[ExecutionPlan]
+    plan --> bld[WorkflowBuilder from_plan]
+    dom[Domain rules order input checks] --> bld
+    bld --> exe[ParallelExecutor]
+    exe -.-> tel[(Telemetry)]
+    exe --> chk[Output checks]
+    chk --> out[Draft in ai/output/drafts]
